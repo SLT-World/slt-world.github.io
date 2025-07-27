@@ -12,26 +12,28 @@
     <ul id="results"></ul>
     <script>
       const list = document.getElementById("results");
-      function logList(text, result) {
+      function logList(success, text, result) {
         const li = document.createElement("li");
-        li.innerHTML = `<strong>${text}</strong> - <code>${result}</code>`;
+        li.classList.add(success ? "success" : "fail")
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
         list.appendChild(li);
       }
       try {
         localStorage.setItem("test", "value");
-        logList("LocalStorage", "Supported");
+        logList(true, "LocalStorage", "Supported");
       } catch (e) {
-        logList("LocalStorage", "Unsupported");
+        logList(false, "LocalStorage", "Unsupported");
       }
       try {
         sessionStorage.setItem("test", "value");
-        logList("SessionStorage", "Supported");
+        logList(true, "SessionStorage", "Supported");
       } catch (e) {
-        logList("SessionStorage", "Unsupported");
+        logList(false, "SessionStorage", "Unsupported");
       }
       const dbreq = indexedDB.open("testdb");
-      dbreq.onsuccess = () => logList("IndexedDB", "Supported");
-      dbreq.onerror = () => logList("IndexedDB", "Unsupported");
+      dbreq.onsuccess = () => logList(true, "IndexedDB", "Supported");
+      dbreq.onerror = () => logList(false, "IndexedDB", "Unsupported");
     </script>
   </body>
 </html>

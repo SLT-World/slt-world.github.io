@@ -13,15 +13,19 @@
     <ul id="results"></ul>
     <script>
       const list = document.getElementById("results");
-      function logList(text, result) {
+      function logList(success, text, result) {
         const li = document.createElement("li");
-        li.innerHTML = `<strong>${text}</strong> - <code>${result}</code>`;
+        li.classList.add(success ? "success" : "fail")
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
         list.appendChild(li);
       }
-      logList("Touch support", 'ontouchstart' in window || navigator.maxTouchPoints > 0 ? "Supported" : "Unsupported");
+      const ts = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+      logList(ts, "Touch support", ts ? "Supported" : "Unsupported");
       const gl = document.getElementById("glcanvas").getContext("webgl");
-      logList("WebGL", gl ? "Supported" : "Unsupported");
-      logList("Service Worker", "serviceWorker" in navigator ? "Supported" : "Unsupported");
+      logList(gl, "WebGL", gl ? "Supported" : "Unsupported");
+      const sw = "serviceWorker" in navigator
+      logList(sw, "Service Worker", sw ? "Supported" : "Unsupported");
     </script>
   </body>
 </html>
