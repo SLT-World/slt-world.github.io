@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      body { font-family: sans-serif; padding: 25px; }
+      h1 { margin: 0; }
+      code { background: gainsboro; padding: 5px 7.5px; border-radius: 5px; }
+      ul { gap: 10px; display: flex; flex-direction: column; list-style-type: none; padding: 0; }
+      li { background: whitesmoke; border-radius: 5px; padding: 10px; }
+    </style>
+  </head>
+  <body>
+    <h1>Test: WebAssembly availability</h1>
+    <p>Tests for the availability & support of WebAssembly.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(text, result) {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${text}</strong> - <code>${result}</code>`;
+        list.appendChild(li);
+      }
+      let hasWebAssembly = instantiateIsFunction = moduleIsWasmModule = false;
+      try {
+          hasWebAssembly = typeof WebAssembly === "object";
+          logList('typeof WebAssembly === "object"', String(hasWebAssembly));
+          instantiateIsFunction = typeof WebAssembly.instantiate === "function"
+          logList('typeof WebAssembly.instantiate === "function"', String(instantiateIsFunction));
+          const module = new WebAssembly.Module(Uint8Array.of(0x0, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00));
+          moduleIsWasmModule = module instanceof WebAssembly.Module;
+          logList('module instanceof WebAssembly.Module', String(moduleIsWasmModule));
+      } catch (e) {
+          logList('Error', String(e));
+      }
+      if (hasWebAssembly && instantiateIsFunction && moduleIsWasmModule) {
+          logList('WebAssembly', 'Supported');
+      } else {
+          logList('WebAssembly', 'Unsupported');
+      }
+    </script>
+  </body>
+</html>
