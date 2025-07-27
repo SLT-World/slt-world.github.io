@@ -22,12 +22,12 @@
       let hasWebAssembly = instantiateIsFunction = moduleIsWasmModule = false;
       try {
           hasWebAssembly = typeof WebAssembly === "object";
-          logList(hasWebAssembly, 'typeof WebAssembly === "object"', String(hasWebAssembly));
+          logList(hasWebAssembly, 'typeof WebAssembly === "object"', hasWebAssembly ? "True" : "False");
           instantiateIsFunction = typeof WebAssembly.instantiate === "function"
-          logList(instantiateIsFunction, 'typeof WebAssembly.instantiate === "function"', String(instantiateIsFunction));
+          logList(instantiateIsFunction, 'typeof WebAssembly.instantiate === "function"', instantiateIsFunction ? "True" : "False");
           const module = new WebAssembly.Module(Uint8Array.of(0x0, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00));
           moduleIsWasmModule = module instanceof WebAssembly.Module;
-          logList(moduleIsWasmModule, 'module instanceof WebAssembly.Module', String(moduleIsWasmModule));
+          logList(moduleIsWasmModule, 'module instanceof WebAssembly.Module', moduleIsWasmModule ? "True" : "False");
       } catch (e) {
           logList(false, 'Error', String(e));
       }
