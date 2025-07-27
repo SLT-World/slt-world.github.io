@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+  </head>
+  <body>
+    <h1>Test: Media Codecs</h1>
+    <p>Tests for the availability & support of media codecs</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        li.classList.add(success ? "success" : "fail")
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
+        list.appendChild(li);
+      }
+      function addResult(text, success) {
+        logList(success, text, success ? "Supported" : "Unsupported");
+      }
+      addResult("MP3 Audio (proprietary)", !!document.createElement("audio").canPlayType("audio/mpeg"));
+      addResult("OGG Audio (open)", !!document.createElement("audio").canPlayType("audio/ogg"));
+      addResult("Opus Audio", !!document.createElement("audio").canPlayType("audio/ogg; codecs=opus"));
+      addResult("H.264 / MP4 (proprietary)", !!document.createElement("video").canPlayType("video/mp4; codecs=\"avc1.42E01E\""));
+      addResult("WebM / VP9 (open)", !!document.createElement("video").canPlayType("video/webm; codecs=\"vp9\""));
+      addResult("AV1 (open)", !!document.createElement("video").canPlayType("video/mp4; codecs=\"av01.0.05M.08\""));
+    </script>
+  </body>
+</html>
