@@ -6,4 +6,5 @@
 > - 🔗 [WebAssembly](../tests/wasm.html)
 > - 🔗 [Media Codecs](../tests/codecs.html)
 > - 🔗 [Storage](../tests/storage.html)
+> - 🔗 [Lazy Load Images](../tests/lazyload.html)
 > - 🔗 [Non-existent Scripts](../tests/broken_scripts.html)

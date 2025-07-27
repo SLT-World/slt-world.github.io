@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+  </head>
+  <body>
+    <h1>Test: Lazy loading</h1>
+    <p>Tests for the availability & support of lazy loading.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      for (let i = 1; i <= 50; i++) {
+        const li = document.createElement("li");
+        const img = document.createElement("img");
+        img.loading = "lazy";
+        img.src = `https://picsum.photos/seed/${i}/600/400`;
+        li.appendChild(img);
+        list.appendChild(li);
+      }
+    </script>
+  </body>
+</html>
