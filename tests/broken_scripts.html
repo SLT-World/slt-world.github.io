@@ -29,8 +29,12 @@
         { domain: "browserabc.com", url: "https://www.browserabc.com/invalid.js" },
         { domain: "google.com", url: "https://www.google.com/invalid.js" },
         { domain: "developersheavean.com", url: "https://www.developersheavean.com/invalid.js" },
-        { domain: "aufwiedersehen.com", url: "https://www.aufwiedersehen.com/invalid.js" },
-        { domain: "browserheaven.com", url: "https://www.browserheaven.com/invalid.js" }
+        { domain: "notarealsite.com", url: "https://www.notarealsite.com/invalid.js" },
+        { domain: "browserheaven.com", url: "https://www.browserheaven.com/invalid.js" },
+        { domain: "invalidcdn.com", url: "https://cdn.invalidcdn.com/file.js" },
+        { domain: "slowresource.com", url: "https://slowresource.com/missing.js" },
+        { domain: "junkcdn.org", url: "https://junkcdn.org/dead.js" },
+        { domain: "delayedcdn.net", url: "https://delayedcdn.net/never.js" }
       ];
       for (const { domain, url } of urls) {
         const script = document.createElement("script");
