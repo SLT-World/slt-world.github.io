@@ -6,11 +6,10 @@
     <link rel="stylesheet" href="../../style.css">
   </head>
   <body>
-    <h1>Test: General</h1>
-    <p>Tests for the availability & support of general features</p>
+    <h1>Test: Miscellaneous</h1>
+    <p>Tests for the availability & support of miscellaneous features</p>
     <hr>
     <ul id="results"></ul>
-    <canvas id="glcanvas"></canvas>
     <script>
       const list = document.getElementById("results");
       function logList(success, text, result) {
@@ -22,7 +21,12 @@
       }
       const ts = 'ontouchstart' in window || navigator.maxTouchPoints > 0
       logList(ts, "Touch support", ts ? "Supported" : "Unsupported");
-      const gl = document.getElementById("glcanvas").getContext("webgl");
+      const gl = (() => {
+      try {
+        const canvas = document.createElement("canvas");
+        return !!window.WebGLRenderingContext && !!canvas.getContext("webgl");
+      } catch (e) { return false; }
+    })();
       logList(gl, "WebGL", gl ? "Supported" : "Unsupported");
       const sw = "serviceWorker" in navigator
       logList(sw, "Service Worker", sw ? "Supported" : "Unsupported");
