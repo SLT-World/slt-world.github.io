@@ -12,18 +12,28 @@
     <h1>Test: Non-existent scripts</h1>
     <p>Measures how long the browser takes when trying to load a non-existent external script.</p>
     <hr>
+    <ul id="results"></ul>
     <script>
       const start = Date.now();
+      const list = document.getElementById("results");
       function logElapsed(domain) {
         const now = Date.now();
         const elapsed = now - start;
-        const div = document.createElement('div');
-        div.innerHTML = `<strong>${domain}</strong> - Elapsed Time: <code>${elapsed}ms</code>`;
-        document.body.appendChild(div);
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${domain}</strong> - Elapsed Time: <code>${elapsed} ms</code>`;
+        list.appendChild(li);
       }
-      document.write(`<script src="https://www.browserabc.com/invalid.js" onerror="logElapsed('browserabc.com')"><\/script>`);
-      document.write(`<script src="https://www.google.com/invalid.js" onerror="logElapsed('google.com')"><\/script>`);
-      document.write(`<script src="https://www.developersheavean.com/invalid.js" onerror="logElapsed('developersheavean.com')"><\/script>`);
+      const urls = [
+        { domain: "browserabc.com", url: "https://www.browserabc.com/invalid.js" },
+        { domain: "google.com", url: "https://www.google.com/invalid.js" },
+        { domain: "developersheavean.com", url: "https://www.developersheavean.com/invalid.js" }
+      ];
+      for (const { domain, url } of urls) {
+        const script = document.createElement("script");
+        script.src = url;
+        script.onerror = () => logElapsed(domain);
+        document.head.appendChild(script);
+      }
     </script>
   </body>
 </html>
