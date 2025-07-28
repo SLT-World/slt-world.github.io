@@ -47,6 +47,14 @@
         } catch { return false; }
       })();
       logList(wg, "WebGPU", wg ? "Supported" : "Unsupported");
+      const bt = "bluetooth" in navigator
+      logList(bt, "Web Bluetooth", bt ? "Supported" : "Unsupported");
+      const usb = "usb" in navigator
+      logList(usb, "WebUSB", usb ? "Supported" : "Unsupported");
+      const hid = "hid" in navigator
+      logList(hid, "WebHID", hid ? "Supported" : "Unsupported");
+      const sl = "serial" in navigator
+      logList(sl, "Web Serial", sl ? "Supported" : "Unsupported");
     </script>
   </body>
 </html>
