@@ -49,6 +49,21 @@
       }).catch(() => {
         addResult("ClearKey DRM", false);
       });
+      navigator.requestMediaKeySystemAccess("com.microsoft.playready", [{ videoCapabilities: [{ contentType: 'video/mp4; codecs="avc1.42E01E"' }] }]).then(() => {
+        addResult("PlayReady DRM", true);
+      }).catch(() => {
+        addResult("PlayReady DRM", false);
+      });
+      navigator.requestMediaKeySystemAccess("com.apple.fps", [{ videoCapabilities: [{ contentType: 'video/mp4; codecs="avc1.42E01E"' }] }]).then(() => {
+        addResult("FairPlay DRM", true);
+      }).catch(() => {
+        addResult("FairPlay DRM", false);
+      });
+      navigator.requestMediaKeySystemAccess("com.huawei.wiseplay", [{ videoCapabilities: [{ contentType: 'video/mp4; codecs="avc1.42E01E"' }] }]).then(() => {
+        addResult("WisePlay DRM", true);
+      }).catch(() => {
+        addResult("WisePlay DRM", false);
+      });
     </script>
   </body>
 </html>
