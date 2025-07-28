@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1>Test: Storage</h1>
-    <p>Tests for the availability of LocalStorage, SessionStorage & IndexedDB.</p>
+    <p>Tests for the availability of Cookies, LocalStorage, SessionStorage & IndexedDB.</p>
     <hr>
     <ul id="results"></ul>
     <script>
@@ -19,7 +19,7 @@
         if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
         list.appendChild(li);
       }
-      logList(navigator.cookieEnabled, "Cookie", navigator.cookieEnabled ? "Supported" : "Unsupported");
+      logList(navigator.cookieEnabled, "Cookies", navigator.cookieEnabled ? "Supported" : "Unsupported");
       try {
         localStorage.setItem("test", "value");
         logList(true, "LocalStorage", "Supported");
