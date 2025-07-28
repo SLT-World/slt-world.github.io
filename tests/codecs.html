@@ -22,22 +22,22 @@
       function addResult(text, success) {
         logList(success, text, success ? "Supported" : "Unsupported");
       }
-      addResult("MP3 Audio (proprietary)", !!document.createElement("audio").canPlayType("audio/mpeg"));
-      addResult("OGG Audio (open)", !!document.createElement("audio").canPlayType("audio/ogg"));
-      addResult("Opus Audio", !!document.createElement("audio").canPlayType("audio/ogg; codecs=opus"));
-      addResult("AAC Audio (proprietary)", !!document.createElement("audio").canPlayType("audio/aac"));
-      addResult("WAV / PCM (open)", !!document.createElement("audio").canPlayType("audio/wav"));
-      addResult("FLAC Audio (open)", !!document.createElement("audio").canPlayType("audio/flac"));
-      addResult("M4A / AAC-LC Audio (proprietary)", !!document.createElement("audio").canPlayType("audio/mp4; codecs=\"mp4a.40.2\""));
+      addResult("MP3 Audio (Proprietary)", !!document.createElement("audio").canPlayType("audio/mpeg"));
+      addResult("OGG Audio (Open)", !!document.createElement("audio").canPlayType("audio/ogg"));
+      addResult("Opus Audio (Open)", !!document.createElement("audio").canPlayType("audio/ogg; codecs=opus"));
+      addResult("AAC Audio (Proprietary)", !!document.createElement("audio").canPlayType("audio/aac"));
+      addResult("WAV / PCM (Open)", !!document.createElement("audio").canPlayType("audio/wav"));
+      addResult("FLAC Audio (Open)", !!document.createElement("audio").canPlayType("audio/flac"));
+      addResult("M4A / AAC-LC Audio (Proprietary)", !!document.createElement("audio").canPlayType("audio/mp4; codecs=\"mp4a.40.2\""));
 
-      addResult("H.265 / HEVC (proprietary)", !!document.createElement("video").canPlayType("video/mp4; codecs=\"hev1.1.6.L93.B0\""));
-      addResult("H.264 / MP4 (proprietary)", !!document.createElement("video").canPlayType("video/mp4; codecs=\"avc1.42E01E\""));
-      addResult("Theora / OGV (open)", !!document.createElement("video").canPlayType("video/ogg; codecs=theora"));
-      addResult("WebM / VP8 (open)", !!document.createElement("video").canPlayType("video/webm; codecs=\"vp8\""));
-      addResult("WebM / VP9 (open)", !!document.createElement("video").canPlayType("video/webm; codecs=\"vp9\""));
-      addResult("MPEG-2 Video (proprietary)", !!document.createElement("video").canPlayType("video/mp2t; codecs=\"mp2v\""));
-      addResult("HLS Streaming / M3U8 (proprietary)", !!document.createElement("video").canPlayType("application/vnd.apple.mpegurl"));
-      addResult("AV1 (open)", !!document.createElement("video").canPlayType("video/mp4; codecs=\"av01.0.05M.08\""));
+      addResult("H.265 / HEVC (Proprietary)", !!document.createElement("video").canPlayType("video/mp4; codecs=\"hev1.1.6.L93.B0\""));
+      addResult("H.264 / MP4 (Proprietary)", !!document.createElement("video").canPlayType("video/mp4; codecs=\"avc1.42E01E\""));
+      addResult("Theora / OGV (Open)", !!document.createElement("video").canPlayType("video/ogg; codecs=theora"));
+      addResult("WebM / VP8 (Open)", !!document.createElement("video").canPlayType("video/webm; codecs=\"vp8\""));
+      addResult("WebM / VP9 (Open)", !!document.createElement("video").canPlayType("video/webm; codecs=\"vp9\""));
+      addResult("MPEG-2 Video (Proprietary)", !!document.createElement("video").canPlayType("video/mp2t; codecs=\"mp2v\""));
+      addResult("HLS Streaming / M3U8 (Proprietary)", !!document.createElement("video").canPlayType("application/vnd.apple.mpegurl"));
+      addResult("AV1 (Open)", !!document.createElement("video").canPlayType("video/mp4; codecs=\"av01.0.05M.08\""));
     </script>
   </body>
 </html>
