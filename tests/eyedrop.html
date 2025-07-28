@@ -33,6 +33,14 @@
         hexli.style.color = "white";
         list.appendChild(hexli);
 
+        function getContrastColor(hex) {
+          const r = parseInt(hex.substr(1, 2), 16);
+          const g = parseInt(hex.substr(3, 2), 16);
+          const b = parseInt(hex.substr(5, 2), 16);
+          const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+          return yiq >= 128 ? "#000000" : "#ffffff";
+        }
+
         let eyeDropper = new EyeDropper();
 
         const dropButton = document.createElement("button");
@@ -40,8 +48,10 @@
         dropButton.addEventListener('click', e => {
           eyeDropper.open()
           .then(colorSelectionResult => {
-            hexli.innerHTML = `<strong>Hex Color</strong> - <code>${colorSelectionResult.sRGBHex}</code>`;
-            hexli.style.background = colorSelectionResult.sRGBHex;
+            const hex = colorSelectionResult.sRGBHex;
+            hexli.innerHTML = `<strong>Hex Color</strong> - <code>${hex}</code>`;
+            hexli.style.background = hex;
+            hexli.style.color = getContrastColor(hex);
           })
           .catch(error => {
             hexli.innerHTML = `<strong>Hex Color</strong> - <code>${error}</code>`;
