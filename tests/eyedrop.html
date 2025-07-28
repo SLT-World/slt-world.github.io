@@ -29,6 +29,8 @@
 
         const hexli = document.createElement("li");
         hexli.innerHTML = "<strong>Hex Color</strong> - <code>#000000</code>";
+        hexli.style.background = "black";
+        hexli.style.color = "white";
         list.appendChild(hexli);
 
         let eyeDropper = new EyeDropper();
@@ -39,7 +41,7 @@
           eyeDropper.open()
           .then(colorSelectionResult => {
             hexli.innerHTML = `<strong>Hex Color</strong> - <code>${colorSelectionResult.sRGBHex}</code>`;
-            hexli.className = "success";
+            hexli.style.background = colorSelectionResult.sRGBHex;
           })
           .catch(error => {
             hexli.innerHTML = `<strong>Hex Color</strong> - <code>${error}</code>`;
