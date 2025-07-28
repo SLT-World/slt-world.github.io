@@ -14,7 +14,7 @@
       const list = document.getElementById("results");
       function logList(success, text, result) {
         const li = document.createElement("li");
-        if (success != null) { li.classList.add(success ? "success" : "fail") }
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
         li.innerHTML = `<strong>${text}</strong>`;
         if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
         list.appendChild(li);

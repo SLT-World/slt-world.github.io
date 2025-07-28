@@ -12,6 +12,7 @@
 > - 🔗 [Device & Network Info](../tests/env.html)
 > - 🔗 [Non-existent Scripts](../tests/broken_scripts.html)
 > - 🔗 [Page Visibility API](../tests/pagevisibility.html)
+> - 🔗 [Eye Dropper](../tests/eyedrop.html)
 
 ## 🌐 External Tests
 > - 🔗 [WebAssembly](https://webassembly.org/features/)

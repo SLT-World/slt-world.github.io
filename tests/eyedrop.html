@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+  </head>
+  <body>
+    <h1>Test: Eye Dropper</h1>
+    <p>Tests for the availability & support of EyeDropper.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
+        list.appendChild(li);
+      }
+      const ed = ('EyeDropper' in window)
+      logList(ed, "Eye Dropper", ed ? "Supported" : "Unsupported");
+      if (ed) {
+        const colorli = document.createElement("li");
+        colorli.style.background = "linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%)";
+        colorli.style.height = "40px";
+        list.appendChild(colorli);
+
+        const hexli = document.createElement("li");
+        hexli.innerHTML = "<strong>Hex Color</strong> - <code>#000000</code>";
+        list.appendChild(hexli);
+
+        let eyeDropper = new EyeDropper();
+
+        const dropButton = document.createElement("button");
+        dropButton.innerHTML = "Eye Dropper";
+        dropButton.addEventListener('click', e => {
+          eyeDropper.open()
+          .then(colorSelectionResult => {
+            hexli.innerHTML = `<strong>Hex Color</strong> - <code>${colorSelectionResult.sRGBHex}</code>`;
+            hexli.className = "success";
+          })
+          .catch(error => {
+            hexli.innerHTML = `<strong>Hex Color</strong> - <code>${error}</code>`;
+            hexli.className = "fail";
+          });
+        });
+        list.appendChild(dropButton);
+      }
+    </script>
+  </body>
+</html>
