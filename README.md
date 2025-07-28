@@ -11,6 +11,7 @@
 > - 🔗 [Pickers](../tests/pickers.html)
 > - 🔗 [Device & Network Info](../tests/env.html)
 > - 🔗 [Non-existent Scripts](../tests/broken_scripts.html)
+> - 🔗 [Page Visibility API](../tests/pagevisibility.html)
 
 ## 🌐 External Tests
 > - 🔗 [WebAssembly](https://webassembly.org/features/)

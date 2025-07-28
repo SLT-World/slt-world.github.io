@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+  </head>
+  <body>
+    <h1>Test: Page Visibility API</h1>
+    <p>Tests for the availability & support of Page Visibility API.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        li.classList.add(success ? "success" : "fail")
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
+        list.appendChild(li);
+      }
+
+      var hiddenProperty = 'hidden' in document ? 'hidden' : 'webkitHidden' in document ? 'webkitHidden' : 'mozHidden' in document ? 'mozHidden' : null;
+      var visibilityStateProperty = 'visibilityState' in document ? 'visibilityState' : 'webkitVisibilityState' in document ? 'webkitVisibilityState' : 'mozVisibilityState' in document ? 'mozVisibilityState' : null;
+
+      if (hiddenProperty === null || visibilityStateProperty === null) {
+        logList(false, 'Page Visibility API', 'Unsupported');
+      } else {
+        logList(true, 'Page Visibility API', 'Supported');
+        var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+        var views = 0;
+        function onVisibilityChange() {
+          if (!document[hiddenProperty]) {
+            views++;
+          }
+          logList(document[hiddenProperty], 'Page', (document[hiddenProperty] ? 'Hidden' : 'Visible') + ` [State: ${document[visibilityStateProperty]}] [Viewed: ${views}]`);
+        }
+        document.addEventListener(visibilityChangeEvent, onVisibilityChange);
+        onVisibilityChange();
+      }
+    </script>
+  </body>
+</html>
