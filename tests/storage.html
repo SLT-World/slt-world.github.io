@@ -19,6 +19,7 @@
         if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
         list.appendChild(li);
       }
+      logList(navigator.cookieEnabled, "Cookie", navigator.cookieEnabled ? "Supported" : "Unsupported");
       try {
         localStorage.setItem("test", "value");
         logList(true, "LocalStorage", "Supported");

@@ -21,6 +21,8 @@
       }
       const ts = 'ontouchstart' in window || navigator.maxTouchPoints > 0
       logList(ts, "Touch support", ts ? "Supported" : "Unsupported");
+      const sw = "serviceWorker" in navigator
+      logList(sw, "Service Worker", sw ? "Supported" : "Unsupported");
       const gl = (() => {
         try {
           const canvas = document.createElement("canvas");
@@ -35,8 +37,6 @@
         } catch (e) { return false; }
       })();
       logList(glt, "WebGL 2", glt ? "Supported" : "Unsupported");
-      const sw = "serviceWorker" in navigator
-      logList(sw, "Service Worker", sw ? "Supported" : "Unsupported");
 
       const wg = (() => {
         if (!navigator.gpu) { return false; }
