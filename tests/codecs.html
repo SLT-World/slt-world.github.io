@@ -38,6 +38,17 @@
       addResult("MPEG-2 Video (Proprietary)", !!document.createElement("video").canPlayType("video/mp2t; codecs=\"mp2v\""));
       addResult("HLS Streaming / M3U8 (Proprietary)", !!document.createElement("video").canPlayType("application/vnd.apple.mpegurl"));
       addResult("AV1 (Open)", !!document.createElement("video").canPlayType("video/mp4; codecs=\"av01.0.05M.08\""));
+
+      navigator.requestMediaKeySystemAccess("com.widevine.alpha", [{ videoCapabilities: [{ contentType: 'video/mp4; codecs="avc1.42E01E"' }] }]).then(() => {
+        addResult("Widevine DRM", true);
+      }).catch(() => {
+        addResult("Widevine DRM", false);
+      });
+      navigator.requestMediaKeySystemAccess("org.w3.clearkey", [{ videoCapabilities: [{ contentType: 'video/mp4; codecs="avc1.42E01E"' }] }]).then(() => {
+        addResult("ClearKey DRM", true);
+      }).catch(() => {
+        addResult("ClearKey DRM", false);
+      });
     </script>
   </body>
 </html>
