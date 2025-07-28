@@ -20,7 +20,7 @@
         list.appendChild(li);
       }
       const ts = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-      logList(ts, "Touchscreen detection", ts ? "Supported" : "Unsupported");
+      logList(ts, "Touchscreen Detection", ts ? "Supported" : "Unsupported");
       const sw = "serviceWorker" in navigator
       logList(sw, "Service Worker", sw ? "Supported" : "Unsupported");
       const gl = (() => {

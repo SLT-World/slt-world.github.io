@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+    <style>li { display: block; }</style>
+  </head>
+  <body>
+    <h1>Test: Pickers</h1>
+    <p>Tests for the availability of browser pickers.</p>
+    <hr>
+    <ul id="results">
+      <li>
+        <label for="file">File</label>
+        <input type="file" id="file"/>
+      </li>
+
+      <li>
+        <label for="multi-file">Multiple File Picker:</label>
+        <input type="file" id="multi-file" multiple/>
+      </li>
+
+      <li>
+        <label for="image-picker">Image</label>
+        <input type="file" id="image-picker" accept="image/*"/>
+      </li>
+
+      <li>
+        <label for="audio-picker">Audio</label>
+        <input type="file" id="audio-picker" accept="audio/*"/>
+      </li>
+
+      <li>
+        <label for="video-picker">Video</label>
+        <input type="file" id="video-picker" accept="video/*"/>
+      </li>
+
+      <li>
+        <label for="camera-capture">Capture Image (Camera)</label>
+        <input type="file" id="camera-capture" accept="image/*" capture="environment"/>
+      </li>
+
+      <li>
+        <label for="audio-capture">Capture Audio</label>
+        <input type="file" id="audio-capture" accept="audio/*" capture/>
+      </li>
+
+      <li>
+        <label for="dir">Directory</label>
+        <input type="file" id="dir" webkitdirectory/>
+      </li>
+
+      <li>
+        <label for="color">Color</label>
+        <input type="color" id="color"/>
+      </li>
+
+      <li>
+        <label for="date">Date</label>
+        <input type="date" id="date"/>
+      </li>
+
+      <li>
+        <label for="time">Time</label>
+        <input type="time" id="time"/>
+      </li>
+
+      <li>
+        <label for="datetime">Datetime-local</label>
+        <input type="datetime-local" id="datetime"/>
+      </li>
+
+      <li>
+        <label for="month">Month</label>
+        <input type="month" id="month"/>
+      </li>
+
+      <li>
+        <label for="week">Week</label>
+        <input type="week" id="week"/>
+      </li>
+
+      <li>
+        <label for="range">Range Slider</label>
+        <input type="range" id="range" min="0" max="100"/>
+      </li>
+
+      <li>
+        <label for="number">Number</label>
+        <input type="number" id="number" min="0" max="10"/>
+      </li>
+
+      <li>
+        <label for="select">Select Dropdown</label>
+        <select id="select">
+          <option value="">Choose an option</option>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+        </select>
+      </li>
+
+      <li>
+        <label>Datalist (Autocomplete)</label>
+        <input list="browsers"/>
+        <datalist id="browsers">
+          <option value="Blink"></option>
+          <option value="WebKit"></option>
+          <option value="Gecko"></option>
+          <option value="EdgeHTML"></option>
+          <option value="Trident"></option>
+        </datalist>
+      </li>
+
+      <li>
+        <label>Input (Autocomplete)</label>
+        <input type="text" autocomplete="name">
+      </li>
+
+      <li>
+        <label>Password Input</label>
+        <input type="password">
+      </li>
+
+      <li>
+        <label for="url-input">URL Input</label>
+        <input type="url" id="url-input"/>
+      </li>
+
+      <li>
+        <label for="search-input">Search Input</label>
+        <input type="search" id="search-input"/>
+      </li>
+      
+      <li>
+        <label for="email-input">Email Input</label>
+        <input type="email" id="email-input"/>
+      </li>
+
+      <li>
+        <label for="tel-input">Telephone Input</label>
+        <input type="tel" id="tel-input"/>
+      </li>
+    </ul>
+  </body>
+</html>
