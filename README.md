@@ -13,6 +13,7 @@
 > - 🔗 [Non-existent Scripts](../tests/broken_scripts.html)
 > - 🔗 [Page Visibility API](../tests/pagevisibility.html)
 > - 🔗 [Eye Dropper](../tests/eyedrop.html)
+> - 🔗 [History API](../tests/history.html)
 
 ## 🌐 External Tests
 > - 🔗 [WebAssembly](https://webassembly.org/features/)
@@ -33,3 +34,9 @@
 > - 🔗 [WebGL Samples](https://webglsamples.org/)
 > - 🔗 [WebKit Poster Circle](https://webkit.org/blog-files/3d-transforms/poster-circle.html)
 > - 🔗 [ReCAPTCHA Demo](https://www.google.com/recaptcha/api2/demo)
+> - 🔗 [Accessibility Demos](https://fuzzbomb.github.io/accessibility-demos/)
+> - 🔗 [PaulJAdam's Accessibility Demos](https://pauljadam.com/demos/)
+> - 🔗 [Web API Demos](https://web-api-examples.github.io/)
+> - 🔗 [Privacy Sandbox Demos](https://domain-aaa.com/)
+> - 🔗 [Project Fugu API Support](https://howfuguismybrowser.dev/)
+> - 🔗 [Heavy Ad Intervention Demo](https://rowan.fyi/made/heavy-ads/)

@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+    <style>li { display: block; }</style>
+  </head>
+  <body>
+    <h1>Test: History API</h1>
+    <p>Tests for the availability & support of the History API.</p>
+    <hr>
+    <ul id="results">
+      <button onclick="pushStateA()">History Push State</button>
+      <button onclick="pushStateB()">History Push State Hash</button>
+      <button onclick="replaceStateA()">History Replace State</button>
+      <button onclick="replaceStateB()">History Replace State Hash</button>
+      <button onclick="assignA()">Location Assign</button>
+      <button onclick="assignB()">Location Assign Hash</button>
+      <button onclick="replaceA()">Location Replace</button>
+      <button onclick="replaceB()">Location Replace Hash</button>
+    </ul>
+    <script>
+      function pushStateA() {
+        history.pushState({}, '', '/?a=b');
+      }
+
+      function pushStateB() {
+        history.pushState({}, '', '/#a=b');
+      }
+
+      function replaceStateA() {
+        history.replaceState({}, '', '/?a=b');
+      }
+
+      function replaceStateB() {
+        history.replaceState({}, '', '/#a=b');
+      }
+
+      function assignA() {
+        location.assign('/?a=b');
+      }
+
+      function assignB() {
+        location.assign('/#a=b');
+      }
+
+      function replaceA() {
+        location.replace('/?a=b');
+      }
+
+      function replaceB() {
+        location.replace('/#a=b');
+      }
+    </script>
+  </body>
+</html>
