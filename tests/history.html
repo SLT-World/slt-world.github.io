@@ -21,36 +21,48 @@
       <button onclick="replaceB()">Location Replace Hash</button>
     </ul>
     <script>
-      function pushStateA() {
-        history.pushState({}, '', '/?a=b');
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
+        list.insertBefore(li, list.firstChild);
       }
+      const hs = ('history' in window)
+      logList(hs, "History API", hs ? "Supported" : "Unsupported");
+      if (hs) {
+        function pushStateA() {
+          history.pushState({}, '', '/?a=b');
+        }
 
-      function pushStateB() {
-        history.pushState({}, '', '/#a=b');
-      }
+        function pushStateB() {
+          history.pushState({}, '', '/#a=b');
+        }
 
-      function replaceStateA() {
-        history.replaceState({}, '', '/?a=b');
-      }
+        function replaceStateA() {
+          history.replaceState({}, '', '/?a=b');
+        }
 
-      function replaceStateB() {
-        history.replaceState({}, '', '/#a=b');
-      }
+        function replaceStateB() {
+          history.replaceState({}, '', '/#a=b');
+        }
 
-      function assignA() {
-        location.assign('/?a=b');
-      }
+        function assignA() {
+          location.assign('/?a=b');
+        }
 
-      function assignB() {
-        location.assign('/#a=b');
-      }
+        function assignB() {
+          location.assign('/#a=b');
+        }
 
-      function replaceA() {
-        location.replace('/?a=b');
-      }
+        function replaceA() {
+          location.replace('/?a=b');
+        }
 
-      function replaceB() {
-        location.replace('/#a=b');
+        function replaceB() {
+          location.replace('/#a=b');
+        }
       }
     </script>
   </body>
