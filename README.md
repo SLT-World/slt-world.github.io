@@ -14,6 +14,7 @@
 > - 🔗 [Page Visibility API](../tests/pagevisibility.html)
 > - 🔗 [Eye Dropper](../tests/eyedrop.html)
 > - 🔗 [History API](../tests/history.html)
+> - 🔗 [Anti DevTools](../tests/nodevtools.html)
 
 ## 🌐 External Tests
 > - 🔗 [WebAssembly](https://webassembly.org/features/)
@@ -40,3 +41,4 @@
 > - 🔗 [Privacy Sandbox Demos](https://domain-aaa.com/)
 > - 🔗 [Project Fugu API Support](https://howfuguismybrowser.dev/)
 > - 🔗 [Heavy Ad Intervention Demo](https://rowan.fyi/made/heavy-ads/)
+> - 🔗 [Picture-in-Picture Sample](https://googlechrome.github.io/samples/picture-in-picture/)

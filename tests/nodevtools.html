@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+    <script src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+  </head>
+  <body>
+    <h1>Test: Anti DevTools</h1>
+    <p>Testing of anti devtools.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
+        list.appendChild(li);
+      }
+      logList(null, 'Open DevTools to test');
+    </script>
+  </body>
+</html>
