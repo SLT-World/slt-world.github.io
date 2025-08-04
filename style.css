@@ -1,4 +1,4 @@
-body { font-family: sans-serif; padding: 25px; }
+body { font-family: sans-serif; padding: 25px; max-width: 1012px; margin-right: auto; margin-left: auto; }
 h1 { margin: 0; }
 code { background: color-mix(in srgb, transparent, gainsboro 50%); padding: 5px 7.5px; border-radius: 5px; }
 ul { gap: 10px; display: flex; flex-direction: column; list-style-type: none; padding: 0; }
