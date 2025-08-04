@@ -10,7 +10,7 @@
 > 🧪 [Test Pages](../tests/)<br>
 > Experimental features and sandbox environments.
 
-## 🚀 Active Projects
+## 🗂️ Active Projects
 > 🌐 [**SLBr - Web Browser**](https://github.com/SLT-World/SLBr)<br>
 > A browser with features such as lightweight browsing, tab unloading, and ad blocking.
 
@@ -20,12 +20,12 @@
 > 💬 [**SLChat - Chat Platform**](https://slchat.alwaysdata.net/)<br>
 > A chat platform that was made to experiment with web sockets.
 
-## 📦 Published Platforms  
+## 📦 Publishing Platforms  
 - 🎮 [Itch.io](https://sltworld.itch.io/)
 - 📱 [Google Play Store](https://play.google.com/store/apps/developer?id=SLT+World)
-- 🧊 [Planet Minecraft](https://www.planetminecraft.com/member/slt_world/)
+- 🌍 [Planet Minecraft](https://www.planetminecraft.com/member/slt_world/)
 - 🗽 [Sketchfab](https://sketchfab.com/SLT_World)
 
-## Socials
+## 📢 Socials
 - 📽️ [YouTube](https://www.youtube.com/@SLT-World)
-- 💬 [Discord](https://discord.gg/fNmFUjmcNn)
+- 👾 [Discord](https://discord.gg/fNmFUjmcNn)
