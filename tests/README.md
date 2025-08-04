@@ -49,6 +49,5 @@
 > - 🔗 [Clipboard Inspector](https://evercoder.github.io/clipboard-inspector/)
 > - 🔗 [Document Picture-in-Picture](https://mdn.github.io/dom-examples/document-picture-in-picture/)
 > - 🔗 [Payments](https://rsolomakhin.github.io/)
-> - 🔗 []()
 > - 🔗 [Gallery Demo](https://microsoftedge.github.io/Demos/photo-gallery/)
 > - 🔗 [Prompt API Playground](https://microsoftedge.github.io/Demos/built-in-ai/playgrounds/prompt-api/)
