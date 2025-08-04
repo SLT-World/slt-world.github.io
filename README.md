@@ -1,5 +1,5 @@
 <head>
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
 </head>
 
 # 📄 SLT's GitHub Page
@@ -20,11 +20,11 @@
 > A chat platform that was made to experiment with web sockets.
 
 ## 📦 Published Platforms  
-- [Itch.io](https://sltworld.itch.io/)
-- [Google Play Store](https://play.google.com/store/apps/developer?id=SLT+World)
+- 🎮 [Itch.io](https://sltworld.itch.io/)
+- 📱 [Google Play Store](https://play.google.com/store/apps/developer?id=SLT+World)
+- 🧊 [Planet Minecraft](https://www.planetminecraft.com/member/slt_world/)
+- 🗽 [Sketchfab](https://sketchfab.com/SLT_World)
 
 ## Socials
 - 📽️ [YouTube](https://www.youtube.com/@SLT-World)
 - 💬 [Discord](https://discord.gg/fNmFUjmcNn)
-- 🧊 [Planet Minecraft](https://www.planetminecraft.com/member/slt_world/)
-- 🗽 [Sketchfab](https://sketchfab.com/SLT_World)
