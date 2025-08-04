@@ -1,3 +1,7 @@
+<head>
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
 # 📄 Test Pages
 > A collection of browser capability tests used to evaluate feature support for SLBr and general web compatibility.
 

@@ -1,3 +1,7 @@
+<head>
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
 # 📄 SLT's GitHub Page
 > The central hub of my projects & experiments.
 
