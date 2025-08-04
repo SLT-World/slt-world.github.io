@@ -22,3 +22,5 @@
 ## Socials
 - 📽️ [YouTube](https://www.youtube.com/@SLT-World)
 - 💬 [Discord](https://discord.gg/fNmFUjmcNn)
+- 🧊 [Planet Minecraft](https://www.planetminecraft.com/member/slt_world/)
+- 🗽 [Sketchfab](https://sketchfab.com/SLT_World)
