@@ -55,6 +55,8 @@
       logList(hid, "WebHID", hid ? "Supported" : "Unsupported");
       const sl = "serial" in navigator
       logList(sl, "Web Serial", sl ? "Supported" : "Unsupported");
+      const llm = "LanguageModel" in navigator
+      logList(llm, "LanguageModel API", llm ? "Supported" : "Unsupported");
     </script>
   </body>
 </html>
