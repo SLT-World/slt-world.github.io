@@ -1,54 +1,21 @@
 # 📄 SLT's GitHub Page
-> A collection of browser capability tests used to evaluate feature support for SLBr and general web compatibility.
-
-## ✅ Available Tests
-> - 🔗 [Miscellaneous](../tests/misc.html)
-> - 🔗 [WebAssembly](../tests/wasm.html)
-> - 🔗 [Media Codecs](../tests/codecs.html)
-> - 🔗 [Storage](../tests/storage.html)
-> - 🔗 [Lazy Load Images](../tests/lazyload.html)
-> - 🔗 [Inputs](../tests/inputs.html)
-> - 🔗 [Pickers](../tests/pickers.html)
-> - 🔗 [Device & Network Info](../tests/env.html)
-> - 🔗 [Non-existent Scripts](../tests/broken_scripts.html)
-> - 🔗 [Page Visibility API](../tests/pagevisibility.html)
-> - 🔗 [Eye Dropper](../tests/eyedrop.html)
-> - 🔗 [History API](../tests/history.html)
-> - 🔗 [Anti DevTools](../tests/nodevtools.html)
-
-## 🌐 External Tests
-> - 🔗 [WebAssembly](https://webassembly.org/features/)
-> - 🔗 [WebGL](https://get.webgl.org/)
-> - 🔗 [SafeBrowsing](https://testsafebrowsing.appspot.com/)
-> - 🔗 [SmartScreen](https://demo.smartscreen.msft.net/)
-> - 🔗 [HTML5 Audio & Video](https://tools.woolyss.com/html5-audio-video-tester/)
-> - 🔗 [Codecs Support](https://shaka-player-demo.appspot.com/support.html)
-> - 🔗 [WebRTC Experiments](https://www.webrtc-experiment.com/)
-> - 🔗 [Chrome Demo Space](https://chrome.dev/)
-> - 🔗 [WebKit Demos](https://webkit.org/demo-content/)
-> - 🔗 [WebKit WebGPU Demos](https://webkit.org/demos/webgpu/)
-> - 🔗 [Web Speech API Demo](https://www.google.com/intl/en/chrome/demos/speech.html)
-> - 🔗 [Chrome Experiments](https://experiments.withgoogle.com/collection/chrome)
-> - 🔗 [Web Platform Tests](https://wpt.live/)
-> - 🔗 [Storage Persistence](http://www.sharonminsuk.com/code/storage-test.html)
-> - 🔗 [Touch Feature Tests](https://patrickhlauke.github.io/touch)
-> - 🔗 [WebGL Samples](https://webglsamples.org/)
-> - 🔗 [WebKit Poster Circle](https://webkit.org/blog-files/3d-transforms/poster-circle.html)
-> - 🔗 [ReCAPTCHA Demo](https://www.google.com/recaptcha/api2/demo)
-> - 🔗 [Accessibility Demos](https://fuzzbomb.github.io/accessibility-demos/)
-> - 🔗 [PaulJAdam's Accessibility Demos](https://pauljadam.com/demos/)
-> - 🔗 [Web API Demos](https://web-api-examples.github.io/)
-> - 🔗 [Privacy Sandbox Demos](https://domain-aaa.com/)
-> - 🔗 [Project Fugu API Support](https://howfuguismybrowser.dev/)
-> - 🔗 [Heavy Ad Intervention Demo](https://rowan.fyi/made/heavy-ads/)
-> - 🔗 [Picture-in-Picture Sample](https://googlechrome.github.io/samples/picture-in-picture/)
-> - 🔗 [Colorimeter](https://simoncozens.github.io/colorimeter/)
-> - 🔗 [Popover Hint](https://mdn.github.io/dom-examples/popover-api/popover-hint/)
-> - 🔗 [Cross-document View Transition](https://mdn.github.io/dom-examples/view-transitions/mpa/index.html)
-> - 🔗 [IndexedDB Index Performance](https://dumbmatter.github.io/chrome-indexeddb-index-perf/)
-> - 🔗 [Clipboard Inspector](https://evercoder.github.io/clipboard-inspector/)
-> - 🔗 [Document Picture-in-Picture](https://mdn.github.io/dom-examples/document-picture-in-picture/)
-> - 🔗 [Payments](https://rsolomakhin.github.io/)
-> - 🔗 []()
-> - 🔗 [Gallery Demo](https://microsoftedge.github.io/Demos/photo-gallery/)
-> - 🔗 [Prompt API Playground](https://microsoftedge.github.io/Demos/built-in-ai/playgrounds/prompt-api/)
+> The central hub of my projects & experiments.
+## 📚 Pages
+> 🧪 [Test Pages](../tests/)<br>
+> Experimental features and sandbox environments.
+---
+## 🚀 Active Projects
+- > 🌐 [**SLBr - Web Browser**](https://github.com/SLT-World/SLBr)<br>
+  > A browser with features such as lightweight browsing, tab unloading, and ad blocking.
+- > 🔎 [**SLSearch - Search Engine**](https://slsearch.eu.org/)<br>
+  > A metasearch engine that gathers results from multiple search engines.
+- > 💬 [**SLChat - Chat Platform**](https://slchat.alwaysdata.net/)<br>
+  > A chat platform that was made to experiment with web sockets.
+---
+## 📦 Published Platforms  
+- [Itch.io](https://sltworld.itch.io/)
+- [Google Play Store](https://play.google.com/store/apps/developer?id=SLT+World)
+---
+## Socials
+> - 📽️ [YouTube](https://www.youtube.com/@SLT-World)
+> - 💬 [Discord](https://discord.gg/fNmFUjmcNn)
