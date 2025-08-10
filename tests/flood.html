@@ -37,7 +37,7 @@
           const script = document.createElement('script');
           script.src = `${target}?t=${Date.now()}`;
           script.onload = () => logList(true, "Loaded script", "");
-          script.onerror = () => log(false, "Script load failed", "");
+          script.onerror = () => logList(false, "Script load failed", "");
           document.body.appendChild(script);
         }, 50);
         /*floodInterval = setInterval(() => {
