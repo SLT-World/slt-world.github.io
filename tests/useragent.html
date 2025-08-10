@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+  </head>
+  <body>
+    <h1>Test: User Agent & User-Agent Client Hints</h1>
+    <p>Displays <code>navigator.userAgent</code> and <code>navigator.userAgentData</code> values.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      function capitalizeFirst(val) {
+        return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+      }
+
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
+        list.appendChild(li);
+      }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
+
+      logList(navigator.userAgent, "navigator.userAgent", navigator.userAgent || "Unsupported");
+
+      if (navigator.userAgentData) {
+        logList(true, "navigator.userAgentData", "Supported");
+
+        logHeader("Brands");
+        if (navigator.userAgentData.brands) {
+          navigator.userAgentData.brands.forEach(b => {
+            logList(true, b.brand, b.version);
+          });
+        }
+
+        logHeader("High Entropy");
+        navigator.userAgentData.getHighEntropyValues([
+          "architecture", "bitness", "model", "platformVersion", "uaFullVersion"
+        ]).then(ua => {
+          for (const key in ua) {
+            if (key == "brands") continue;
+            logList(Boolean(ua[key]), capitalizeFirst(key), ua[key]);
+          }
+        });
+      } else {
+        logList(false, "navigator.userAgentData", "Unsupported");
+      }
+    </script>
+  </body>
+</html>

@@ -19,50 +19,58 @@
         if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
         list.appendChild(li);
       }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
       function addResult(text, success) {
         logList(success, text, success ? "Supported" : "Unsupported");
       }
-      addResult("MP3 Audio (Proprietary)", !!document.createElement("audio").canPlayType("audio/mpeg"));
-      addResult("OGG Audio (Open)", !!document.createElement("audio").canPlayType("audio/ogg"));
-      addResult("Opus Audio (Open)", !!document.createElement("audio").canPlayType("audio/ogg; codecs=opus"));
-      addResult("AAC Audio (Proprietary)", !!document.createElement("audio").canPlayType("audio/aac"));
+      logHeader("Audio");
+      addResult("MP3 (Proprietary)", !!document.createElement("audio").canPlayType("audio/mpeg"));
+      addResult("OGG (Open)", !!document.createElement("audio").canPlayType("audio/ogg"));
+      addResult("Opus (Open)", !!document.createElement("audio").canPlayType("audio/ogg; codecs=opus"));
+      addResult("AAC (Proprietary)", !!document.createElement("audio").canPlayType("audio/aac"));
       addResult("WAV / PCM (Open)", !!document.createElement("audio").canPlayType("audio/wav"));
-      addResult("FLAC Audio (Open)", !!document.createElement("audio").canPlayType("audio/flac"));
-      addResult("M4A / AAC-LC Audio (Proprietary)", !!document.createElement("audio").canPlayType("audio/mp4; codecs=\"mp4a.40.2\""));
+      addResult("FLAC (Open)", !!document.createElement("audio").canPlayType("audio/flac"));
+      addResult("M4A / AAC-LC (Proprietary)", !!document.createElement("audio").canPlayType("audio/mp4; codecs=\"mp4a.40.2\""));
 
+      logHeader("Video");
       addResult("H.265 / HEVC (Proprietary)", !!document.createElement("video").canPlayType("video/mp4; codecs=\"hev1.1.6.L93.B0\""));
       addResult("H.264 / MP4 (Proprietary)", !!document.createElement("video").canPlayType("video/mp4; codecs=\"avc1.42E01E\""));
       addResult("Theora / OGV (Open)", !!document.createElement("video").canPlayType("video/ogg; codecs=theora"));
       addResult("WebM / VP8 (Open)", !!document.createElement("video").canPlayType("video/webm; codecs=\"vp8\""));
       addResult("WebM / VP9 (Open)", !!document.createElement("video").canPlayType("video/webm; codecs=\"vp9\""));
-      addResult("MPEG-2 Video (Proprietary)", !!document.createElement("video").canPlayType("video/mp2t; codecs=\"mp2v\""));
+      addResult("MPEG-2 (Proprietary)", !!document.createElement("video").canPlayType("video/mp2t; codecs=\"mp2v\""));
       addResult("HLS Streaming / M3U8 (Proprietary)", !!document.createElement("video").canPlayType("application/vnd.apple.mpegurl"));
       addResult("AV1 (Open)", !!document.createElement("video").canPlayType("video/mp4; codecs=\"av01.0.05M.08\""));
 
+      logHeader("DRM");
       navigator.requestMediaKeySystemAccess("com.widevine.alpha", [{ videoCapabilities: [{ contentType: 'video/mp4; codecs="avc1.42E01E"' }] }]).then(() => {
-        addResult("Widevine DRM", true);
+        addResult("Widevine", true);
       }).catch(() => {
-        addResult("Widevine DRM", false);
+        addResult("Widevine", false);
       });
       navigator.requestMediaKeySystemAccess("org.w3.clearkey", [{ videoCapabilities: [{ contentType: 'video/mp4; codecs="avc1.42E01E"' }] }]).then(() => {
-        addResult("ClearKey DRM", true);
+        addResult("ClearKey", true);
       }).catch(() => {
-        addResult("ClearKey DRM", false);
+        addResult("ClearKey", false);
       });
       navigator.requestMediaKeySystemAccess("com.microsoft.playready", [{ videoCapabilities: [{ contentType: 'video/mp4; codecs="avc1.42E01E"' }] }]).then(() => {
-        addResult("PlayReady DRM", true);
+        addResult("PlayReady", true);
       }).catch(() => {
-        addResult("PlayReady DRM", false);
+        addResult("PlayReady", false);
       });
       navigator.requestMediaKeySystemAccess("com.apple.fps", [{ videoCapabilities: [{ contentType: 'video/mp4; codecs="avc1.42E01E"' }] }]).then(() => {
-        addResult("FairPlay DRM", true);
+        addResult("FairPlay", true);
       }).catch(() => {
-        addResult("FairPlay DRM", false);
+        addResult("FairPlay", false);
       });
       navigator.requestMediaKeySystemAccess("com.huawei.wiseplay", [{ videoCapabilities: [{ contentType: 'video/mp4; codecs="avc1.42E01E"' }] }]).then(() => {
-        addResult("WisePlay DRM", true);
+        addResult("WisePlay", true);
       }).catch(() => {
-        addResult("WisePlay DRM", false);
+        addResult("WisePlay", false);
       });
     </script>
   </body>

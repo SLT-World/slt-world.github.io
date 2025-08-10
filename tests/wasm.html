@@ -19,6 +19,11 @@
         if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
         list.appendChild(li);
       }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
       let hasWebAssembly = instantiateIsFunction = moduleIsWasmModule = false;
       try {
           hasWebAssembly = typeof WebAssembly === "object";

@@ -19,6 +19,11 @@
         if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
         list.appendChild(li);
       }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
 
       var hiddenProperty = 'hidden' in document ? 'hidden' : 'webkitHidden' in document ? 'webkitHidden' : 'mozHidden' in document ? 'mozHidden' : null;
       var visibilityStateProperty = 'visibilityState' in document ? 'visibilityState' : 'webkitVisibilityState' in document ? 'webkitVisibilityState' : 'mozVisibilityState' in document ? 'mozVisibilityState' : null;

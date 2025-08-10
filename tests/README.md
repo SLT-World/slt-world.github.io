@@ -20,6 +20,7 @@
 > - 🔗 [Eye Dropper](../tests/eyedrop.html)
 > - 🔗 [History API](../tests/history.html)
 > - 🔗 [Anti DevTools](../tests/nodevtools.html)
+> - 🔗 [User Agent](../tests/useragent.html)
 
 ## 🌐 External Tests
 > - 🔗 [WebAssembly](https://webassembly.org/features/)
@@ -56,3 +57,4 @@
 > - 🔗 [Payments](https://rsolomakhin.github.io/)
 > - 🔗 [Gallery Demo](https://microsoftedge.github.io/Demos/photo-gallery/)
 > - 🔗 [Prompt API Playground](https://microsoftedge.github.io/Demos/built-in-ai/playgrounds/prompt-api/)
+> - 🔗 [Third Party Cookies](https://alanhogan.github.io/web-experiments/3rd/third-party-cookies.html)
