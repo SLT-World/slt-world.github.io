@@ -21,6 +21,7 @@
 > - 🔗 [History API](../tests/history.html)
 > - 🔗 [Anti DevTools](../tests/nodevtools.html)
 > - 🔗 [User Agent](../tests/useragent.html)
+> - 🔗 [Request Flood](../tests/flood.html)
 
 ## 🌐 External Tests
 > - 🔗 [WebAssembly](https://webassembly.org/features/)

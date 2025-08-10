@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+  </head>
+  <body>
+    <h1>Test: Flood</h1>
+    <p>Tests the browser load when handling repeated requests to a URL.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
+        list.appendChild(li);
+      }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
+
+      let floodInterval;
+      function startFlood() {
+        const target = "https://blank";
+        if (floodInterval) {
+          logList(null, "Flood is already running.", "");
+          return;
+        }
+        logList(null, `Starting flood to ${target}`, "");
+        floodInterval = setInterval(() => {
+          fetch(target, { cache: "no-store" })
+            .then(res => logList(null, `Status: ${res.status}`, ""))
+            .catch(err => logList(false, err.message, ""));
+        }, 50);
+      }
+
+      function stopFlood() {
+        clearInterval(floodInterval);
+        floodInterval = null;
+        logList(null, "Flood stopped.", "");
+      }
+      startFlood();
+    </script>
+  </body>
+</html>
