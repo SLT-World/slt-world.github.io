@@ -11,8 +11,8 @@
     <hr>
     <ul id="results"></ul>
     <script>
-      function capitalizeFirst(val) {
-        return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+      function capitalize(val) {
+        return String(val).charAt(0).toUpperCase() + String(val).slice(1).replace(/([A-Z])/g, ' $1').trim();
       }
 
       const list = document.getElementById("results");
@@ -29,10 +29,10 @@
         list.appendChild(h);
       }
 
-      logList(navigator.userAgent, "navigator.userAgent", navigator.userAgent || "Unsupported");
+      logList(navigator.userAgent, "User Agent", navigator.userAgent || "Unsupported");
 
       if (navigator.userAgentData) {
-        logList(true, "navigator.userAgentData", "Supported");
+        logList(true, "User Agent Data", "Supported");
 
         logHeader("Brands");
         if (navigator.userAgentData.brands) {
@@ -47,7 +47,8 @@
         ]).then(ua => {
           for (const key in ua) {
             if (key == "brands") continue;
-            logList(Boolean(ua[key]), capitalizeFirst(key), ua[key]);
+            if (key == "mobile") logList(Boolean(ua[key]), capitalize(key), ua[key] ? "True" : "False");
+            else { logList(Boolean(ua[key]), capitalize(key), ua[key]); }
           }
         });
       } else {
