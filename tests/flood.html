@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="../../style.css">
   </head>
   <body>
-    <h1>Test: Flood</h1>
-    <p>Tests the browser load when handling repeated requests to a URL.</p>
+    <h1>Test: Script Flood</h1>
+    <p>Tests the browser load when handling repeated requests to a script URL.</p>
     <hr>
     <ul id="results"></ul>
     <script>
@@ -34,10 +34,17 @@
         }
         logList(null, `Starting flood to ${target}`, "");
         floodInterval = setInterval(() => {
+          const script = document.createElement('script');
+          script.src = `${target}?t=${Date.now()}`;
+          script.onload = () => logList(true, "Loaded script", "");
+          script.onerror = () => log(false, "Script load failed", "");
+          document.body.appendChild(script);
+        }, 50);
+        /*floodInterval = setInterval(() => {
           fetch(target, { cache: "no-store" })
             .then(res => logList(null, `Status: ${res.status}`, ""))
             .catch(err => logList(false, err.message, ""));
-        }, 50);
+        }, 50);*/
       }
 
       function stopFlood() {
