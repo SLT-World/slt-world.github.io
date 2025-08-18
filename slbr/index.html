@@ -144,6 +144,7 @@
         }
 
         .card {
+            position: relative;
             height: 250px;
             border: 1px solid gainsboro;
             width: 200px;
@@ -157,13 +158,23 @@
             display: flex;
             justify-content: center;
         }
-        .card > div:not(.thumbnail) {
+        .card > div:not(.thumbnail):not(.overlay) {
             height: 60%;
             padding: 15px;
         }
         .card pre:not(.fonticon) {
             font-size: unset;
             color: dimgray;
+        }
+        .card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .cardlist {
             display: grid !important;
@@ -348,6 +359,9 @@ Ideal for articles, blogs, and long-form content.</pre>
                             <h3>AI Chat & Compose</h3>
                             <pre>Built-in AI for chatting and writing help.</pre>
                         </div>
+                        <div class="overlay" style="background: rgba(255, 0, 0, 0.25);">
+                            <pre class="fonticon" style="font-size: 150px;color: red;"></pre>
+                        </div>
                     </div>
                     <div class="card">
                         <div class="thumbnail">
@@ -402,6 +416,9 @@ Ideal for articles, blogs, and long-form content.</pre>
                             <h3>QR Code Generator</h3>
                             <pre>Share links easily with QR codes.</pre>
                         </div>
+                        <div class="overlay" style="background: rgba(255, 0, 0, 0.25);">
+                            <pre class="fonticon" style="font-size: 150px;color: red;"></pre>
+                        </div>
                     </div>
                     <div class="card">
                         <div class="thumbnail">
@@ -419,6 +436,9 @@ Ideal for articles, blogs, and long-form content.</pre>
                         <div>
                             <h3>Web3 Support</h3>
                             <pre>Access decentralized and blockchain-based sites.</pre>
+                        </div>
+                        <div class="overlay" style="background: rgba(255, 0, 0, 0.25);">
+                            <pre class="fonticon" style="font-size: 150px;color: red;"></pre>
                         </div>
                     </div>
                     <div class="card">
@@ -441,11 +461,14 @@ Ideal for articles, blogs, and long-form content.</pre>
                     </div>
                     <div class="card">
                         <div class="thumbnail">
-                            <pre class="fonticon"></pre>
+                            <pre class="fonticon"></pre>
                         </div>
                         <div>
                             <h3>Browser Engines</h3>
                             <pre>Switch between Chromium or Trident.</pre>
+                        </div>
+                        <div class="overlay" style="background: rgba(255, 0, 0, 0.25);">
+                            <pre class="fonticon" style="font-size: 150px;color: red;"></pre>
                         </div>
                     </div>
                     <div class="card">
@@ -454,7 +477,10 @@ Ideal for articles, blogs, and long-form content.</pre>
                         </div>
                         <div>
                             <h3>Experiments</h3>
-                            <pre>Early access to cutting-edge tools and options.</pre>
+                            <pre>Early access to amazing tools and options.</pre>
+                        </div>
+                        <div class="overlay" style="background: rgba(255, 0, 0, 0.25);">
+                            <pre class="fonticon" style="font-size: 150px;color: red;"></pre>
                         </div>
                     </div>
                 </div>
