@@ -179,6 +179,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            pointer-events: none;
+        }
+        .card .overlay .fonticon {
+            font-size: 150px;
+            opacity: 0.5;
         }
         .cardlist {
             display: grid !important;
@@ -208,6 +213,7 @@
             .feature {
                 display: flex;
                 flex-direction: column !important;
+                gap: 0;
             }
         }
     </style>
@@ -222,10 +228,13 @@
     </div>
 
     <div class="content">
-        <div class="center" style="margin-bottom: 50px;">
+        <div class="center" style="margin-bottom: 50px;display: flex;flex-direction: column;gap: 10px;">
             <button style="padding: 15px 25px;height: unset;font-size: 20px;display: flex;align-items: center;border-radius: 10px;font-weight: 600;gap: 10px;">
                 <p class="fonticon" style="color: white;font-size: 20px;display: inline-block;vertical-align: unset;font-weight: 600;"></p>Download SLBr
             </button>
+            <a href="https://github.com/SLT-World/SLBr" target="_blank" class="button" style="background:black;padding: 15px 25px;height: unset;font-size: 20px;display: flex;align-items: center;border-radius: 10px;font-weight: 600;gap: 10px;">
+                <p class="fonticon" style="color: white;font-size: 20px;display: inline-block;vertical-align: unset;font-weight: 600;"></p>GitHub
+            </a>
         </div>
         <div class="feature">
 			<div>
@@ -284,7 +293,7 @@ Ideal for articles, blogs, and long-form content.</pre>
 			<img src="./Reader Mode.png">
 		</div>
         <div class="feature">
-			<div style="width: 100%; max-width: 1200px; margin-right: 0;">
+			<div style="width: 100%; max-width: 1250px; margin-right: 0;">
                 <div>
                     <pre class="fonticon"></pre>
                     <h1>And more...</h1>
@@ -362,10 +371,13 @@ Ideal for articles, blogs, and long-form content.</pre>
                             <h3>Extension Support</h3>
                             <pre>Install Chrome extensions for added functionality.</pre>
                         </div>
+                        <div class="overlay" style="background: rgba(0, 100, 0, 0.25)">
+                            <pre class="fonticon" style="color:green;"></pre>
+                        </div>
                     </div>
                     <div class="card">
                         <div class="thumbnail">
-                            <pre class="fonticon"></pre>
+                            <pre class="fonticon"></pre>
                         </div>
                         <div>
                             <h3>Tab Unloading</h3>
@@ -381,7 +393,7 @@ Ideal for articles, blogs, and long-form content.</pre>
                             <pre>Built-in AI for chatting and writing help.</pre>
                         </div>
                         <div class="overlay" style="background: rgba(255, 0, 0, 0.25);">
-                            <pre class="fonticon" style="font-size: 150px;color: red;"></pre>
+                            <pre class="fonticon" style="color: red;"></pre>
                         </div>
                     </div>
                     <div class="card">
@@ -438,7 +450,7 @@ Ideal for articles, blogs, and long-form content.</pre>
                             <pre>Share links easily with QR codes.</pre>
                         </div>
                         <div class="overlay" style="background: rgba(255, 0, 0, 0.25);">
-                            <pre class="fonticon" style="font-size: 150px;color: red;"></pre>
+                            <pre class="fonticon" style="color: red;"></pre>
                         </div>
                     </div>
                     <div class="card">
@@ -459,7 +471,7 @@ Ideal for articles, blogs, and long-form content.</pre>
                             <pre>Access decentralized and blockchain-based sites.</pre>
                         </div>
                         <div class="overlay" style="background: rgba(255, 0, 0, 0.25);">
-                            <pre class="fonticon" style="font-size: 150px;color: red;"></pre>
+                            <pre class="fonticon" style="color: red;"></pre>
                         </div>
                     </div>
                     <div class="card">
@@ -486,10 +498,10 @@ Ideal for articles, blogs, and long-form content.</pre>
                         </div>
                         <div>
                             <h3>Browser Engines</h3>
-                            <pre>Switch between Chromium or Trident.</pre>
+                            <pre>Switch between Chromium, EdgeHTML & Trident.</pre>
                         </div>
                         <div class="overlay" style="background: rgba(255, 0, 0, 0.25);">
-                            <pre class="fonticon" style="font-size: 150px;color: red;"></pre>
+                            <pre class="fonticon" style="color: red;"></pre>
                         </div>
                     </div>
                     <div class="card">
@@ -501,7 +513,7 @@ Ideal for articles, blogs, and long-form content.</pre>
                             <pre>Use local copies of common CDN files for faster loading & offline support.</pre>
                         </div>
                         <div class="overlay" style="background: rgba(255, 0, 0, 0.25);">
-                            <pre class="fonticon" style="font-size: 150px;color: red;"></pre>
+                            <pre class="fonticon" style="color: red;"></pre>
                         </div>
                     </div>
                     <div class="card">
@@ -520,6 +532,15 @@ Ideal for articles, blogs, and long-form content.</pre>
                         <div>
                             <h3>AMP Redirect</h3>
                             <pre>Open the faster AMP versions of pages when available.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>YouTube Ad Skip</h3>
+                            <pre>Auto-skip YouTube video ads.</pre>
                         </div>
                     </div>
                 </div>
