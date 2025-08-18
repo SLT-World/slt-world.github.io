@@ -25,25 +25,28 @@
             white-space: nowrap;
             margin-bottom: 50px;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+        }
+        .feature.opposite {
+            flex-direction: row-reverse;
         }
         .feature > div {
             display: inline-block;
-            width: 625px;
+            max-width: 625px;
+            width: 100%;
             white-space: normal;
             text-align: left;
-        }
-        .feature > div:nth-child(1) {
-            margin: 25px 50px 25px 0;
-        }
-        .feature > div:nth-child(2) {
-            margin: 25px 0 25px 50px;
+            margin: 25px 0;
         }
         .feature > div h1 {
             margin-top: 0;
         }
         .feature > img {
             display: inline-block;
-            width: 625px;
+            max-width: 625px;
+            width: 100%;
             white-space: normal;
             border-radius: 25px;
             box-shadow: 0 0px 25px 0 rgba(0, 0, 0, 0.375);
@@ -107,15 +110,17 @@
             justify-content: center;
         }
 
-        .SLBrIcon {
+        .slbricon {
+            height: 375px;
+            width: 375px;
             transition: transform .5s ease-in-out;
         }
 
-        .SLBrIcon:hover {
+        .slbricon:hover {
             transform: rotate(180deg);
         }
 
-        .aboutheader {
+        .header {
             margin: 25px;
             padding: 75px;
             text-align: center;
@@ -125,20 +130,16 @@
             overflow-y: hidden;
         }
 
-        .aboutheader h1 {
+        .header h1 {
             margin: 0px;
             color: white;
         }
-        .aboutheader p {
+        .header p {
             margin: 0px;
             color: white;
         }
 
-        .aboutcontent {
-            margin: 75px;
-        }
-
-        .aboutcontent p {
+        .content p {
             margin: 0px;
         }
 
@@ -183,7 +184,7 @@
             display: grid !important;
             grid-template-columns: repeat(auto-fill, 200px);
             gap: 10px;
-            justify-content: center;
+            justify-content: start;
             align-content: center;
         }
 
@@ -192,18 +193,35 @@
                 color:green;
             }
         }
+
+        @media screen and (max-width: 655px) {
+            .cardlist {
+                justify-content: center;
+            }
+            .header {
+                padding: 10px 25px;
+            }
+            .slbricon {
+                height: 200px;
+                width: 200px;
+            }
+            .feature {
+                display: flex;
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="aboutheader">
+    <div class="header">
         <h1 style="position: relative;z-index: 2;">SLBr</h1>
         <div class="center" style="position: relative;z-index: 1;">
-            <img class="SLBrIcon" style="user-select: none;position: absolute;" src="../slbr/slbr.png" width="375" height="375">
+            <img class="slbricon" style="user-select: none;position: absolute;" src="../slbr/slbr.png">
         </div>
         <p style="position: relative;z-index: 2;font-weight: 600;">A lightweight browser for a faster web</p>
     </div>
 
-    <div class="aboutcontent">
+    <div class="content">
         <div class="center" style="margin-bottom: 50px;">
             <button style="padding: 15px 25px;height: unset;font-size: 20px;display: flex;align-items: center;border-radius: 10px;font-weight: 600;gap: 10px;">
                 <p class="fonticon" style="color: white;font-size: 20px;display: inline-block;vertical-align: unset;font-weight: 600;"></p>Download SLBr
@@ -223,8 +241,7 @@ Clean lines and a refreshed layout make navigation simple and uncluttered.</pre>
 			</div>
 			<img src="./SLBr Browser.png">
 		</div>
-        <div class="feature">
-			<img src="./Performance.png">
+        <div class="feature opposite">
 			<div>
                 <div>
                     <pre class="fonticon green"></pre>
@@ -236,6 +253,7 @@ Lite Performance Mode reduces resource load on low-end devices for more data-eff
 
 Smart Tab Unloading frees memory from inactive tabs while keeping tabs with active music or video running.</pre>
 			</div>
+			<img src="./Performance.png">
 		</div>
         <div class="feature">
 			<div>
@@ -251,8 +269,7 @@ YouTube ads are automatically skipped for smoother playback.</pre>
 			</div>
             <img src="./SLBr Browser.png">
 		</div>
-        <div class="feature">
-			<img src="./Reader Mode.png">
+        <div class="feature opposite">
 			<div>
                 <div>
                     <pre class="fonticon" style="color:rebeccapurple;"></pre>
@@ -264,6 +281,7 @@ Reader Mode strips away page clutter for a clear, distraction-free reading exper
 
 Ideal for articles, blogs, and long-form content.</pre>
 			</div>
+			<img src="./Reader Mode.png">
 		</div>
         <div class="feature">
 			<div style="width: 100%; max-width: 1200px; margin-right: 0;">
@@ -272,7 +290,7 @@ Ideal for articles, blogs, and long-form content.</pre>
                     <h1>And more...</h1>
                     <p>Others</p>
                 </div>
-				<div class="cardlist" style="justify-content: start;">
+				<div class="cardlist">
                     <div class="card">
                         <div class="thumbnail">
                             <pre class="fonticon"></pre>
