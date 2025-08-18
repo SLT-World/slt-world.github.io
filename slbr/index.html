@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+        body {
+            padding: 10px;
+            margin: 0px;
+            max-width: unset;
+        }
+
+        .feature {
+            white-space: nowrap;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        .feature > div {
+            display: inline-block;
+            width: 625px;
+            white-space: normal;
+            text-align: left;
+        }
+        .feature > div:nth-child(1) {
+            margin: 25px 50px 25px 0;
+        }
+        .feature > div:nth-child(2) {
+            margin: 25px 0 25px 50px;
+        }
+        .feature > div h1 {
+            margin-top: 0;
+        }
+        .feature > img {
+            display: inline-block;
+            width: 625px;
+            white-space: normal;
+            border-radius: 25px;
+            box-shadow: 0 0px 25px 0 rgba(0, 0, 0, 0.375);
+            /*box-shadow: 0px 0px 25px gray;*/
+            vertical-align: top;
+            height: 350px;
+            object-fit: cover;
+        }
+        .fonticon {
+            font-family: "Segoe Fluent Icons";
+            font-size: 35px;
+            margin: 0;
+            font-weight: lighter;
+            user-select: none;
+            text-align: center;
+            vertical-align: middle;
+            align-self: center;
+        }
+        .feature pre {
+            font-family: inherit;
+            margin: 0;
+            white-space: break-spaces;
+            font-weight: 600;
+            font-size: x-large;
+        }
+        .feature .fonticon {
+            font-family: "Segoe Fluent Icons";
+            font-size: 35px;
+            font-weight: lighter;
+            margin-right: 10px;
+        }
+        .card .fonticon {
+            margin-right: 0px;
+        }
+        .feature > div > div {
+            display: flex;
+            margin-bottom: 25px;
+        }
+        .feature > div > div h1 {
+            align-self: center;
+            display: inline-block;
+            margin: 0;
+            height: 30px;
+            line-height: 30px;
+        }
+        .feature > div > div p {
+            display: inline-block;
+            align-self: center;
+            margin-left: 10px;
+            padding: 5px 12.5px;
+            background: whitesmoke;
+            border: 1px solid gainsboro;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+
+        .Center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .SLBrIcon {
+            transition: transform .5s ease-in-out;
+        }
+
+        .SLBrIcon:hover {
+            transform: rotate(180deg);
+        }
+
+        .AboutHeader {
+            margin: 25px;
+            padding: 75px;
+            text-align: center;
+            background: lightsteelblue;
+            font-size: 25px;
+            border-radius: 25px;
+            overflow-y: hidden;
+        }
+
+        .AboutHeader h1 {
+            margin: 0px;
+            color: white;
+        }
+        .AboutHeader p {
+            margin: 0px;
+            color: white;
+        }
+
+        .AboutContent {
+            margin: 75px;
+        }
+
+        .AboutContent p {
+            margin: 0px;
+        }
+
+        .green {
+            color:limegreen;
+        }
+
+        .card {
+            height: 250px;
+            border: 1px solid gainsboro;
+            width: 200px;
+            border-radius: 15px;
+            overflow: clip;
+        }
+
+        .card .thumbnail {
+            height: 40%;
+            background: whitesmoke;
+            display: flex;
+            justify-content: center;
+        }
+        .card > div:not(.thumbnail) {
+            height: 60%;
+            padding: 15px;
+        }
+        .card pre:not(.fonticon) {
+            font-size: unset;
+            color: dimgray;
+        }
+        .cardlist {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, 200px);
+            gap: 10px;
+            justify-content: center;
+            align-content: center;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .green {
+                color:green;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="AboutHeader">
+        <h1 style="position: relative;z-index: 2;">SLBr</h1>
+        <div class="Center" style="position: relative;z-index: 1;">
+            <img class="SLBrIcon" style="user-select: none;position: absolute;" src="../slbr/slbr.png" width="375" height="375">
+        </div>
+        <p style="position: relative;z-index: 2;font-weight: 600;">A lightweight browser for a faster web</p>
+    </div>
+
+    <div class="AboutContent">
+        <div class="Center" style="margin-bottom: 50px;">
+            <button style="padding: 15px 25px;height: unset;font-size: 20px;display: flex;align-items: center;border-radius: 10px;font-weight: 600;gap: 10px;">
+                <p class="fonticon" style="color: white;font-size: 20px;display: inline-block;vertical-align: unset;font-weight: 600;"></p>Download SLBr
+            </button>
+        </div>
+        <div class="feature">
+			<div>
+                <div>
+                    <pre class="fonticon" style="color:cornflowerblue;"></pre>
+                    <h1 style="color:cornflowerblue;">A New Look</h1>
+                    <p>User Interface</p>
+                </div>
+				<pre>
+SLBr features a modern, re-designed interface inspired by Windows 11.
+
+Clean lines and a refreshed layout make navigation simple and uncluttered.</pre>
+			</div>
+			<img src="./SLBr Browser.png">
+		</div>
+        <div class="feature">
+			<img src="./Performance.png">
+			<div>
+                <div>
+                    <pre class="fonticon green"></pre>
+                    <h1 class="green">Optimized Performance</h1>
+                    <p>Performance</p>
+                </div>
+				<pre>
+Lite Performance Mode reduces resource load on low-end devices for more data-efficient browsing.
+
+Smart Tab Unloading frees memory from inactive tabs while keeping tabs with active music or video running.</pre>
+			</div>
+		</div>
+        <div class="feature">
+			<div>
+                <div>
+                    <pre class="fonticon" style="color:orange;"></pre>
+                    <h1 style="color:orange;">Ad-Free Viewing</h1>
+                    <p>Privacy</p>
+                </div>
+				<pre>
+Built-in ad and tracker blocking cuts down on clutter, speeds up page loads, and protects your privacy.
+
+YouTube ads are automatically skipped for smoother playback.</pre>
+			</div>
+            <img src="./SLBr Browser.png">
+		</div>
+        <div class="feature">
+			<img src="./Reader Mode.png">
+			<div>
+                <div>
+                    <pre class="fonticon" style="color:rebeccapurple;"></pre>
+                    <h1 style="color:rebeccapurple;">Distraction-Free Reading</h1>
+                    <p>Accessibility</p>
+                </div>
+				<pre>
+Reader Mode strips away page clutter for a clear, distraction-free reading experience.
+
+Ideal for articles, blogs, and long-form content.</pre>
+			</div>
+		</div>
+        <div class="feature">
+			<div style="width: 100%; max-width: 1200px; margin-right: 0;">
+                <div>
+                    <pre class="fonticon"></pre>
+                    <h1>And more...</h1>
+                    <p>Others</p>
+                </div>
+				<div class="cardlist" style="justify-content: start;">
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Ad Blocker</h3>
+                            <pre>Built-in protection against unwanted ads and tracking.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Anti-Tamper Mode</h3>
+                            <pre>Prevents sites from disabling copy, paste, right-click, or DevTools.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Safe Browsing</h3>
+                            <pre>Warns against phishing, malware, and unsafe sites.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Private Tabs</h3>
+                            <pre>Browse without saving history or cookies.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Themes</h3>
+                            <pre>Choose from light, dark, and others to personalize the browser.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Smart Address Bar</h3>
+                            <pre>Translate, calculate, and get search suggestions.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Image Upload Popup</h3>
+                            <pre>Quick access to images in clipboard & downloads.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Extension Support</h3>
+                            <pre>Install Chrome extensions for added functionality.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Tab Unloading</h3>
+                            <pre>Free memory by suspending inactive tabs.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>AI Chat & Compose</h3>
+                            <pre>Built-in AI for chatting and writing help.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Favorites</h3>
+                            <pre>Save and access your favorite sites.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Never Slow Mode</h3>
+                            <pre>Limits heavy scripts and images for smoother browsing.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Network Limiter</h3>
+                            <pre>Control and limit bandwidth usage.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>News Feed</h3>
+                            <pre>Stay updated with browser-integrated news.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Reader Mode</h3>
+                            <pre>Read articles without clutter or distractions.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>QR Code Generator</h3>
+                            <pre>Share links easily with QR codes.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Gopher & Gemini Support</h3>
+                            <pre>Access alternative web protocols.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Web3 Support</h3>
+                            <pre>Access decentralized and blockchain-based sites.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Translate</h3>
+                            <pre>Instantly translate pages with Google Translate.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Tab Alignment</h3>
+                            <pre>View tabs vertically or horizontally.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Browser Engines</h3>
+                            <pre>Switch between Chromium or Trident.</pre>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumbnail">
+                            <pre class="fonticon"></pre>
+                        </div>
+                        <div>
+                            <h3>Experiments</h3>
+                            <pre>Early access to cutting-edge tools and options.</pre>
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+    </div>
+</body>
+</html>

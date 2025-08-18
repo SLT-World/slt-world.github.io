@@ -10,6 +10,9 @@
 > 🧪 [Test Pages](../tests/)<br>
 > Experimental features and sandbox environments.
 
+> 🌐 [SLBr](../slbr/)<br>
+> A lightweight WPF C# browser for a faster web. Fast, lightweight browsing with a clean interface.
+
 ## 🗂️ Active Projects
 > 🌐 [**SLBr - Web Browser**](https://github.com/SLT-World/SLBr)<br>
 > A lightweight WPF C# browser for a faster web. Fast, lightweight browsing with a clean interface.
