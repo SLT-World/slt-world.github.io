@@ -15,7 +15,7 @@
 
 ## 🗂️ Active Projects
 > 🌐 [**SLBr - Web Browser**](https://github.com/SLT-World/SLBr)<br>
-> A lightweight WPF C# browser for a faster web. Fast, lightweight browsing with a clean interface.
+> SLBr GitHub Repository
 
 > 🔎 [**SLSearch - Search Engine**](https://slsearch.eu.org/)<br>
 > A metasearch engine that gathers results from multiple search engines.
