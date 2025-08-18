@@ -12,7 +12,7 @@
 
 ## 🗂️ Active Projects
 > 🌐 [**SLBr - Web Browser**](https://github.com/SLT-World/SLBr)<br>
-> A browser with features such as lightweight browsing, tab unloading, and ad blocking.
+> A lightweight WPF C# browser for a faster web. Fast, lightweight browsing with a clean interface.
 
 > 🔎 [**SLSearch - Search Engine**](https://slsearch.eu.org/)<br>
 > A metasearch engine that gathers results from multiple search engines.
@@ -23,6 +23,7 @@
 ## 📦 Publishing Platforms  
 - 🎮 [Itch.io](https://sltworld.itch.io/)
 - 📱 [Google Play Store](https://play.google.com/store/apps/developer?id=SLT+World)
+- 🗃️ [GitHub](https://github.com/SLT-World)
 - 🌍 [Planet Minecraft](https://www.planetminecraft.com/member/slt_world/)
 - 🗽 [Sketchfab](https://sketchfab.com/SLT_World)
 
