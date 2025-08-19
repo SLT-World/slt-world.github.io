@@ -1,4 +1,19 @@
-body { font-family: sans-serif; padding: 25px; max-width: 1012px; margin-right: auto; margin-left: auto; }
+@font-face {
+    font-family: 'Segoe Fluent Icons';
+    src: url('../../sfi.ttf') format('truetype');
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+body {
+    font-family: sans-serif;
+    padding: 10px;
+    margin: 0px;
+    max-width: unset;
+}
 h1 { margin: 0; }
 code { background: color-mix(in srgb, transparent, gainsboro 50%); padding: 5px 7.5px; border-radius: 5px; }
 ul { gap: 10px; display: flex; flex-direction: column; list-style-type: none; padding: 0; }
@@ -13,3 +28,66 @@ button:hover { filter: brightness(90%); }
 .button { text-decoration: none; cursor: pointer; background: #0092FF; border: none; height: 35px; border-radius: 5px; color: white; width: fit-content; padding: 0 25px; transition: filter 0.3s ease; }
 .button:hover { filter: brightness(90%); }
 h2 { margin: 0; border: solid gainsboro; border-width: 0 0 1px 0; padding: 10px 0; }
+
+.fonticon {
+    font-family: "Segoe Fluent Icons";
+    font-size: 35px;
+    margin: 0;
+    font-weight: lighter;
+    user-select: none;
+    text-align: center;
+    vertical-align: middle;
+    align-self: center;
+}
+
+.card {
+    position: relative;
+    height: 250px;
+    border: 1px solid gainsboro;
+    width: 200px;
+    border-radius: 15px;
+    overflow: clip;
+}
+
+.card .thumbnail {
+    height: 40%;
+    background: whitesmoke;
+    display: flex;
+    justify-content: center;
+}
+.card > div:not(.thumbnail):not(.overlay) {
+    height: 60%;
+    padding: 15px;
+}
+.card pre:not(.fonticon) {
+    font-size: unset;
+    color: dimgray;
+}
+.card .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+.card .overlay .fonticon {
+    font-size: 150px;
+    opacity: 0.5;
+}
+.cardlist {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, 200px);
+    gap: 10px;
+    justify-content: start;
+    align-content: center;
+}
+
+@media screen and (max-width: 655px) {
+    .cardlist {
+        justify-content: center;
+    }
+}

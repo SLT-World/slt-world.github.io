@@ -7,21 +7,6 @@
     <title>SLBr - A lightweight browser for a faster web</title>
     <link rel="shortcut icon" type="image/x-icon" href="./slbr.ico">
     <style>
-        @font-face {
-            font-family: 'Segoe Fluent Icons';
-            src: url('../../sfi.ttf') format('truetype');
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-        }
-        body {
-            padding: 10px;
-            margin: 0px;
-            max-width: unset;
-        }
         .feature {
             white-space: nowrap;
             margin-bottom: 50px;
@@ -54,16 +39,6 @@
             vertical-align: top;
             max-height: 350px;
             object-fit: fill;
-        }
-        .fonticon {
-            font-family: "Segoe Fluent Icons";
-            font-size: 35px;
-            margin: 0;
-            font-weight: lighter;
-            user-select: none;
-            text-align: center;
-            vertical-align: middle;
-            align-self: center;
         }
         .feature pre {
             font-family: inherit;
@@ -147,52 +122,6 @@
             color:limegreen;
         }
 
-        .card {
-            position: relative;
-            height: 250px;
-            border: 1px solid gainsboro;
-            width: 200px;
-            border-radius: 15px;
-            overflow: clip;
-        }
-
-        .card .thumbnail {
-            height: 40%;
-            background: whitesmoke;
-            display: flex;
-            justify-content: center;
-        }
-        .card > div:not(.thumbnail):not(.overlay) {
-            height: 60%;
-            padding: 15px;
-        }
-        .card pre:not(.fonticon) {
-            font-size: unset;
-            color: dimgray;
-        }
-        .card .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-        }
-        .card .overlay .fonticon {
-            font-size: 150px;
-            opacity: 0.5;
-        }
-        .cardlist {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fill, 200px);
-            gap: 10px;
-            justify-content: start;
-            align-content: center;
-        }
-
         @media (prefers-color-scheme: dark) {
             .green {
                 color:green;
@@ -200,9 +129,6 @@
         }
 
         @media screen and (max-width: 655px) {
-            .cardlist {
-                justify-content: center;
-            }
             .header {
                 padding: 10px 25px;
             }
