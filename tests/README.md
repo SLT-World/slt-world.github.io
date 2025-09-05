@@ -22,6 +22,7 @@
 > - 🔗 [Anti DevTools](../tests/nodevtools.html)
 > - 🔗 [User Agent](../tests/useragent.html)
 > - 🔗 [Script Flood](../tests/flood.html)
+> - 🔗 [Embedded Browser Detection](../tests/embedded.html)
 
 ## 🌐 External Tests
 > - 🔗 [WebAssembly](https://webassembly.org/features/)
