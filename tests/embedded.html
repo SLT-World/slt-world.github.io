@@ -25,9 +25,6 @@
         list.appendChild(h);
       }
 
-      const isTrident = !!document.documentMode;
-      logList(isTrident, "WebBrowser (Trident/IE)", isTrident ? "Likely" : "No");
-
       const isEdgeHTML = /Edge\/\d+/.test(navigator.userAgent) && !/EdgA|EdgiOS|Edg\//.test(navigator.userAgent);
       logList(isEdgeHTML, "WebView (EdgeHTML)", isEdgeHTML ? "Likely" : "No");
 
