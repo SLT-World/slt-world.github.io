@@ -25,22 +25,22 @@
         list.appendChild(h);
       }
 
-      const isTrident = document.documentMode;
+      const isTrident = !!document.documentMode;
       logList(isTrident, "WebBrowser (Trident/IE)", isTrident ? "Likely" : "No");
 
       const isEdgeHTML = /Edge\/\d+/.test(navigator.userAgent) && !/EdgA|EdgiOS|Edg\//.test(navigator.userAgent);
       logList(isEdgeHTML, "WebView (EdgeHTML)", isEdgeHTML ? "Likely" : "No");
 
-      const isWebView2 = window.chrome && window.chrome.webview;
+      const isWebView2 = !!(window.chrome && window.chrome.webview);
       logList(isWebView2, "WebView2 (Edge Chromium)", isWebView2 ? "Yes" : "No");
 
-      const isCef = window.CefSharp;
+      const isCef = !!(window.CefSharp);
       logList(isCef, "CefSharp (Chromium Embedded Framework)", isCef ? "Yes" : "No");
 
-      const isElectron = window.process && window.process.versions && window.process.versions.electron;
+      const isElectron = !!(window.process && window.process.versions && window.process.versions.electron);
       logList(isElectron, "Electron", isElectron ? window.process.versions.electron : "No");
 
-      const isWebKit = window.webkit && window.webkit.messageHandlers;
+      const isWebKit = !!(window.webkit && window.webkit.messageHandlers);
       logList(isWebKit, "WKWebView", isWebKit ? "No" : "No");
 
       const isAndroidWebView = /\bwv\b/.test(navigator.userAgent);
