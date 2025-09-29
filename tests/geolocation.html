@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <h1>Test: Geolocation API</h1>
+    <p>Tests for the availability & support of the Geolocation API.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
+        list.appendChild(li);
+      }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
+      const geo = ('geolocation' in navigator)
+      logList(geo, "Geolocation API", geo ? "Supported" : "Unsupported");
+      if (geo) {
+        const latli = document.createElement("li");
+        latli.innerHTML = "<strong>Latitude</strong> - <code>NaN</code>";
+        list.appendChild(latli);
+        const longli = document.createElement("li");
+        longli.innerHTML = "<strong>Longitude</strong> - <code>NaN</code>";
+        list.appendChild(longli);
+
+        const geoButton = document.createElement("button");
+        geoButton.innerHTML = "Location";
+        geoButton.addEventListener('click', e => {
+          navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        });
+        list.appendChild(geoButton);
+
+        function onSuccess(position) {
+          const {latitude, longitude} = position.coords;
+          latli.innerHTML = `<strong>Latitude</strong> - <code>${latitude}</code>`;
+          longli.innerHTML = `<strong>Longitude</strong> - <code>${longitude}</code>`;
+        }
+        function onError() {
+          logList(false, "Error", "Failed");
+        }
+      }
+    </script>
+  </body>
+</html>

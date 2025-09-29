@@ -28,7 +28,7 @@
         logList(success, text, success ? "Supported" : "Unsupported");
       }
       logHeader("Audio");
-      addResult("MP3 (Proprietary)", !!document.createElement("audio").canPlayType("audio/mpeg"));
+      addResult("MP3 (Open)", !!document.createElement("audio").canPlayType("audio/mpeg"));
       addResult("OGG (Open)", !!document.createElement("audio").canPlayType("audio/ogg"));
       addResult("Opus (Open)", !!document.createElement("audio").canPlayType("audio/ogg; codecs=opus"));
       addResult("AAC (Proprietary)", !!document.createElement("audio").canPlayType("audio/aac"));
