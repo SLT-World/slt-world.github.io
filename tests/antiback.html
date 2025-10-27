@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <h1>Test: Anti Back Button</h1>
+    <p>Test to block backwards navigation.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
+        list.appendChild(li);
+      }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
+      logList(null, 'Navigate backwards to test', '');
+      history.pushState(null, document.title, location.href);
+      window.addEventListener('popstate', function (event) { history.pushState(null, document.title, location.href); });
+    </script>
+  </body>
+</html>

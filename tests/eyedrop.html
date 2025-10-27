@@ -24,7 +24,7 @@
         h.innerHTML = text;
         list.appendChild(h);
       }
-      const ed = ('EyeDropper' in window)
+      const ed = ('EyeDropper' in window);
       logList(ed, "Eye Dropper", ed ? "Supported" : "Unsupported");
       if (ed) {
         const colorli = document.createElement("li");

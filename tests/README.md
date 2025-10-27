@@ -28,8 +28,8 @@
 ## 🌐 External Tests
 > - 🔗 [WebAssembly](https://webassembly.org/features/)
 > - 🔗 [WebGL](https://get.webgl.org/)
-> - 🔗 [SafeBrowsing](https://testsafebrowsing.appspot.com/)
-> - 🔗 [SmartScreen](https://demo.smartscreen.msft.net/)
+> - 🔗 [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)
+> - 🔗 [SmartScreen Demo](https://demo.smartscreen.msft.net/)
 > - 🔗 [HTML5 Audio & Video](https://tools.woolyss.com/html5-audio-video-tester/)
 > - 🔗 [Codecs Support](https://shaka-player-demo.appspot.com/support.html)
 > - 🔗 [WebRTC Experiments](https://www.webrtc-experiment.com/)
