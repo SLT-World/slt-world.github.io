@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Emoji Fonts Collection - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <style>
+        @font-face {
+            font-family: extrafluent;
+            src: url("extramoji-fluent.ttf") format('truetype');
+        }
+
+        .extramoji > * {
+            font-family: 'extramoji', 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        @font-face {
+            font-family: extramoji;
+            src: url("extramoji.ttf") format('truetype');
+        }
+
+        .extrafluent > * {
+            font-family: 'extrafluent', 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        @font-face {
+            font-family: slbricons;
+            src: url("slbricons.ttf") format('truetype');
+        }
+
+        .slbricons > * {
+            font-family: 'slbricons', 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        @font-face {
+            font-family: extraflags;
+            src: url("extramoji-flags.ttf") format('truetype');
+        }
+
+        .extraflags > * {
+            font-family: 'extraflags', 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        @font-face {
+            font-family: brands;
+            src: url("brands.ttf") format('truetype');
+        }
+
+        .brands > * {
+            font-family: 'brands', 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        .emoji_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 75px);
+            gap: 10px !important;
+            justify-content: center;
+        }
+
+        .emoji_display {
+            font-size: 45px;
+            background: var(--primary-color);
+            width: 75px;
+            height: 75px;
+            /*outline: 1px solid gainsboro;*/
+            border-radius: 5px;
+            color: var(--font-color);
+            /*transition: 0.25s outline ease;*/
+        }
+        /*.emoji_display:hover {
+                outline: 2px solid dodgerblue;
+            }*/
+    </style>
+    <script>
+        function copy(element) {
+            navigator.clipboard.writeText(element.textContent).then(() => {
+                const original = element.textContent;
+                const originalSize = element.style.fontSize;
+                element.textContent = "Copied!";
+                element.style.fontSize = "16px";
+                element.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    element.textContent = original;
+                    element.style.fontSize = originalSize;
+                    element.style.pointerEvents = 'auto';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert('Failed to copy text: ' + err);
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="navigation">
+        <img src="../../favicon.png" width="35" height="35" draggable="false">
+        <h3>SLT World</h3>
+    </div>
+    <h1>Emoji Fonts Collection</h1>
+    <p>Welcome to my <strong>emoji font showcase.</strong></p>
+    <p>Here are the custom emoji fonts I've created so far.</p>
+    <div class="container">
+        <div class="header">
+            <p class="icon">1.</p>
+            <p>Extramoji</p>
+            <span class="material-symbols-rounded icon" style="color: springgreen;" title="Colored">humidity_low</span>
+            <a class="icon button" title="Download" href="./extramoji.ttf" download="extramoji.ttf" style="margin-left: auto; background: var(--primary-color);"><span class="material-symbols-rounded icon">download</span></a>
+        </div>
+        <div class="emoji_grid extramoji"></div>
+    </div>
+    <div class="container">
+        <div class="header">
+            <!--<span class="material-symbols-rounded icon">contact_support</span>-->
+            <p class="icon">2.</p>
+            <p>Extramoji Flags</p>
+            <span class="material-symbols-rounded icon" style="color: springgreen;" title="Colored">humidity_low</span>
+            <a class="icon button" title="Download" href="./extramoji-flags.ttf" download="extramoji-flags.ttf" style="margin-left: auto; background: var(--primary-color);"><span class="material-symbols-rounded icon">download</span></a>
+            <!--<span class="material-symbols-rounded icon rainbow">humidity_high</span>-->
+        </div>
+        <div class="emoji_grid extraflags"></div>
+    </div>
+    <div class="container">
+        <div class="header">
+            <!--<span class="material-symbols-rounded icon">contact_support</span>-->
+            <p class="icon">3.</p>
+            <p>Extramoji Fluent</p>
+            <span class="material-symbols-rounded icon" style="color: springgreen;" title="Colored">humidity_low</span>
+            <a class="icon button" title="Download" href="./extramoji-fluent.ttf" download="extramoji-fluent.ttf" style="margin-left: auto; background: var(--primary-color);"><span class="material-symbols-rounded icon">download</span></a>
+            <!--<span class="material-symbols-rounded icon rainbow">humidity_high</span>-->
+        </div>
+        <div class="emoji_grid extrafluent"></div>
+    </div>
+    <div class="container">
+        <div class="header">
+            <!--<span class="material-symbols-rounded icon">contact_support</span>-->
+            <p class="icon">4.</p>
+            <p>SLBr Icons</p>
+            <span class="material-symbols-rounded icon" style="color: red;" title="Colorless">format_color_reset</span>
+            <a class="icon button" title="Download" href="./slbricons.ttf" download="slbricons.ttf" style="margin-left: auto; background: var(--primary-color);"><span class="material-symbols-rounded icon">download</span></a>
+            <!--<button class="icon" title="Download" onclick="" style="margin-left:auto;background:white;"><span class="material-symbols-rounded icon">download</span></button>-->
+        </div>
+        <div class="emoji_grid slbricons"></div>
+    </div>
+    <div class="container">
+        <div class="header">
+            <!--<span class="material-symbols-rounded icon">contact_support</span>-->
+            <p class="icon">5.</p>
+            <p>Brands</p>
+            <span class="material-symbols-rounded icon" style="color: springgreen;" title="Colored">humidity_low</span>
+            <a class="icon button" title="Download" href="./brands.ttf" download="brands.ttf" style="margin-left: auto; background: var(--primary-color);"><span class="material-symbols-rounded icon">download</span></a>
+            <!--<span class="material-symbols-rounded icon rainbow">humidity_high</span>-->
+        </div>
+        <div class="emoji_grid brands"></div>
+    </div>
+    <script>
+        const segmenter = new Intl.Segmenter("en", { granularity: "grapheme" });
+
+        const extramoji_panel = document.querySelector(".emoji_grid.extramoji");
+        const extramoji = "🍥‍🧁🍪‍⚫‍⚪🐄‍🍓🔫‍💥"
+        const extramoji_list = [...segmenter.segment(extramoji)].map(s => s.segment);
+        for (let emoji of extramoji_list) {
+            extramoji_panel.innerHTML += `<button class="emoji_display" onclick="copy(this)">${emoji}</button>`;
+        }
+
+        const extraflags_panel = document.querySelector(".emoji_grid.extraflags");
+        const extraflags = "🏛‍🦅🔴‍🟡‍🔵‍⚪‍⚫🟥‍🌅🟥‍🌊🟥‍🌲🟥‍🌻🟥‍🪆🟥‍⚒🟥‍⚔🟦‍🌙🟦‍☀🟦‍⬜‍🟪🟨‍🔴◯‍◯‍◯‍◯‍◯⚪‍🗺⚪‍🟡‍⚫⚫‍⬜‍🟥❄‍🌲⭐‍🔵"
+        const extraflags_list = [...segmenter.segment(extraflags)].map(s => s.segment);
+        let encountered_olympics = false;
+        for (let emoji of extraflags_list) {
+            if (emoji == "◯‍" || emoji == "◯") {
+                if (encountered_olympics)
+                    continue;
+                encountered_olympics = true;
+                extraflags_panel.innerHTML += `<button class="emoji_display" onclick="copy(this)">◯‍◯‍◯‍◯‍◯</button>`;
+            }
+            else
+                extraflags_panel.innerHTML += `<button class="emoji_display" onclick="copy(this)">${emoji}</button>`;
+        }
+
+        const extrafluent_panel = document.querySelector(".emoji_grid.extrafluent");
+        const extrafluent = "🌺‍🔴🍇‍🟢🍦‍🌿🍦‍🍓🍦‍🍫🍺‍🍀🎂‍🌿🎂‍🍓🎂‍🍫🐄‍🍓🐱‍🐉🐱‍👤🐱‍💻🐱‍🚀💊‍♀🔥‍🔵🥛‍🍫🥝‍🟡🥦‍⚪🫙‍🍯"
+        const extrafluent_list = [...segmenter.segment(extrafluent)].map(s => s.segment);
+        for (let emoji of extrafluent_list) {
+            extrafluent_panel.innerHTML += `<button class="emoji_display" onclick="copy(this)">${emoji}</button>`;
+        }
+
+        const slbricons_panel = document.querySelector(".emoji_grid.slbricons");
+        const slbricons = "☀☁☂☃"
+        const slbricons_list = [...segmenter.segment(slbricons)].map(s => s.segment);
+        for (let emoji of slbricons_list) {
+            slbricons_panel.innerHTML += `<button class="emoji_display" onclick="copy(this)">${emoji}</button>`;
+        }
+
+        const brands_panel = document.querySelector(".emoji_grid.brands");
+        const brands = "🅿‍🧠🌐‍🅾🌐‍🎯🌐‍📄🌐‍🕸🌐‍🦁🌐‍🧪🌐‍🧭🌐‍🧿🍔‍👑🎨‍📄🎮‍🟣🐍‍👨‍💻🐙‍💻🐦‍⚡👥‍📘👻‍📸💬‍⚡💻‍🔁💼‍🔗📌‍❤📞‍💜📦‍🛒📱‍🟢📸‍🌈🔣‍💻🔥‍💬🔴‍▶🔵‍🐦🔵‍🚀🔵‍✈🟠‍🤖🟢‍💬🟣‍👾🟦‍💬🤖‍📱🧑‍💻‍🌐🧩‍🧑‍💻🧬‍🔓☕‍💻☕‍🧠❌‍🐦❓‍🧠"
+        const brands_list = [...segmenter.segment(brands)].map(s => s.segment);
+        for (let emoji of brands_list) {
+            brands_panel.innerHTML += `<button class="emoji_display" onclick="copy(this)">${emoji}</button>`;
+        }
+    </script>
+</body>
+</html>
