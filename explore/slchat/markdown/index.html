@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../modern.css">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <script src="../../../prism.js"></script>
+    <link rel="stylesheet" href="../../../prism.css"/>
     <style>
 .syntax_list {
     display: flex;
@@ -68,9 +70,9 @@ li {
 }
 
 img.spoiler, video.spoiler, iframe.spoiler, canvas.spoiler {
-  filter: blur(75px);
-  transition: filter 0.3s ease;
-  mask-image: linear-gradient(to right, #fff, #fff);
+    filter: blur(75px);
+    transition: filter 0.3s ease;
+    mask-image: linear-gradient(to right, #fff, #fff);
 }
 
 .attachment {
@@ -83,7 +85,7 @@ img.spoiler, video.spoiler, iframe.spoiler, canvas.spoiler {
     cursor: pointer;
 }
 video.attachment {
-  height: 100%;
+    height: 100%;
 }
 
 img, video {
@@ -92,14 +94,29 @@ img, video {
 }
 
 code {
-  padding: 0 5px;
-  display: unset;
-  width: auto;
+    padding: 0 5px;
+    display: unset;
+    width: auto;
+    text-shadow: none !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    color: var(--font-color) !important;
+}
+
+code .token.operator, .token.url {
+    background: unset !important;
 }
 
 code.multiline {
-  padding: 5px !important;
-  display: block !important;
+    padding: 5px !important;
+    display: block !important;
+}
+
+pre[class*=language-] {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: auto;
+    background: unset !important;
 }
 
 @media screen and (max-width: 1000px) {
@@ -141,7 +158,8 @@ const input = document.querySelector("#input");
 const output = document.querySelector("#output");
 
 input.addEventListener("input", function() {
-    output.innerHTML = parseMarkdown(input.value);
+    //WARNING: Do not remove escapeHtml, it is intended to mimic SLChat behavior.
+    output.innerHTML = parseMarkdown(escapeHtml(input.value));
 });
 
 function spoiler(el) {
@@ -152,27 +170,57 @@ function spoiler(el) {
 function extractCodeBlocks(text) {
     let codeBlocks = [];
     let index = 0;
+
+    text = text.replace(/```([a-z]+)\n([\s\S]*?)```/g, (_, lang, code) => {
+        const placeholder = `__CODE_BLOCK_${index}__`;
+        codeBlocks.push({ placeholder, lang, code });
+        index++;
+        return placeholder;
+    });
+
     text = text.replace(/```([\s\S]*?)```/g, (_, code) => {
         const placeholder = `__CODE_BLOCK_${index}__`;
-        codeBlocks.push({ placeholder, content: `<pre><code class="multiline">${code}</code></pre>` });
+        codeBlocks.push({ placeholder, code });
         index++;
         return placeholder;
     });
+
     text = text.replace(/`([^`]+)`/g, (_, code) => {
         const placeholder = `__CODE_BLOCK_${index}__`;
-        codeBlocks.push({ placeholder, content: `<code>${code}</code>` });
+        codeBlocks.push({ placeholder, inline: true, code });
         index++;
         return placeholder;
     });
+
     return { text, codeBlocks };
 }
 function restoreCodeBlocks(text, codeBlocks) {
-    for (var block of codeBlocks) text = text.replace(block.placeholder, block.content);
+    for (let block of codeBlocks) {
+        let html;
+        if (block.inline) html = `<code>${block.code}</code>`;
+        else if (block.lang && Prism.languages[block.lang]) html = `<pre><code class="language-${block.lang} multiline">${Prism.highlight(block.code, Prism.languages[block.lang], block.lang)}</code></pre>`;
+        else html = `<pre><code class="multiline">${block.code}</code></pre>`;
+        text = text.replace(block.placeholder, html);
+    }
     return text;
 }
-function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;")
+        .replace(/'/g, "&#x27;");
+}
 const emojiRegex = /^(?:\p{Extended_Pictographic}(?:\u200D\p{Extended_Pictographic})*)+$/u;
 function parseMarkdown(rawText) {
+    rawText = rawText
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, "\"")
+        .replace(/&#0*39;/g, "'")
+        .replace(/&#x*27;/g, "'")
+        .replace(/&amp;(?![a-zA-Z0-9#]+;)/g, "&");
     if (emojiRegex.test(rawText)) return `<span style="font-size: 45px;">` + rawText + `</span>`;
     let { text, codeBlocks } = extractCodeBlocks(rawText);
     let lines = text.split(/\r?\n/);
@@ -286,6 +334,7 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "~~Strikethrough~~", "__Underline__", "==Highlight==",
     "> Blockquote\n>\n> Space", "- First\n- Second\n- Third\n- Fourth", "* First\n* Second\n* Third\n* Fourth",
     "`Code`", "```Multiline\nCode```",
+    "```py\nimport asyncio, os\nimport discord.ext\nfrom discord.ext import commands\nimport datetime\n\nintents = discord.Intents.all()\nclient = discord.Client(intents=intents)\n\nclient = commands.Bot(command_prefix='-', intents=intents, case_insensitive=True, help_command=None)```",
     "[YouTube](https://youtube.com)", "https://google.com",
     "||Spoiler||",
     "https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png", "||https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png||",

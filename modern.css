@@ -126,7 +126,7 @@ a {
 }
 
 code {
-    font-family: Consolas, monospace;
+    font-family: Consolas, monospace !important;
     display: block;
 }
 
