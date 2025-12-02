@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SLChat Markdown System - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <style>
+.syntax_list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.syntax_list > * {
+    display: flex;
+    background: var(--primary-color);
+    flex-direction: column;
+}
+.syntax_list > * > *:not(audio) {
+    align-content: center;
+    width: max-content;
+}
+.syntax_list > * > pre {
+    width: 100%;
+}
+
+#preview_container {
+    display: flex;
+    gap: 10px;
+    height: 300px;
+}
+
+blockquote {
+    padding-left: 10px;
+    position: relative;
+}
+
+blockquote::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 5px;
+    background-color: var(--border-color);
+    border-radius: 10px;
+}
+
+li {
+    list-style-position: inside;
+}
+
+.spoiler {
+    cursor: pointer;
+}
+
+.spoiler:not(img):not(video):not(iframe):not(canvas) {
+    border-radius: 5px;
+    background: black;
+    color: transparent;
+    display: inline;
+    --font-color: white;
+    transition: color 0.3s ease;
+    user-select: none;
+}
+
+img.spoiler, video.spoiler, iframe.spoiler, canvas.spoiler {
+  filter: blur(75px);
+  transition: filter 0.3s ease;
+  mask-image: linear-gradient(to right, #fff, #fff);
+}
+
+.attachment {
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    display: block;
+    width: auto;
+    max-width: 350px;
+    max-height: 350px;
+    cursor: pointer;
+}
+video.attachment {
+  height: 100%;
+}
+
+img, video {
+    max-width: 350px;
+    max-height: 350px;
+}
+
+code {
+  padding: 0 5px;
+  display: unset;
+  width: auto;
+}
+
+code.multiline {
+  padding: 5px !important;
+  display: block !important;
+}
+
+@media screen and (max-width: 1000px) {
+    #preview_container {
+        flex-direction: column;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="navigation">
+            <img src="../../../favicon.png" width="35" height="35" draggable="false">
+            <h3>SLT World</h3>
+        </div>
+        <h1>SLChat Markdown System</h1>
+        <p>A showcase of the <strong>markdown system</strong> used in SLChat.</p>
+        <p>This page covers all the markdown syntaxes SLChat supports, taken straight out of SLChat's source.</p>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">preview</span>
+                <p>Live Preview</p>
+            </div>
+            <div id="preview_container">
+                <textarea id="input"></textarea>
+                <div id="output" class="input textarea" style="width: 100%;overflow-y: scroll;"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">markdown</span>
+                <p>Markdown Syntax</p>
+            </div>
+            <div class="syntax_list"> </div>
+        </div>
+    </div>
+    <script>
+const input = document.querySelector("#input");
+const output = document.querySelector("#output");
+
+input.addEventListener("input", function() {
+    output.innerHTML = parseMarkdown(input.value);
+});
+
+function spoiler(el) {
+    if (el.tagName === "IMG" || el.tagName === "VIDEO") { el.style.filter = el.style.filter === "none" ? "blur(75px)" : "none"; }
+    else { el.style.color = el.style.color === "var(--font-color)" ? "" : "var(--font-color)"; el.style.userSelect = el.style.userSelect === "unset" ? "" : "unset"; }
+}
+
+function extractCodeBlocks(text) {
+    let codeBlocks = [];
+    let index = 0;
+    text = text.replace(/```([\s\S]*?)```/g, (_, code) => {
+        const placeholder = `__CODE_BLOCK_${index}__`;
+        codeBlocks.push({ placeholder, content: `<pre><code class="multiline">${code}</code></pre>` });
+        index++;
+        return placeholder;
+    });
+    text = text.replace(/`([^`]+)`/g, (_, code) => {
+        const placeholder = `__CODE_BLOCK_${index}__`;
+        codeBlocks.push({ placeholder, content: `<code>${code}</code>` });
+        index++;
+        return placeholder;
+    });
+    return { text, codeBlocks };
+}
+function restoreCodeBlocks(text, codeBlocks) {
+    for (var block of codeBlocks) text = text.replace(block.placeholder, block.content);
+    return text;
+}
+function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+const emojiRegex = /^(?:\p{Extended_Pictographic}(?:\u200D\p{Extended_Pictographic})*)+$/u;
+function parseMarkdown(rawText) {
+    if (emojiRegex.test(rawText)) return `<span style="font-size: 45px;">` + rawText + `</span>`;
+    let { text, codeBlocks } = extractCodeBlocks(rawText);
+    let lines = text.split(/\r?\n/);
+    let html = "";
+    let inList = false;
+    let listType = null;
+    let inBlockquote = false;
+    function closeList() {
+        if (inList) {
+            html += `</${listType}>`;
+            inList = false;
+            listType = null;
+        }
+    }
+    function closeBlockquote() {
+        if (inBlockquote) {
+            html += "</blockquote>";
+            inBlockquote = false;
+        }
+    }
+    for (let line of lines) {
+        if (/^\s*$/.test(line)) {
+            closeList();
+            closeBlockquote();
+            html += "<br>";
+            continue;
+        }
+
+        const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
+        if (headingMatch) {
+            closeList();
+            closeBlockquote();
+            const level = headingMatch[1].length;
+            const content = parseInlineMarkdown(headingMatch[2]);
+            html += `<h${level}>${content}</h${level}>`;
+            continue;
+        }
+
+        const blockquoteMatch = line.match(/^>\s?(.*)/);
+        if (blockquoteMatch) {
+            closeList();
+            if (!inBlockquote) {
+                html += "<blockquote>";
+                inBlockquote = true;
+            }
+            html += parseInlineMarkdown(blockquoteMatch[1]) + "<br>";
+            continue;
+        }
+        else closeBlockquote();
+
+        const unorderedMatch = line.match(/^[-*]\s+(.*)/);
+        if (unorderedMatch) {
+            closeBlockquote();
+            if (!inList || listType !== 'ul') {
+                closeList();
+                html += '<ul>';
+                inList = true;
+                listType = 'ul';
+            }
+            html += `<li>${parseInlineMarkdown(unorderedMatch[1])}</li>`;
+            continue;
+        }
+
+        closeList();
+        closeBlockquote();
+
+        if (line) {
+            html += parseInlineMarkdown(line);
+            if (!(/^__CODE_BLOCK_\d+__$/.test(line.trim()))) html += "<br>";
+        }
+    }
+
+    closeList();
+    closeBlockquote();
+    html = html.trim();
+    if (html.endsWith("<br>")) html = html.slice(0, -4);
+    return restoreCodeBlocks(html, codeBlocks);
+}
+
+function parseInlineMarkdown(text) {
+    return text
+        .replace(/\|\|(https?:\/\/[^\s<>"')]+)\|\|/g, (match, url) => {
+            const lowerUrl = url.toLowerCase();
+            if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif)(\?.*)?$/.test(lowerUrl)) return `<img class="attachment spoiler" onclick="spoiler(this)" src="${url}"/>`;
+            if (/\.(mp4|webm|ogg)(\?.*)?$/.test(lowerUrl)) return `<video class="attachment spoiler" onclick="spoiler(this)" width="320" height="240" controls><source src="${url}"></video>`;
+            if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) return `<audio class="attachment spoiler" onclick="spoiler(this)" controls src="${url}"></audio>`;
+            return `<p class="spoiler" onclick="spoiler(this)">${url}</p>`;
+        })
+        .replace(/\|\|([^|]+)\|\|/g, '<p class="spoiler" onclick="spoiler(this)">$1</p>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+        .replace(/~~([^~]+)~~/g, '<del>$1</del>')
+        .replace(/==([^~]+)==/g, '<mark>$1</mark>')
+        .replace(/__([^_]+)__/g, '<u>$1</u>')
+        .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<'+'a href="$2" target="_blank" rel="noopener noreferrer nofollow">$1<'+'/a>')
+        .replace(/(<[^>]+>)|((?<!["'=\]])https?:\/\/[^\s<>"')]+)/g, (match, tag, url) => {
+            if (tag) return tag;
+            const lowerUrl = url.toLowerCase();
+            if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) return `<audio controls src="${url}"></audio>`;
+            if (/\.(mp4|webm|ogg)(\?.*)?$/.test(lowerUrl)) return `<video class="attachment" width="320" height="240" controls><source src="${url}"></video>`;
+            if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif)(\?.*)?$/.test(lowerUrl)) return `<img class="attachment" src="${url}"/>`;
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer nofollow">${url}</a>`;
+        }
+    );
+}
+    </script>
+    <script>
+const syntax_list = document.querySelector(".syntax_list");
+const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", "##### Header 5", "###### Header 6",
+    "*Italic*", "**Bold**", "***Bold & Italic***",
+    "~~Strikethrough~~", "__Underline__", "==Highlight==",
+    "> Blockquote\n>\n> Space", "- First\n- Second\n- Third\n- Fourth", "* First\n* Second\n* Third\n* Fourth",
+    "`Code`", "```Multiline\nCode```",
+    "[YouTube](https://youtube.com)", "https://google.com",
+    "||Spoiler||",
+    "https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png", "||https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png||",
+    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "||https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4||",
+    "https://www.w3schools.com/html/horse.mp3",
+];
+for (let syntax of syntaxes) {
+    syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${syntax}</code></pre>${parseMarkdown(syntax)}</div>`;
+}
+    </script>
+</body>
+</html>

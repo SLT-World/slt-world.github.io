@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: var(--font-color);
 }
 
 html {
@@ -46,7 +47,7 @@ p, h1, h2, h3, h4, h5, h6, span {
     border: 1px solid var(--border-color);
     border-radius: 5px;
     padding: 10px;
-    gap: 15px;
+    gap: 10px;
     display: flex;
     flex-direction: column;
 }
@@ -54,7 +55,7 @@ p, h1, h2, h3, h4, h5, h6, span {
     display: flex;
     align-items: center;
     gap: 5px;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-color: var(--border-color);
@@ -103,6 +104,53 @@ button.icon > .icon, a.button.icon > .icon {
 button:hover, a.button:hover {
     filter: brightness(0.85);
 }
+
+
+.input, code, textarea {
+    background: var(--primary-color);
+    color: var(--font-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 5px;
+    font-size: medium;
+}
+
+textarea:focus {
+  border: 1px solid rgb(51, 145, 255);
+  outline: 1px solid rgb(51, 145, 255);
+}
+
+a {
+    color: rgb(51, 145, 255);
+    text-decoration: none;
+}
+
+code {
+    font-family: Consolas, monospace;
+    display: block;
+}
+
+textarea {
+    resize: none;
+    width: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border: 2.5px solid transparent;
+    border-radius: 100px;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner { background: transparent; }
 
 @media screen and (max-width: 1000px) {
     body {
