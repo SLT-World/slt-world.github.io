@@ -67,6 +67,7 @@ li {
     --font-color: white;
     transition: color 0.3s ease;
     user-select: none;
+    padding: 0 2.5px;
 }
 
 img.spoiler, video.spoiler, iframe.spoiler, canvas.spoiler {
@@ -93,6 +94,13 @@ img, video {
     max-height: 350px;
 }
 
+mark {
+    border-radius: 5px;
+    background: mediumseagreen;
+    color: var(--font-color);
+    padding: 0 2.5px;
+}
+
 code {
     padding: 0 5px;
     display: unset;
@@ -117,6 +125,13 @@ pre[class*=language-] {
     margin: 0 !important;
     overflow: auto;
     background: unset !important;
+}
+
+.mention {
+    background: rgba(65, 105, 225, 0.4);
+    color: aliceblue;
+    border-radius: 5px;
+    padding: 0 2.5px;
 }
 
 @media screen and (max-width: 1000px) {
@@ -173,6 +188,7 @@ function extractCodeBlocks(text) {
 
     text = text.replace(/```([a-z]+)\n([\s\S]*?)```/g, (_, lang, code) => {
         const placeholder = `__CODE_BLOCK_${index}__`;
+        code = code.replace(/^\s*\n/, '').replace(/\s+$/, '');
         codeBlocks.push({ placeholder, lang, code });
         index++;
         return placeholder;
@@ -180,6 +196,7 @@ function extractCodeBlocks(text) {
 
     text = text.replace(/```([\s\S]*?)```/g, (_, code) => {
         const placeholder = `__CODE_BLOCK_${index}__`;
+        code = code.replace(/^\s*\n/, '').replace(/\s+$/, '');
         codeBlocks.push({ placeholder, code });
         index++;
         return placeholder;
@@ -187,6 +204,7 @@ function extractCodeBlocks(text) {
 
     text = text.replace(/`([^`]+)`/g, (_, code) => {
         const placeholder = `__CODE_BLOCK_${index}__`;
+        code = code.replace(/^\s*\n/, '').replace(/\s+$/, '');
         codeBlocks.push({ placeholder, inline: true, code });
         index++;
         return placeholder;
@@ -198,7 +216,7 @@ function restoreCodeBlocks(text, codeBlocks) {
     for (let block of codeBlocks) {
         let html;
         if (block.inline) html = `<code>${block.code}</code>`;
-        else if (block.lang && Prism.languages[block.lang]) html = `<pre><code class="language-${block.lang} multiline">${Prism.highlight(block.code, Prism.languages[block.lang], block.lang)}</code></pre>`;
+        else if (block.lang && Prism.languages[block.lang]) html = `<pre><code class="language-${block.lang} multiline">${Prism.highlight(block.code.replace(/&lt;/g, "<"), Prism.languages[block.lang], block.lang)}</code></pre>`;
         else html = `<pre><code class="multiline">${block.code}</code></pre>`;
         text = text.replace(block.placeholder, html);
     }
@@ -213,6 +231,7 @@ function escapeHtml(text) {
         .replace(/'/g, "&#039;")
         .replace(/'/g, "&#x27;");
 }
+
 const emojiRegex = /^(?:\p{Extended_Pictographic}(?:\u200D\p{Extended_Pictographic})*)+$/u;
 function parseMarkdown(rawText) {
     rawText = rawText
@@ -315,6 +334,7 @@ function parseInlineMarkdown(text) {
         .replace(/~~([^~]+)~~/g, '<del>$1</del>')
         .replace(/==([^~]+)==/g, '<mark>$1</mark>')
         .replace(/__([^_]+)__/g, '<u>$1</u>')
+        .replace(/@([a-zA-Z0-9_]{1,32})/g, '<span class="mention">@$1</span>')
         .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<'+'a href="$2" target="_blank" rel="noopener noreferrer nofollow">$1<'+'/a>')
         .replace(/(<[^>]+>)|((?<!["'=\]])https?:\/\/[^\s<>"')]+)/g, (match, tag, url) => {
             if (tag) return tag;
@@ -337,6 +357,7 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "```py\nimport asyncio, os\nimport discord.ext\nfrom discord.ext import commands\nimport datetime\n\nintents = discord.Intents.all()\nclient = discord.Client(intents=intents)\n\nclient = commands.Bot(command_prefix='-', intents=intents, case_insensitive=True, help_command=None)```",
     "[YouTube](https://youtube.com)", "https://google.com",
     "||Spoiler||",
+    "@everyone",
     "https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png", "||https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png||",
     "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "||https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4||",
     "https://www.w3schools.com/html/horse.mp3",
