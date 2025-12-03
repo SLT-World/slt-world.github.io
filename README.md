@@ -13,8 +13,11 @@
 > 🌐 [SLBr](../slbr/)<br>
 > A lightweight WPF C# browser for a faster web. Fast, lightweight browsing with a clean interface.
 
-> 🧪 [Emoji Fonts Collection](../explore/emoji/)<br>
+> 🍕 [Emoji Fonts Collection](../explore/emoji/)<br>
 > A collection of custom emoji fonts.
+
+> 💬 [SLChat's Markdown Compiler](../explore/slchat/markdown/)<br>
+> The markdown compiler used in SLChat.
 
 ## 🗂️ Active Projects
 > 🌐 [**SLBr - Web Browser**](https://github.com/SLT-World/SLBr)<br>
