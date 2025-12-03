@@ -7,9 +7,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../modern.css">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <link rel="stylesheet" type="text/css" href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css">
     <script src="../../../prism.js"></script>
     <link rel="stylesheet" href="../../../prism.css"/>
     <style>
+.embed {
+    word-wrap: break-word;
+    background: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    padding: 10px;
+    border-radius: 5px;
+    white-space: initial;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    overflow: hidden;
+}
+
+.embed:has(.header) {
+    display: block;
+}
+
+.embed > .header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.embed:not(.clean) {
+    border-left: 5px solid var(--color);
+}
+
+.embed .gap {
+    gap: 5px;
+}
+
+.center {
+    display: flex !important;
+    align-items:center;
+}
+
+.embed .inline {
+    display: inline;
+    margin-right: 5px;
+}
+.embed .inline.center {
+    display: inline-flex !important;
+}
+.embed .inline.gap {
+    display: inline-flex !important;
+}
+
+.center.vertical {
+    flex-direction: column;
+    align-items: flex-start;
+}
+.embed.vertical {
+    flex-direction: column;
+    align-items: flex-start;
+}
+.embed.middle {
+    align-items: center;
+}
+.center.middle {
+    justify-content: center;
+}
+.embed .video_icon {
+    color: var(--light-gray-color);
+    opacity: 0.75;
+    position: absolute;
+    font-size: calc(50px + 2vw) !important;
+    pointer-events: none;
+}
+
+.embed .avatar {
+    width: 25px;
+    height: 25px;
+    border-radius: 100px;
+    object-fit: cover;
+    background: var(--primary-color);
+    overflow: hidden;
+}
+.embed.info {
+    border-left: 5px solid dodgerblue;
+}
+.embed.info > .bx, .embed.info > .header > .bx {
+    color: dodgerblue;
+}
+.embed.warn {
+    border-left: 5px solid darkorange;
+}
+.embed.warn > .bx, .embed.warn > .header > .bx {
+    color: darkorange;
+}
+.embed.error {
+    border-left: 5px solid red;
+}
+.embed.error > .bx, .embed.error > .header > .bx {
+    color: red;
+}
+.embed.success {
+    border-left: 5px solid springgreen;
+}
+.embed.success > .bx, .embed.success > .header > .bx {
+    color: springgreen;
+}
+.embed.note {
+    border-left: 5px solid gold;
+}
+.embed.note > .bx, .embed.note > .header > .bx {
+    color: gold;
+}
+
+.embed.block {
+    display: block;
+}
+.embed:has(br) {
+    display: block;
+}
+
+/*.embed:has(i.bx) {
+    white-space: pre;
+    display: flex;
+    align-items:center;
+}*/
+
+.embed .bx {
+    font-size: 20px;
+}
+
+.embed > .bx, .embed > .header > .bx {
+    margin-right: 5px;
+    color: var(--color);
+}
+
+.embed.block > .bx, .embed.block > .header > .bx {
+    top: 2.5px;
+    position: relative;
+    align-self: baseline;
+}
+
+.embed > .header > .bx {
+    margin-right: 0px;
+}
+
 .syntax_list {
     display: flex;
     flex-direction: column;
@@ -181,7 +323,98 @@ function spoiler(el) {
     if (el.tagName === "IMG" || el.tagName === "VIDEO") { el.style.filter = el.style.filter === "none" ? "blur(75px)" : "none"; }
     else { el.style.color = el.style.color === "var(--font-color)" ? "" : "var(--font-color)"; el.style.userSelect = el.style.userSelect === "unset" ? "" : "unset"; }
 }
+const EMBED_ICONS = {
+    "error": "x-circle",
+    "warn": "alert-triangle",
+    "info": "info-circle",
+    "success": "check-circle",
+    "note": "note",
+    "clean": null,
+    "default": null
+};
+function renderEmbed(embed) {
+    const icon = EMBED_ICONS[embed.type] || embed.icon;
+    const colorHtml = embed.color ? ` style="--color:${embed.color};"` : "";
+    let html = `<div class="embed${embed.type ? " " + embed.type : ""}"${colorHtml}>`;
+    if (icon || embed.avatar || embed.title || embed.description) html += `<div class="header">
+    ${icon ? `<i class="bx bx-${icon}"></i>` : ""}
+    ${embed.avatar ? `<img loading="lazy" class="avatar" src="${embed.avatar}">` : ""}
+    ${embed.title ? `<h4>${parseInlineMarkdown(embed.title)}</h4>` : ""}
+    ${embed.description && !embed.title ? `<p>${parseInlineMarkdown(embed.description)}</p>` : ""}
+</div>`;
+    if (embed.description && embed.title) html += `<p>${parseInlineMarkdown(embed.description)}</p>`;
+    for (const field of embed.fields)  html += `<div class="field"><strong>${parseInlineMarkdown(field.name) ?? ""}</strong><br><span>${parseInlineMarkdown(field.value) ?? ""}</span></div>`;
+    if (embed.image) html += `<img loading="lazy" class="attachment" src="${embed.image}">`;
+    if (embed.footer) html += `<div class="footer">${embed.footer}</div>`;
+    html += `</div>`;
+    return html;
+}
+function extractEmbedBlocks(text) {
+    const embedRegex = /\|embed([\s\S]*?)\|end/g;
+    const embeds = [];
+    let match;
 
+    while ((match = embedRegex.exec(text)) !== null) {
+        const raw = match[1].trim();
+        const lines = raw.split(/\r?\n/);
+
+        const embed = {
+            type: null,
+            title: null,
+            description: null,
+            color: null,
+            image: null,
+            avatar: null,
+            footer: null,
+            icon: null,
+            fields: [],
+        };
+
+        let inFields = false;
+        let currentField = null;
+
+        for (let line of lines) {
+            if (!line.trim()) continue;
+
+            if (line.trim() === "fields:") {
+                inFields = true;
+                continue;
+            }
+            if (inFields) {
+                if (line.trim().startsWith("- ")) {
+                    if (currentField) embed.fields.push(currentField);
+                    currentField = {};
+                    line = line.trim().slice(2).trim();
+
+                    const idx = line.indexOf(":");
+                    if (idx !== -1) currentField.name = line.slice(idx + 1).trim();
+                    continue;
+                }
+
+                const fieldMatch = line.trim().match(/^(\w+):\s*(.*)$/);
+                if (fieldMatch) {
+                    const key = fieldMatch[1];
+                    const val = fieldMatch[2];
+                    if (currentField) currentField[key] = val;
+                }
+
+                continue;
+            }
+
+            const m = line.match(/^([a-zA-Z0-9_-]+):\s*(.*)$/);
+            if (m) {
+                const key = m[1];
+                const val = m[2];
+                if (key in embed) embed[key] = val;
+            }
+        }
+
+        if (currentField) embed.fields.push(currentField);
+        embeds.push(embed);
+    }
+
+    return embeds;
+}
 function extractCodeBlocks(text) {
     let codeBlocks = [];
     let index = 0;
@@ -242,6 +475,17 @@ function parseMarkdown(rawText) {
         .replace(/&amp;(?![a-zA-Z0-9#]+;)/g, "&");
     if (emojiRegex.test(rawText)) return `<span style="font-size: 45px;">` + rawText + `</span>`;
     let { text, codeBlocks } = extractCodeBlocks(rawText);
+
+    const embeds = extractEmbedBlocks(text);
+    let embedIndex = 0;
+
+    text = text.replace(/\|embed[\s\S]*?\|end/g, () => {
+        const placeholder = `__EMBED_${embedIndex}__`;
+        embeds[embedIndex].placeholder = placeholder;
+        embedIndex++;
+        return placeholder;
+    });
+
     let lines = text.split(/\r?\n/);
     let html = "";
     let inList = false;
@@ -314,6 +558,7 @@ function parseMarkdown(rawText) {
 
     closeList();
     closeBlockquote();
+    for (const embed of embeds) html = html.replace(embed.placeholder, renderEmbed(embed));
     html = html.trim();
     if (html.endsWith("<br>")) html = html.slice(0, -4);
     return restoreCodeBlocks(html, codeBlocks);
@@ -361,6 +606,9 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png", "||https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png||",
     "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "||https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4||",
     "https://www.w3schools.com/html/horse.mp3",
+    "|embed\ntype: error\ntitle: Error encountered\ndescription: Something went wrong\nfooter: Please try again\n|end",
+    "|embed\ntype: clean\ntitle: Clean\ndescription: A clean embed\n|end",
+    "|embed\ntype: default\nicon: coin\ntitle: [Wiki - Wikipedia](https://en.wikipedia.org/wiki/Wiki)\ndescription: A wiki is a form of hypertext publication...\ncolor: white\nfooter: Footer\navatar: https://wikipedia.com/favicon.ico\nimage: https://upload.wikimedia.org/wikipedia/commons/f/f0/Wikitext-wiki_markup-wikipedia.png\n\nfields:\n- name: Foo\n  value: Bar\n- name: Foo\n  value: Bar\n|end",
 ];
 for (let syntax of syntaxes) {
     syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${syntax}</code></pre>${parseMarkdown(syntax)}</div>`;
