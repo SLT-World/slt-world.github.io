@@ -48,15 +48,13 @@
     align-items:center;
 }
 
-.embed .inline {
-    display: inline;
-    margin-right: 5px;
+.embed .field {
+    display: flex;
+    flex-direction: column;
 }
-.embed .inline.center {
-    display: inline-flex !important;
-}
-.embed .inline.gap {
-    display: inline-flex !important;
+.embed .field.inline {
+    display: inline-flex;
+    margin-right: 15px;
 }
 
 .center.vertical {
@@ -343,7 +341,7 @@ function renderEmbed(embed) {
     ${embed.description && !embed.title ? `<p>${parseInlineMarkdown(embed.description)}</p>` : ""}
 </div>`;
     if (embed.description && embed.title) html += `<p>${parseInlineMarkdown(embed.description)}</p>`;
-    for (const field of embed.fields)  html += `<div class="field"><strong>${parseInlineMarkdown(field.name) ?? ""}</strong><br><span>${parseInlineMarkdown(field.value) ?? ""}</span></div>`;
+    for (const field of embed.fields)  html += `<div class="field${field.inline ? ' inline' : ''}"><strong>${parseInlineMarkdown(field.name) ?? ""}</strong><span>${parseInlineMarkdown(field.value) ?? ""}</span></div>`;
     if (embed.image) html += `<img loading="lazy" class="attachment" src="${embed.image}">`;
     if (embed.footer) html += `<div class="footer">${embed.footer}</div>`;
     html += `</div>`;
@@ -394,10 +392,10 @@ function extractEmbedBlocks(text) {
                 const fieldMatch = line.trim().match(/^(\w+):\s*(.*)$/);
                 if (fieldMatch) {
                     const key = fieldMatch[1];
-                    const val = fieldMatch[2];
+                    let val = fieldMatch[2];
+                    if (key === "inline") val = val.toLowerCase() === "true";
                     if (currentField) currentField[key] = val;
                 }
-
                 continue;
             }
 
@@ -608,7 +606,7 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "https://www.w3schools.com/html/horse.mp3",
     "|embed\ntype: error\ntitle: Error encountered\ndescription: Something went wrong\nfooter: Please try again\n|end",
     "|embed\ntype: clean\ntitle: Clean\ndescription: A clean embed\n|end",
-    "|embed\ntype: default\nicon: coin\ntitle: [Wiki - Wikipedia](https://en.wikipedia.org/wiki/Wiki)\ndescription: A wiki is a form of hypertext publication...\ncolor: white\nfooter: Footer\navatar: https://wikipedia.com/favicon.ico\nimage: https://upload.wikimedia.org/wikipedia/commons/f/f0/Wikitext-wiki_markup-wikipedia.png\n\nfields:\n- name: Foo\n  value: Bar\n- name: Foo\n  value: Bar\n|end",
+    "|embed\ntype: default\nicon: coin\ntitle: [Wiki - Wikipedia](https://en.wikipedia.org/wiki/Wiki)\ndescription: A wiki is a form of hypertext publication...\ncolor: white\nfooter: Footer\navatar: https://wikipedia.com/favicon.ico\nimage: https://upload.wikimedia.org/wikipedia/commons/f/f0/Wikitext-wiki_markup-wikipedia.png\n\nfields:\n- name: Foo\n  value: Bar\n- name: Foo\n  value: Inline Bar\n  inline: true\n- name: Foo\n  value: Inline Bar\n  inline: true\n|end",
 ];
 for (let syntax of syntaxes) {
     syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${syntax}</code></pre>${parseMarkdown(syntax)}</div>`;
