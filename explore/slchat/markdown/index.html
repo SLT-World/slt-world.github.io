@@ -11,6 +11,12 @@
     <script src="../../../prism.js"></script>
     <link rel="stylesheet" href="../../../prism.css"/>
     <style>
+.timestamp {
+    background: var(--primary-color);
+    border-radius: 5px;
+    padding: 0 2.5px;
+}
+
 .embed {
     word-wrap: break-word;
     background: var(--secondary-color);
@@ -321,6 +327,82 @@ function spoiler(el) {
     if (el.tagName === "IMG" || el.tagName === "VIDEO") { el.style.filter = el.style.filter === "none" ? "blur(75px)" : "none"; }
     else { el.style.color = el.style.color === "var(--font-color)" ? "" : "var(--font-color)"; el.style.userSelect = el.style.userSelect === "unset" ? "" : "unset"; }
 }
+
+
+function formatRelativeTime(unixTimeMs) {
+    const diffSec = Math.floor((unixTimeMs - Date.now()) / 1000);
+    if (!Number.isFinite(diffSec)) return "Invalid time";
+    const abs = Math.abs(diffSec);
+    const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: "auto" });
+    if (abs < 60) return rtf.format(Math.round(diffSec), "second");
+    if (abs < 3600) return rtf.format(Math.round(diffSec / 60), "minute");
+    if (abs < 86400) return rtf.format(Math.round(diffSec / 3600), "hour");
+    if (abs < 2592000) return rtf.format(Math.round(diffSec / 86400), "day");
+    if (abs < 31536000) return rtf.format(Math.round(diffSec / 2592000), "month");
+    return rtf.format(Math.round(diffSec / 31536000), "year");
+}
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+function formatShortDateTime(unixTimeMs) {
+    var date = new Date(unixTimeMs);
+    let hours = date.getHours() % 12 || 12;
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${hours}:${date.getMinutes().toString().padStart(2, '0')} ${date.getHours() >= 12 ? "PM" : "AM"}`;
+}
+function formatShortDate(unixTimeMs) {
+    var date = new Date(unixTimeMs);
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+}
+function formatDate(unixTimeMs) {
+    var date = new Date(unixTimeMs);
+    return date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
+}
+function formatTime(unixTimeMs) {
+    var date = new Date(unixTimeMs);
+    return `${date.getHours() % 12 || 12}:${date.getMinutes().toString().padStart(2, '0')} ${date.getHours() >= 12 ? "PM" : "AM"}`;
+}
+function formatLongTime(unixTimeMs) {
+    var date = new Date(unixTimeMs);
+    let hours = date.getHours() % 12 || 12;
+    return `${hours}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds()} ${date.getHours() >= 12 ? "PM" : "AM"}`;
+}
+
+function updateTimestamps() {
+    const elements = document.querySelectorAll(".timestamp");
+    elements.forEach(el => {
+        if (el.classList.contains("static")) return;
+        var unixTime = parseInt(el.dataset.unix, 10);
+        if (!Number.isFinite(unixTime)) return el.textContent = "Invalid timestamp";
+        var unixTimeMs = unixTime * 1000;
+        var format = el.dataset.format || "";
+        switch (format) {
+            case "r":
+                el.textContent = formatRelativeTime(unixTimeMs);
+                break;
+            case "d":
+                el.textContent = formatDate(unixTimeMs);
+                break;
+            case "D":
+                el.textContent = formatShortDate(unixTimeMs);
+                break;
+            case "t":
+                el.textContent = formatTime(unixTimeMs);
+                break;
+            case "T":
+                el.textContent = formatLongTime(unixTimeMs);
+                break;
+            default:
+                el.textContent = formatShortDateTime(unixTimeMs);
+                break;
+        }
+        el.title = new Date(unixTimeMs).toLocaleString();
+
+        if (format !== "r") { el.classList.add("static"); }
+        else if (Math.abs(Date.now() - unixTimeMs) > 86400000) { el.classList.add("static"); }
+    });
+}
+
+updateTimestamps();
+setInterval(updateTimestamps, 1000);
+
 const EMBED_ICONS = {
     "error": "x-circle",
     "warn": "alert-triangle",
@@ -604,6 +686,8 @@ function parseInlineMarkdown(text) {
             let n = Math.max(0, Math.min(100, Number(num)));
             return `<progress data-tip="${n}%" value="${n}" max="100"></progress>`;
         })
+        .replace(/\[timestamp:(\d{1,20}):([a-zA-Z])\]/g, (m, unix, fmt) => `<span class="timestamp" data-format="${fmt}" data-unix="${unix}"></span>`)
+        .replace(/\[timestamp:(\d{1,20})\]/g, (m, unix) => `<span class="timestamp" data-unix="${unix}"></span>`)
         .replace(/\|\|([^|]+)\|\|/g, '<p class="spoiler" onclick="spoiler(this)">$1</p>')
         .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
         .replace(/\*([^*]+)\*/g, '<em>$1</em>')
@@ -624,6 +708,7 @@ function parseInlineMarkdown(text) {
 }
     </script>
     <script>
+let currentTimestamp = Math.floor(Date.now() / 1000);
 const syntax_list = document.querySelector(".syntax_list");
 const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", "##### Header 5", "###### Header 6",
     "*Italic*", "**Bold**", "***Bold & Italic***",
@@ -641,6 +726,7 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "|embed\ntype: error\ntitle: Error encountered\ndescription: Something went wrong\nfooter: Please try again\n|end",
     "|embed\ntype: clean\ntitle: Clean\ndescription: A clean embed\n|end",
     "|embed\ntype: default\nicon: coin\ntitle: [Wiki - Wikipedia](https://en.wikipedia.org/wiki/Wiki)\ndescription: A wiki is a form of hypertext publication...\ncolor: white\nfooter: Footer\navatar: https://wikipedia.com/favicon.ico\nimage: https://upload.wikimedia.org/wikipedia/commons/f/f0/Wikitext-wiki_markup-wikipedia.png\n\nfields:\n- name: Foo\n  value: Bar\n- name: Foo\n  value: Inline Bar\n  inline: true\n- name: Foo\n  value: Inline Bar\n  inline: true\n|end",
+    `[timestamp:${currentTimestamp}:r]\n[timestamp:${currentTimestamp}:t]\n[timestamp:${currentTimestamp}:T]\n[timestamp:${currentTimestamp}:d]\n[timestamp:${currentTimestamp}:D]\n[timestamp:${currentTimestamp}]`,
 ];
 for (let syntax of syntaxes) syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${syntax}</code></pre>${parseMarkdown(syntax)}</div>`;
     </script>
