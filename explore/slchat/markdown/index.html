@@ -161,7 +161,7 @@
     background: var(--primary-color);
     flex-direction: column;
 }
-.syntax_list > * > *:not(audio) {
+.syntax_list > * > *:not(audio):not(progress) {
     align-content: center;
     width: max-content;
 }
@@ -338,9 +338,9 @@ function renderEmbed(embed) {
     ${icon ? `<i class="bx bx-${icon}"></i>` : ""}
     ${embed.avatar ? `<img loading="lazy" class="avatar" src="${embed.avatar}">` : ""}
     ${embed.title ? `<h4>${parseInlineMarkdown(embed.title)}</h4>` : ""}
-    ${embed.description && !embed.title ? `<p>${parseInlineMarkdown(embed.description)}</p>` : ""}
+    ${embed.description && !embed.title ? `<p style="white-space: pre;">${parseInlineMarkdown(embed.description)}</p>` : ""}
 </div>`;
-    if (embed.description && embed.title) html += `<p>${parseInlineMarkdown(embed.description)}</p>`;
+    if (embed.description && embed.title) html += `<p style="white-space: pre;">${parseInlineMarkdown(embed.description)}</p>`;
     for (const field of embed.fields)  html += `<div class="field${field.inline ? ' inline' : ''}"><strong>${parseInlineMarkdown(field.name) ?? ""}</strong><span>${parseInlineMarkdown(field.value) ?? ""}</span></div>`;
     if (embed.image) html += `<img loading="lazy" class="attachment" src="${embed.image}">`;
     if (embed.footer) html += `<div class="footer">${embed.footer}</div>`;
@@ -371,25 +371,55 @@ function extractEmbedBlocks(text) {
         let inFields = false;
         let currentField = null;
 
-        for (let line of lines) {
-            if (!line.trim()) continue;
+        let inMultiline = false;
+        let multilineKey = null;
+        let multilineBuffer = [];
 
-            if (line.trim() === "fields:") {
+        for (let line of lines) {
+            const trimmed = line.trim();
+            const multilineStart = line.match(/^([a-zA-Z0-9_-]+):\s*"(.*)$/);
+            if (!inMultiline && multilineStart) {
+                multilineKey = multilineStart[1];
+                let after = multilineStart[2];
+                if (after.endsWith('"') && after.length > 0) {
+                    embed[multilineKey] = after.slice(0, -1);
+                    multilineKey = null;
+                }
+                else {
+                    inMultiline = true;
+                    multilineBuffer.push(after);
+                }
+                continue;
+            }
+            if (inMultiline) {
+                if (trimmed.endsWith('"')) {
+                    let content = (multilineBuffer.join("\n") + "\n" + line.slice(0, line.lastIndexOf('"'))).trim();
+                    if (inFields && currentField) currentField[multilineKey] = content;
+                    else embed[multilineKey] = content;
+                    inMultiline = false;
+                    multilineKey = null;
+                    multilineBuffer = [];
+                }
+                else multilineBuffer.push(line);
+                continue;
+            }
+            if (!trimmed) continue;
+            if (trimmed === "fields:") {
                 inFields = true;
                 continue;
             }
             if (inFields) {
-                if (line.trim().startsWith("- ")) {
+                if (trimmed.startsWith("- ")) {
                     if (currentField) embed.fields.push(currentField);
                     currentField = {};
-                    line = line.trim().slice(2).trim();
+                    line = trimmed.slice(2).trim();
 
                     const idx = line.indexOf(":");
                     if (idx !== -1) currentField.name = line.slice(idx + 1).trim();
                     continue;
                 }
 
-                const fieldMatch = line.trim().match(/^(\w+):\s*(.*)$/);
+                const fieldMatch = trimmed.match(/^(\w+):\s*(.*)$/);
                 if (fieldMatch) {
                     const key = fieldMatch[1];
                     let val = fieldMatch[2];
@@ -410,7 +440,6 @@ function extractEmbedBlocks(text) {
         if (currentField) embed.fields.push(currentField);
         embeds.push(embed);
     }
-
     return embeds;
 }
 function extractCodeBlocks(text) {
@@ -571,6 +600,10 @@ function parseInlineMarkdown(text) {
             if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) return `<audio class="attachment spoiler" onclick="spoiler(this)" controls src="${url}"></audio>`;
             return `<p class="spoiler" onclick="spoiler(this)">${url}</p>`;
         })
+        .replace(/\[progress:(\d{1,3})%\]/gi, (m, num) => {
+            let n = Math.max(0, Math.min(100, Number(num)));
+            return `<progress data-tip="${n}%" value="${n}" max="100"></progress>`;
+        })
         .replace(/\|\|([^|]+)\|\|/g, '<p class="spoiler" onclick="spoiler(this)">$1</p>')
         .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
         .replace(/\*([^*]+)\*/g, '<em>$1</em>')
@@ -604,13 +637,12 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png", "||https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png||",
     "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "||https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4||",
     "https://www.w3schools.com/html/horse.mp3",
+    "[progress:25%]",
     "|embed\ntype: error\ntitle: Error encountered\ndescription: Something went wrong\nfooter: Please try again\n|end",
     "|embed\ntype: clean\ntitle: Clean\ndescription: A clean embed\n|end",
     "|embed\ntype: default\nicon: coin\ntitle: [Wiki - Wikipedia](https://en.wikipedia.org/wiki/Wiki)\ndescription: A wiki is a form of hypertext publication...\ncolor: white\nfooter: Footer\navatar: https://wikipedia.com/favicon.ico\nimage: https://upload.wikimedia.org/wikipedia/commons/f/f0/Wikitext-wiki_markup-wikipedia.png\n\nfields:\n- name: Foo\n  value: Bar\n- name: Foo\n  value: Inline Bar\n  inline: true\n- name: Foo\n  value: Inline Bar\n  inline: true\n|end",
 ];
-for (let syntax of syntaxes) {
-    syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${syntax}</code></pre>${parseMarkdown(syntax)}</div>`;
-}
+for (let syntax of syntaxes) syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${syntax}</code></pre>${parseMarkdown(syntax)}</div>`;
     </script>
 </body>
 </html>
