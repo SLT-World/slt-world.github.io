@@ -11,6 +11,16 @@
     <script src="../../../prism.js"></script>
     <link rel="stylesheet" href="../../../prism.css"/>
     <style>
+.subtext {
+    color: var(--gray-color);
+    font-size: small;
+}
+
+.subtext * {
+    color: var(--gray-color);
+    font-size: small;
+}
+
 .rainbow {
     transition: all 1s;
 }
@@ -758,6 +768,7 @@ function parseInlineMarkdown(text) {
             const finalClasses = potentialClasses.split(/\s+/).filter(Boolean).filter(cls => allowedDecorationClasses.includes(cls)).join(' ');
             return `<span class="${finalClasses}">${content}</span>`;
         })
+        .replace(/^\-#\s?(.*)$/gm, '<p class="subtext">$1</p>')
         .replace(/\|\|(https?:\/\/[^\s<>"')]+)\|\|/g, (match, url) => {
             const lowerUrl = url.toLowerCase();
             if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif)(\?.*)?$/.test(lowerUrl)) return `<img class="attachment spoiler" onclick="spoiler(this)" src="${url}"/>`;
