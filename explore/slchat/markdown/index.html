@@ -175,6 +175,33 @@
     width: 100%;
 }
 
+progress {
+    --color: mediumseagreen;
+    accent-color: var(--color);
+    border: 0;
+    height: 10px;
+    border-radius: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+progress::-webkit-progress-bar {
+    border: 1px solid var(--border-color);
+    height: 10px;
+    border-radius: 10px;
+    background: var(--primary-color);
+}
+progress::-webkit-progress-value {
+    border: 0;
+    height: 10px;
+    border-radius: 10px;
+    background: var(--color);
+}
+progress::-moz-progress-bar {
+    border: 1px solid var(--border-color);
+    height: 10px;
+    border-radius: 10px;
+}
+
 #preview_container {
     display: flex;
     gap: 10px;
@@ -682,9 +709,9 @@ function parseInlineMarkdown(text) {
             if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) return `<audio class="attachment spoiler" onclick="spoiler(this)" controls src="${url}"></audio>`;
             return `<p class="spoiler" onclick="spoiler(this)">${url}</p>`;
         })
-        .replace(/\[progress:(\d{1,3})%\]/gi, (m, num) => {
+        .replace(/\[progress:(\d{1,3})%(?::([^\]]+))?\]/gi, (m, num, color) => {
             let n = Math.max(0, Math.min(100, Number(num)));
-            return `<progress data-tip="${n}%" value="${n}" max="100"></progress>`;
+            return `<progress data-tip="${n}%" value="${n}" max="100"${color ? ` style="--color:${color};"` : ""}></progress>`;
         })
         .replace(/\[timestamp:(\d{1,20}):([a-zA-Z])\]/g, (m, unix, fmt) => `<span class="timestamp" data-format="${fmt}" data-unix="${unix}"></span>`)
         .replace(/\[timestamp:(\d{1,20})\]/g, (m, unix) => `<span class="timestamp" data-unix="${unix}"></span>`)
@@ -722,7 +749,7 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png", "||https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png||",
     "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "||https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4||",
     "https://www.w3schools.com/html/horse.mp3",
-    "[progress:25%]",
+    "[progress:80%]\n[progress:60%:yellow]\n[progress:40%:#ffcc00]\n[progress:20%:rgb(255,0,0)]",
     "|embed\ntype: error\ntitle: Error encountered\ndescription: Something went wrong\nfooter: Please try again\n|end",
     "|embed\ntype: clean\ntitle: Clean\ndescription: A clean embed\n|end",
     "|embed\ntype: default\nicon: coin\ntitle: [Wiki - Wikipedia](https://en.wikipedia.org/wiki/Wiki)\ndescription: A wiki is a form of hypertext publication...\ncolor: white\nfooter: Footer\navatar: https://wikipedia.com/favicon.ico\nimage: https://upload.wikimedia.org/wikipedia/commons/f/f0/Wikitext-wiki_markup-wikipedia.png\n\nfields:\n- name: Foo\n  value: Bar\n- name: Foo\n  value: Inline Bar\n  inline: true\n- name: Foo\n  value: Inline Bar\n  inline: true\n|end",
