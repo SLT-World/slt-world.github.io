@@ -11,6 +11,52 @@
     <script src="../../../prism.js"></script>
     <link rel="stylesheet" href="../../../prism.css"/>
     <style>
+.rainbow {
+    transition: all 1s;
+}
+.rainbow.shadow {
+    letter-spacing: 0.2em;
+    text-shadow: 0.1em 0.1em #fc0049, 0.2em 0.2em #fe8f01, 0.3em 0.3em #fdf21f, 0.4em 0.4em #3fdf4b, 0.5em 0.5em #3462fe;
+}
+.rainbow:not(.shadow) {
+    background: linear-gradient(#fd004c 16.7%, #fe9000 16.7%, #fe9000 33.4%, #fff020 33.4%, #fff020 50.1%, #3edf4b 50.1%, #3edf4b 66.8%, #3363ff 66.8%, #3363ff 83.5%, #b102b7 83.5%);
+    background-clip: text;
+    animation: vertical 50s linear infinite;
+    color: transparent;
+}
+.glow {
+    text-shadow: 0 0 5px var(--font-color), 0 0 10px var(--font-color), 0 0 20px var(--font-color), 0 0 40px var(--font-color), 0 0 80px var(--font-color);
+}
+.gold {
+    background: linear-gradient(
+        to right,
+        #cb9b51 0%,
+        #f6e27a 45%,
+        #f6f2c0 50%,
+        #f6e27a 55%,
+        #cb9b51 100%
+    );
+    animation: horizontal 10s linear infinite;
+    background-clip: text;
+    color: transparent;
+}
+.anaglyph {
+    letter-spacing: 2.5px;
+    text-shadow: -3px 0 1px rgb(30, 242, 241), 3px 0 1px rgb(246, 5, 10);
+}
+
+@keyframes vertical{
+    100%{
+        background-position: 0 30em;
+    }
+}
+
+@keyframes horizontal{
+    100%{
+        background-position: 30em 0;
+    }
+}
+
 .timestamp {
     background: var(--primary-color);
     border-radius: 5px;
@@ -602,6 +648,7 @@ function escapeHtml(text) {
 }
 
 const emojiRegex = /^(?:\p{Extended_Pictographic}(?:\u200D\p{Extended_Pictographic})*)+$/u;
+
 function parseMarkdown(rawText) {
     rawText = rawText
         .replace(/&gt;/g, ">")
@@ -611,6 +658,7 @@ function parseMarkdown(rawText) {
         .replace(/&amp;(?![a-zA-Z0-9#]+;)/g, "&");
     if (emojiRegex.test(rawText)) return `<span style="font-size: 45px;">` + rawText + `</span>`;
     let { text, codeBlocks } = extractCodeBlocks(rawText);
+    text = text.replace(/\\([^a-zA-Z0-9 ])/g, (_, ch) => `\uE000${ch.charCodeAt(0)}\uE000`);
 
     const embeds = extractEmbedBlocks(text);
     let embedIndex = 0;
@@ -694,14 +742,22 @@ function parseMarkdown(rawText) {
 
     closeList();
     closeBlockquote();
+    html = html.replace(/\uE000(\d+)\uE000/g, (m, code) => String.fromCharCode(code));
     for (const embed of embeds) html = html.replace(embed.placeholder, renderEmbed(embed));
     html = html.trim();
     if (html.endsWith("<br>")) html = html.slice(0, -4);
     return restoreCodeBlocks(html, codeBlocks);
 }
 
+const allowedDecorationClasses = ['rainbow', 'anaglyph', 'gold', 'glow', 'shadow'];
+
 function parseInlineMarkdown(text) {
     return text
+        .replace(/\{([a-zA-Z]+)(?:\s+([a-zA-Z\s-]+))?\}([\s\S]*?)\{\/\1\}/g, (m, name, classes, content) => {
+            const potentialClasses = classes ? `${name} ${classes}` : name;
+            const finalClasses = potentialClasses.split(/\s+/).filter(Boolean).filter(cls => allowedDecorationClasses.includes(cls)).join(' ');
+            return `<span class="${finalClasses}">${content}</span>`;
+        })
         .replace(/\|\|(https?:\/\/[^\s<>"')]+)\|\|/g, (match, url) => {
             const lowerUrl = url.toLowerCase();
             if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif)(\?.*)?$/.test(lowerUrl)) return `<img class="attachment spoiler" onclick="spoiler(this)" src="${url}"/>`;
@@ -710,8 +766,8 @@ function parseInlineMarkdown(text) {
             return `<p class="spoiler" onclick="spoiler(this)">${url}</p>`;
         })
         .replace(/\[progress:(\d{1,3})%(?::([^\]]+))?\]/gi, (m, num, color) => {
-            let n = Math.max(0, Math.min(100, Number(num)));
-            return `<progress data-tip="${n}%" value="${n}" max="100"${color ? ` style="--color:${color};"` : ""}></progress>`;
+            const percentage = Math.max(0, Math.min(100, Number(num)));
+            return `<progress data-tip="${percentage}%" value="${percentage}" max="100"${color ? ` style="--color:${color};"` : ""}></progress>`;
         })
         .replace(/\[timestamp:(\d{1,20}):([a-zA-Z])\]/g, (m, unix, fmt) => `<span class="timestamp" data-format="${fmt}" data-unix="${unix}"></span>`)
         .replace(/\[timestamp:(\d{1,20})\]/g, (m, unix) => `<span class="timestamp" data-unix="${unix}"></span>`)
@@ -730,8 +786,7 @@ function parseInlineMarkdown(text) {
             if (/\.(mp4|webm|ogg)(\?.*)?$/.test(lowerUrl)) return `<video class="attachment" width="320" height="240" controls><source src="${url}"></video>`;
             if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif)(\?.*)?$/.test(lowerUrl)) return `<img class="attachment" src="${url}"/>`;
             return `<a href="${url}" target="_blank" rel="noopener noreferrer nofollow">${url}</a>`;
-        }
-    );
+        });
 }
     </script>
     <script>
@@ -754,6 +809,12 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "|embed\ntype: clean\ntitle: Clean\ndescription: A clean embed\n|end",
     "|embed\ntype: default\nicon: coin\ntitle: [Wiki - Wikipedia](https://en.wikipedia.org/wiki/Wiki)\ndescription: A wiki is a form of hypertext publication...\ncolor: white\nfooter: Footer\navatar: https://wikipedia.com/favicon.ico\nimage: https://upload.wikimedia.org/wikipedia/commons/f/f0/Wikitext-wiki_markup-wikipedia.png\n\nfields:\n- name: Foo\n  value: Bar\n- name: Foo\n  value: Inline Bar\n  inline: true\n- name: Foo\n  value: Inline Bar\n  inline: true\n|end",
     `[timestamp:${currentTimestamp}:r]\n[timestamp:${currentTimestamp}:t]\n[timestamp:${currentTimestamp}:T]\n[timestamp:${currentTimestamp}:d]\n[timestamp:${currentTimestamp}:D]\n[timestamp:${currentTimestamp}]`,
+    "# {gold}hello{/gold}",
+    "{anaglyph}Hello{/anaglyph}",
+    "{rainbow}Hello{/rainbow}",
+    "{rainbow shadow}Hello{/rainbow}",
+    "{glow}Hello{/glow}",
+    "\\\\ \\\* \\\[ \\\]",
 ];
 for (let syntax of syntaxes) syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${syntax}</code></pre>${parseMarkdown(syntax)}</div>`;
     </script>
