@@ -826,6 +826,7 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "{rainbow shadow}Hello{/rainbow}",
     "{glow}Hello{/glow}",
     "\\\\ \\\* \\\[ \\\]",
+    "-# Sub**text**",
 ];
 for (let syntax of syntaxes) syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${syntax}</code></pre>${parseMarkdown(syntax)}</div>`;
     </script>
