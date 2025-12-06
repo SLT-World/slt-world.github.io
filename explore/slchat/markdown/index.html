@@ -288,7 +288,7 @@ li {
     cursor: pointer;
 }
 
-.spoiler:not(img):not(video):not(iframe):not(canvas) {
+.spoiler:not(.embed):not(img):not(video):not(iframe):not(canvas) {
     border-radius: 5px;
     background: black;
     color: transparent;
@@ -299,7 +299,7 @@ li {
     padding: 0 2.5px;
 }
 
-img.spoiler, video.spoiler, iframe.spoiler, canvas.spoiler {
+.embed.spoiler, img.spoiler, video.spoiler, iframe.spoiler, canvas.spoiler {
     filter: blur(75px);
     transition: filter 0.3s ease;
     mask-image: linear-gradient(to right, #fff, #fff);
@@ -762,7 +762,17 @@ function parseMarkdown(rawText) {
 const allowedDecorationClasses = ['rainbow', 'anaglyph', 'gold', 'glow', 'shadow'];
 
 function parseInlineMarkdown(text) {
-    return text
+    const literalLinks = [];
+    text = text.replace(/<(https?:\/\/[^\s>]+)>/g, (m, url) => {
+        literalLinks.push(url);
+        return `__LITERAL_LINK_${literalLinks.length - 1}__`;
+    });
+    text = text.replace(/&lt;(https?:\/\/[^\s>]+)>/g, (m, url) => {
+        literalLinks.push(url);
+        return `__LITERAL_LINK_${literalLinks.length - 1}__`;
+    });
+
+    text = text
         .replace(/\{([a-zA-Z]+)(?:\s+([a-zA-Z\s-]+))?\}([\s\S]*?)\{\/\1\}/g, (m, name, classes, content) => {
             const potentialClasses = classes ? `${name} ${classes}` : name;
             const finalClasses = potentialClasses.split(/\s+/).filter(Boolean).filter(cls => allowedDecorationClasses.includes(cls)).join(' ');
@@ -798,6 +808,11 @@ function parseInlineMarkdown(text) {
             if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif)(\?.*)?$/.test(lowerUrl)) return `<img class="attachment" src="${url}"/>`;
             return `<a href="${url}" target="_blank" rel="noopener noreferrer nofollow">${url}</a>`;
         });
+
+    literalLinks.forEach((url, i) => {
+        text = text.replace(`__LITERAL_LINK_${i}__`, `<a href="${url}" target="_blank" rel="noopener noreferrer nofollow" data-tip="${url}">${url}</a>`);
+    });
+    return text;
 }
     </script>
     <script>
@@ -813,6 +828,7 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "||Spoiler||",
     "@everyone",
     "https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png", "||https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png||",
+    "<https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png>",
     "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "||https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4||",
     "https://www.w3schools.com/html/horse.mp3",
     "[progress:80%]\n[progress:60%:yellow]\n[progress:40%:#ffcc00]\n[progress:20%:rgb(255,0,0)]",
@@ -828,7 +844,7 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "\\\\ \\\* \\\[ \\\]",
     "-# Sub**text**",
 ];
-for (let syntax of syntaxes) syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${syntax}</code></pre>${parseMarkdown(syntax)}</div>`;
+for (let syntax of syntaxes) syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${escapeHtml(syntax)}</code></pre>${parseMarkdown(syntax)}</div>`;
     </script>
 </body>
 </html>
