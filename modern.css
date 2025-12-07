@@ -80,7 +80,7 @@ p, h1, h2, h3, h4, h5, h6, span {
     background-clip: text !important;
     color: transparent !important;
 }
-button, a.button {
+button, .button {
     height: 35px;
     width: auto;
     background: var(--secondary-color);
@@ -92,21 +92,26 @@ button, a.button {
     cursor: pointer;
     transition: 0.25s filter;
     text-decoration: none;
+    font-size: medium;
 }
-button.icon, a.button.icon {
+button.icon, .button.icon {
     width: 35px;
 }
 
-button.icon > .icon, a.button.icon > .icon {
+button.icon > .icon, .button.icon > .icon {
     color: var(--gray-color);
 }
 
-button:hover, a.button:hover {
+button:hover, .button:hover {
     filter: brightness(0.85);
 }
 
+.disabled {
+    filter: brightness(0.75);
+    pointer-events: none;
+}
 
-.input, code, textarea {
+input:not([type="image"], [type="range"], [type="checkbox"], [type="radio"]), select, .input, code, textarea {
     background: var(--primary-color);
     color: var(--font-color);
     border: 1px solid var(--border-color);
@@ -115,7 +120,7 @@ button:hover, a.button:hover {
     font-size: medium;
 }
 
-textarea:focus {
+input:not([type="image"], [type="range"], [type="checkbox"], [type="radio"]):focus, select:focus, textarea:focus {
   border: 1px solid rgb(51, 145, 255);
   outline: 1px solid rgb(51, 145, 255);
 }
@@ -159,6 +164,10 @@ textarea {
 }
 
 @media (prefers-color-scheme: dark) {
+    ::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+
     html {
         --primary-color: #202225;
         --secondary-color: #37393B;

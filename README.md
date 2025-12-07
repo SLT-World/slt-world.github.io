@@ -16,8 +16,8 @@
 > 🍕 [Emoji Fonts Collection](../explore/emoji/)<br>
 > A collection of custom emoji fonts.
 
-> 💬 [SLChat's Markdown Compiler](../explore/slchat/markdown/)<br>
-> The markdown compiler used in SLChat.
+> 💬 [SLChat Directory](../explore/slchat/)<br>
+> A collection of SLChat utilities, tools & showcases.
 
 ## 🗂️ Active Projects
 > 🌐 [**SLBr - Web Browser**](https://github.com/SLT-World/SLBr)<br>

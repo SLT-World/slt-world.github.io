@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SLChat Directory - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <link rel="stylesheet" type="text/css" href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css">
+    <script src="../../../prism.js"></script>
+    <link rel="stylesheet" href="../../../prism.css"/>
+    <link rel="stylesheet" href="../style.css"/>
+    <style>
+#directory_grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+}
+
+/*#directory_grid > a {
+    position: relative;
+}*/
+
+#directory_grid > a > .button {
+    justify-content: stretch;
+    height: unset;
+    padding: 10px;
+}
+
+#directory_grid > a > .button > div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    height: 35px;
+    width: 100%;
+}
+
+.material-symbols-rounded {
+    color: var(--gray-color);
+}
+
+@media screen and (max-width: 1000px) {
+    #directory_grid {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="navigation">
+            <img src="../../../favicon.png" width="35" height="35" draggable="false">
+            <h3>SLT World</h3>
+        </div>
+        <h1>SLChat Directory</h1>
+        <p>A collection of SLChat utilities, tools & small showcases.</p>
+        <div id="directory_grid">
+            <a href="markdown">
+                <div class="button">
+                    <div>
+                        <span class="material-symbols-rounded icon">markdown</span>
+                        <span>Markdown Compiler</span>
+                        <span class="material-symbols-rounded icon" style="margin-left:auto;">keyboard_arrow_right</span>
+                    </div>
+                </div>
+            </a>
+            <a href="timestamps">
+                <div class="button">
+                    <div>
+                        <span class="material-symbols-rounded icon">nest_clock_farsight_analog</span>
+                        <span>Timestamps Generator</span>
+                        <span class="material-symbols-rounded icon" style="margin-left:auto;">keyboard_arrow_right</span>
+                    </div>
+                </div>
+            </a>
+            <a href="embeds" class="disabled">
+                <div class="button">
+                    <div>
+                        <span class="material-symbols-rounded icon">iframe</span>
+                        <span>Link Preview Embed</span>
+                        <span class="material-symbols-rounded icon" style="margin-left:auto;">keyboard_arrow_right</span>
+                    </div>
+                </div>
+                <!--<div style="position: absolute; pointer-events: none;top: 0;right: 0;left: 0;bottom: 0;background: color-mix(in srgb, orangered 25%, transparent);display: flex;align-items: center;justify-content: center;border-radius: 5px;">
+                    <span class="material-symbols-rounded icon" style="color: orangered;font-size: 40px;">handyman</span>
+                </div>-->
+            </a>
+        </div>
+    </div>
+</body>
+</html>

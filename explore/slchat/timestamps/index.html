@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SLChat Timestamp Generator - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <link rel="stylesheet" type="text/css" href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css">
+    <script src="../../../prism.js"></script>
+    <link rel="stylesheet" href="../../../prism.css"/>
+    <link rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+    <div class="content">
+        <div class="navigation">
+            <img src="../../../favicon.png" width="35" height="35" draggable="false">
+            <h3>SLT World</h3>
+        </div>
+        <h1>SLChat Timestamp Generator</h1>
+        <p>A simple <strong>timestamp generator</strong> for SLChat.</p>
+        <div class="container">
+            <div style="display: flex;align-items: center;gap: 10px;">
+                <p>Type</p>
+                <select id="type_picker" style="margin-left: auto;max-width: 100%;width: 300px;">
+                    <option value="t">Short Time</option>
+                    <option value="T">Long Time</option>
+                    <option value="d">Short Date</option>
+                    <option value="D">Long Date</option>
+                    <option value=" ">Long Date &amp; Short Time</option>
+                    <option value="r" selected="">Relative</option>
+                </select>
+            </div>
+            <div style="display: flex;align-items: center;gap: 10px;">
+                <p>Date</p>
+                <input type="date" id="date_picker" style="margin-left: auto;max-width: 100%;width: 300px;">
+            </div>
+            <div style="display: flex;align-items: center;gap: 10px;">
+                <p>Time</p>
+                <input type="time" id="time_picker" style="margin-left: auto;max-width: 100%;width: 300px;">
+            </div>
+            <div style="display: flex;align-items: center;gap: 10px;">
+                <p>Output</p>
+                <div id="output" class="input textarea" style="height: 35px;margin-left: auto;max-width: 100%;width: 300px;overflow-y: scroll;"></div>
+            </div>
+            <div style="display: flex;flex-direction:column;gap: 10px;">
+                <p style="height: 35px;line-height: 35px;">Text</p>
+                <div style="display: flex;gap: 10px;">
+                    <input type="text" readonly="" id="text" title="Press Ctrl/Cmd+C to copy" style="height: 35px;width: 100%;overflow-y: scroll;">
+                    <button onclick="copy()" class="icon" title="Copy" style="margin-left: auto; background: var(--primary-color);"><span class="material-symbols-rounded icon">content_copy</span></button>
+                </div>
+            </div>
+            <button onclick="setCurrentDateTime()" style="background:var(--primary-color);">Reset to current time</button>
+        </div>
+    </div>
+    <script>
+function formatRelativeTime(unixTimeMs) {
+    const diffSec = Math.floor((unixTimeMs - Date.now()) / 1000);
+    if (!Number.isFinite(diffSec)) return "Invalid time";
+    const abs = Math.abs(diffSec);
+    const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: "auto" });
+    if (abs < 60) return rtf.format(Math.round(diffSec), "second");
+    if (abs < 3600) return rtf.format(Math.round(diffSec / 60), "minute");
+    if (abs < 86400) return rtf.format(Math.round(diffSec / 3600), "hour");
+    if (abs < 2592000) return rtf.format(Math.round(diffSec / 86400), "day");
+    if (abs < 31536000) return rtf.format(Math.round(diffSec / 2592000), "month");
+    return rtf.format(Math.round(diffSec / 31536000), "year");
+}
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+function formatShortDateTime(unixTimeMs) {
+    var date = new Date(unixTimeMs);
+    let hours = date.getHours() % 12 || 12;
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${hours}:${date.getMinutes().toString().padStart(2, '0')} ${date.getHours() >= 12 ? "PM" : "AM"}`;
+}
+function formatShortDate(unixTimeMs) {
+    var date = new Date(unixTimeMs);
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+}
+function formatDate(unixTimeMs) {
+    var date = new Date(unixTimeMs);
+    return date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
+}
+function formatTime(unixTimeMs) {
+    var date = new Date(unixTimeMs);
+    return `${date.getHours() % 12 || 12}:${date.getMinutes().toString().padStart(2, '0')} ${date.getHours() >= 12 ? "PM" : "AM"}`;
+}
+function formatLongTime(unixTimeMs) {
+    var date = new Date(unixTimeMs);
+    let hours = date.getHours() % 12 || 12;
+    return `${hours}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds()} ${date.getHours() >= 12 ? "PM" : "AM"}`;
+}
+
+function updateTimestamps() {
+    const elements = document.querySelectorAll(".timestamp");
+    elements.forEach(el => {
+        if (el.classList.contains("static")) return;
+        var unixTime = parseInt(el.dataset.unix, 10);
+        if (!Number.isFinite(unixTime)) return el.textContent = "Invalid timestamp";
+        var unixTimeMs = unixTime * 1000;
+        var format = el.dataset.format || "";
+        switch (format) {
+            case "r":
+                el.textContent = formatRelativeTime(unixTimeMs);
+                break;
+            case "d":
+                el.textContent = formatDate(unixTimeMs);
+                break;
+            case "D":
+                el.textContent = formatShortDate(unixTimeMs);
+                break;
+            case "t":
+                el.textContent = formatTime(unixTimeMs);
+                break;
+            case "T":
+                el.textContent = formatLongTime(unixTimeMs);
+                break;
+            default:
+                el.textContent = formatShortDateTime(unixTimeMs);
+                break;
+        }
+        el.title = new Date(unixTimeMs).toLocaleString();
+
+        if (format !== "r") { el.classList.add("static"); }
+        else if (Math.abs(Date.now() - unixTimeMs) > 86400000) { el.classList.add("static"); }
+    });
+}
+
+updateTimestamps();
+setInterval(updateTimestamps, 1000);
+
+const typePicker = document.getElementById("type_picker");
+const datePicker = document.getElementById("date_picker");
+const timePicker = document.getElementById("time_picker");
+const output = document.getElementById("output");
+const textOutput = document.getElementById("text");
+
+function copy() {
+    navigator.clipboard.writeText(textOutput.value);
+}
+
+function generateTimestamp() {
+    let date = datePicker.value;
+    let time = timePicker.value;
+    if (!date || !time) {
+        output.innerHTML = "";
+        textOutput.value = "";
+        return;
+    }
+    if (time.length === 5) time = time + ":00";
+    let unix = Math.floor(new Date(`${date}T${time}`).getTime() / 1000);
+    let type = typePicker.value;
+    if (type.trim() === "") textOutput.value = `[timestamp:${unix}]`;
+    else textOutput.value = `[timestamp:${unix}:${type}]`;
+
+    if (type.trim() === "") output.innerHTML = `<span class="timestamp" data-unix="${unix}"></span>`;
+    else output.innerHTML = `<span class="timestamp" data-format="${type}" data-unix="${unix}"></span>`;
+
+    updateTimestamps();
+}
+
+typePicker.addEventListener("change", generateTimestamp);
+datePicker.addEventListener("change", generateTimestamp);
+timePicker.addEventListener("change", generateTimestamp);
+
+function setCurrentDateTime() {
+    let now = new Date();
+    datePicker.value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+    timePicker.value = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+    generateTimestamp();
+}
+setCurrentDateTime();
+    </script>
+</body>
+</html>
