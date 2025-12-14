@@ -1,13 +1,3 @@
-.subtext {
-    color: var(--gray-color);
-    font-size: small;
-}
-
-.subtext * {
-    color: var(--gray-color);
-    font-size: small;
-}
-
 .rainbow {
     transition: all 1s;
 }

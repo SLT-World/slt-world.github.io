@@ -1,0 +1,390 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Explore - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <style>
+@font-face {
+    font-family: brands;
+    src: url("emoji/brands.ttf") format('truetype');
+}
+
+* {
+    font-family: 'Segoe UI', Tahoma, sans-serif, 'brands';
+}
+
+#directory_grid {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: repeat(auto-fill, 300px);
+    width: 100%;
+}
+
+#directory_grid > div {
+    min-height: 375px;
+    width: auto;
+    align-items: center;
+    justify-content: stretch;
+    font-size: medium;
+    padding: 0;
+    gap: 0;
+    overflow: hidden;
+}
+
+#directory_grid > div > div:not(.image_container) {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#directory_grid > div > div > .header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-color: var(--border-color);
+}
+
+#directory_grid > div > div > .header > .icon > img {
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+#directory_grid > div > div > .separator {
+    height: 1px;
+    min-height: 1px;
+    background: var(--border-color);
+}
+
+#directory_grid > div > .image_container {
+    width: 100%;
+    min-height: 200px;
+    height: 200px;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+#directory_grid > div > .image_container > .material-symbols-rounded {
+    font-size: 48px;
+}
+
+#directory_grid > div > .image_container > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+}
+
+#directory_grid > div > div > .header > .icon:first-child {
+    width: 35px;
+    height: 35px;
+    background: var(--primary-color);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#directory_grid > div > div > .header > div:not(:first-child) {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+#directory_grid > div > div > p {
+    height: 100%;
+}
+
+.material-symbols-rounded {
+    color: var(--gray-color);
+    font-size: 24px;
+}
+
+@media screen and (max-width: 679px) {
+    #directory_grid {
+        display: flex;
+        flex-direction: column;
+    }
+    #directory_grid > div {
+        width: 100%;
+    }
+}
+path#github {
+    fill: #181717;
+}
+@media (prefers-color-scheme: dark) {
+    path#github { fill: white; }
+}
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="navigation">
+            <img src="../favicon.png" width="35" height="35" draggable="false">
+            <h3>SLT World</h3>
+        </div>
+        <h1>Explore</h1>
+        <p>Browse active and completed projects</p>
+        <div id="directory_grid"></div>
+        <div class="container" style="width: fit-content;margin: 0 auto;">
+            <h3 style="text-align: center;">More projects</h3>
+            <p style="text-align: center;">Projects that aren't included in this site</p>
+            <div class="icon_links" style="gap: 15px;justify-content: center;">
+                <a style="width: 25px;height: 25px;" href="https://github.com/SLT-World?tab=repositories" target="_blank">
+                    <svg style="width: 25px;height: 25px;" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <title>GitHub</title>
+                        <path id="github" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
+                    </svg>
+                </a>
+                <a style="width: 25px;height: 25px;" href="https://play.google.com/store/apps/developer?id=SLT+World" target="_blank">
+                    <svg style="width: 25px;height: 25px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.99 31.99"><title>Google Play</title><g data-name="Capa 2"><g data-name="Capa 1"><path d="M13.54 15.28.12 29.34a3.66 3.66 0 0 0 5.33 2.16l15.1-8.6Z" style="fill:#ea4335"></path><path d="m27.11 12.89-6.53-3.74-7.35 6.45 7.38 7.28 6.48-3.7a3.54 3.54 0 0 0 1.5-4.79 3.62 3.62 0 0 0-1.5-1.5z" style="fill:#fbbc04"></path><path d="M.12 2.66a3.57 3.57 0 0 0-.12.92v24.84a3.57 3.57 0 0 0 .12.92L14 15.64Z" style="fill:#4285f4"></path><path d="m13.64 16 6.94-6.85L5.5.51A3.73 3.73 0 0 0 3.63 0 3.64 3.64 0 0 0 .12 2.65Z" style="fill:#34a853"></path></g></g></svg>
+                </a>
+                <a style="width: 25px;height: 25px;" href="https://sltworld.itch.io/" target="_blank">
+                    <svg style="width: 25px;height: 25px;fill:#FA5C5C;" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <title>Itch.io</title>
+                        <path d="M3.13 1.338C2.08 1.96.02 4.328 0 4.95v1.03c0 1.303 1.22 2.45 2.325 2.45 1.33 0 2.436-1.102 2.436-2.41 0 1.308 1.07 2.41 2.4 2.41 1.328 0 2.362-1.102 2.362-2.41 0 1.308 1.137 2.41 2.466 2.41h.024c1.33 0 2.466-1.102 2.466-2.41 0 1.308 1.034 2.41 2.363 2.41 1.33 0 2.4-1.102 2.4-2.41 0 1.308 1.106 2.41 2.435 2.41C22.78 8.43 24 7.282 24 5.98V4.95c-.02-.62-2.082-2.99-3.13-3.612-3.253-.114-5.508-.134-8.87-.133-3.362 0-7.945.053-8.87.133zm6.376 6.477a2.74 2.74 0 0 1-.468.602c-.5.49-1.19.795-1.947.795a2.786 2.786 0 0 1-1.95-.795c-.182-.178-.32-.37-.446-.59-.127.222-.303.412-.486.59a2.788 2.788 0 0 1-1.95.795c-.092 0-.187-.025-.264-.052-.107 1.113-.152 2.176-.168 2.95v.005l-.006 1.167c.02 2.334-.23 7.564 1.03 8.85 1.952.454 5.545.662 9.15.663 3.605 0 7.198-.21 9.15-.664 1.26-1.284 1.01-6.514 1.03-8.848l-.006-1.167v-.004c-.016-.775-.06-1.838-.168-2.95-.077.026-.172.052-.263.052a2.788 2.788 0 0 1-1.95-.795c-.184-.178-.36-.368-.486-.59-.127.22-.265.412-.447.59a2.786 2.786 0 0 1-1.95.794c-.76 0-1.446-.303-1.948-.793a2.74 2.74 0 0 1-.468-.602 2.738 2.738 0 0 1-.463.602 2.787 2.787 0 0 1-1.95.794h-.16a2.787 2.787 0 0 1-1.95-.793 2.738 2.738 0 0 1-.464-.602zm-2.004 2.59v.002c.795.002 1.5 0 2.373.953.687-.072 1.406-.108 2.125-.107.72 0 1.438.035 2.125.107.873-.953 1.578-.95 2.372-.953.376 0 1.876 0 2.92 2.934l1.123 4.028c.832 2.995-.266 3.068-1.636 3.07-2.03-.075-3.156-1.55-3.156-3.025-1.124.184-2.436.276-3.748.277-1.312 0-2.624-.093-3.748-.277 0 1.475-1.125 2.95-3.156 3.026-1.37-.004-2.468-.077-1.636-3.072l1.122-4.027c1.045-2.934 2.545-2.934 2.92-2.934zM12 12.714c-.002.002-2.14 1.964-2.523 2.662l1.4-.056v1.22c0 .056.56.033 1.123.007.562.026 1.124.05 1.124-.008v-1.22l1.4.055C14.138 14.677 12 12.713 12 12.713z"></path>
+                    </svg>
+                </a>
+                <a style="width: 25px;height: 25px;" href="https://www.planetminecraft.com/member/slt_world/" target="_blank">
+                    <svg style="width: 25px;height: 25px;" xmlns="http://www.w3.org/2000/svg" width="56px" height="58px" viewBox="0 0 56 58" shaperendering="crispEdges">
+        <g id="water">
+            <path d="M0 38V36H19V38H52V47H51V48H50V49H47V51H46V52H45V53H44V54H38V56H37V57H36V58H20V57H19V56H18V54H11V53H10V52H9V51H8V49H6V48H5V47H4V40H2V39H1V38H0Z" fill="#012647"></path>
+            <path d="M9 4H46V45H9V4Z" fill="#278EED"></path><path d="M5 35H9V36H5V35Z" fill="#278EED"></path>
+            <path d="M10 8H37V36H10V8Z" fill="#3DA2FF"></path><path d="M37 18H42V32H37V18Z" fill="#3DA2FF"></path><path d="M28 36H33V41H28V36Z" fill="#3DA2FF"></path>
+            <path d="M33 36H37V41H33V36Z" fill="#2E95F4"></path><path d="M37 32H42V36H37V32Z" fill="#2E95F4"></path>
+            <path d="M18 8H28V22H18V8Z" fill="#57AAFF"></path><path d="M18 22H23V27H18V22Z" fill="#57AAFF"></path>
+            <path d="M33 8H37V18H33V8Z" fill="#4BA8FF"></path><path d="M33 22H37V32H33V22Z" fill="#4BA8FF"></path><path d="M28 27H33V36H28V27Z" fill="#4BA8FF"></path><path d="M19 32H28V38H19V32Z" fill="#4BA8FF"></path>
+            <path d="M9 41H14V45H9V41Z" fill="#0D74D3"></path><path d="M19 48H23V50H19V48Z" fill="#0D74D3"></path><path d="M46 32H48V36H46V32Z" fill="#0D74D3"></path><path d="M46 18H49V27H46V18Z" fill="#0D74D3"></path><path d="M42 36H46V45H42V36Z" fill="#0D74D3"></path><path d="M37 41H42V45H37V41Z" fill="#0D74D3"></path>
+            <path d="M9 45H19V50H9V45Z" fill="#014E96"></path><path d="M19 50H37V55H19V50Z" fill="#014E96"></path><path d="M37 45H46V50H37V45Z" fill="#014E96"></path><path d="M46 36H51V45H46V36Z" fill="#014E96"></path>
+            <path d="M19 0H37V4H19V0Z" fill="#0157A9"></path><path d="M0 18H5V36H0V18Z" fill="#0157A9"></path><path d="M5 36H9V45H5V36Z" fill="#0157A9"></path>
+            <path d="M42 18H46V22H42V18Z" fill="#3198F7"></path><path d="M51 38V36H56V38H55V39H54V40H52V38H51Z" fill="#132E2F"></path>
+        </g>
+        <g id="land">
+            <path d="M19 38H28V41H19V38Z" fill="#6EC310"></path><path d="M23 14H24V16H23V14Z" fill="#6EC310"></path><path d="M24 8H27V10H24V8Z" fill="#6EC310"></path><path d="M24 18V16H25V17H26V18H24Z" fill="#6EC310"></path><path d="M14 13V8H22V10H21V11H22V13H14Z" fill="#6EC310"></path><path d="M14 22V13H9V22H5V35H9V36H14V34H12V33H10V30H11V29H14V30H15V31H16V27H18V22H14Z" fill="#6EC310"></path>
+            <path d="M19 45V41H34V45H19Z" fill="#57B10F"></path><path d="M5 22V18H9V22H5Z" fill="#57B10F"></path><path d="M9 13V8H14V13H9Z" fill="#57B10F"></path><path d="M19 8V4H28V6H27V8H24V7H22V8H19Z" fill="#57B10F"></path>
+            <path d="M9 37V36H14V37H16V39H17V40H19V41H16V40H15V39H12V37H9Z" fill="#58AE01"></path>
+            <path d="M39 11V8H46V17H45V13H42V11H39Z" fill="#448001"></path><path d="M49 18H51V36H48V32H46V27H49V18Z" fill="#448001"></path><path d="M37 50V45H19V48H23V50H37Z" fill="#448001"></path>
+            <path d="M9 8V4H19V8H9V18H5V8H9Z" fill="#2A5401"></path><path d="M37 8V4H46V8H51V18H56V36H51V18H46V8H37Z" fill="#2A5401"></path><path d="M26 51V50H34V51H33V54H32V55H29V53H27V51H26Z" fill="#2A5401"></path><path d="M51 38V36H49V37H50V38H51Z" fill="#2A5401"></path>
+        </g>
+        <g id="sun">
+            <path d="M14 22V13H23V22H14Z" fill="#ffffff"></path>
+        </g>
+    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+<script>
+const entries = [
+    {
+        "icon": "../slbr/slbr.png",
+        "title": "SLBr",
+        "subtext": "Web Browser",
+        "description": "A lightweight WPF C# browser for a faster web.<br>Fast, lightweight browsing with a clean interface.",
+        "image": "https://raw.githubusercontent.com/SLT-World/SLBr/main/Assets/SLBr%20Browser.png",
+        "tech": ["net"],
+        "links": {
+            "site": "../slbr/",
+            "github": "https://github.com/SLT-World/SLBr",
+        }
+    },
+    {
+        "icon": "../slbr/slbr.png",
+        "title": "SLSearch",
+        "subtext": "Metasearch Engine",
+        "description": "A small, experimental metasearch engine that returns results from other search engines.",
+        "image": "",
+        "tech": ["python", "javascript"],
+        "links": {
+            "site": "https://slsearch.eu.org/"
+        }
+    },
+    {
+        "icon": "slchat/icon.svg",
+        "title": "SLChat",
+        "subtext": "Chat Platform",
+        "description": "A chat platform that was made to experiment with web sockets.",
+        "image": "",
+        "tech": ["python", "javascript"],
+        "links": {
+            "site": "https://slchat.alwaysdata.net/",
+            "tool": "slchat/"
+        }
+    },
+
+    {
+        "icon": "https://play-lh.googleusercontent.com/LRQFdnxif5SfaCnsLUtChKGDFvzMd7a287SGG0JCZ3I8YM3f1ctBaQRdJ4pFiJr2-jE=w240-h480-rw",
+        "title": "PQ",
+        "subtext": "Currency Converter",
+        "description": "A clean and intuitive currency converter designed for simplicity and speed.",
+        "image": "https://play-lh.googleusercontent.com/JceIPT21LGIBUWy6NgNzlg6qnoEBaR4oLY1o7026lCJT85g1GQ1hKABnIxI-YCrQ_WU=w526-h296-rw",
+        "tech": ["net"],
+        "links": {
+            "play": "https://play.google.com/store/apps/details?id=com.sltsoftwares.pq"
+        }
+    },
+    {
+        "icon": "https://play-lh.googleusercontent.com/eoPsDrm0x3rRy6FgUe_ujUD9PbZd-p9QQG-gfJfMgJBDvp476naMv3ej9x4tp-D1K-Q=w240-h480-rw",
+        "title": "Power Station Inc",
+        "subtext": "Mobile Video Game",
+        "description": "Build and expand your power industry in this energy tycoon simulation game!",
+        "image": "https://play-lh.googleusercontent.com/18VKe25DVD-GJT2QJgt4PkZfgRBiBA4Zq6nF5oAFL7N6KvDn9Fim-AriglsPtPvAeQ=w526-h296-rw",
+        "tech": ["unity"],
+        "links": {
+            "play": "https://play.google.com/store/apps/details?id=com.SLTSoftwares.PowerStationInc"
+        }
+    },
+
+    {
+        "icon": "",
+        "title": "Metafetcher",
+        "subtext": "Link Preview API",
+        "description": "A basic, lightweight link preview API initially designed for rendering link embeds in SLChat.",
+        "image": "",
+        "tech": ["javascript"],
+        "links": {
+            "github": "https://github.com/SLT-World/metafetcher"
+        }
+    },
+    {
+        "icon": "",
+        "title": "slchat.py",
+        "subtext": "API Wrapper",
+        "description": "An API wrapper for SLChat, written in Python.",
+        "image": "",
+        "tech": ["python"],
+        "links": {
+            "github": "https://github.com/SLT-World/slchat.py"
+        }
+    },
+
+    {
+        "icon": "https://play-lh.googleusercontent.com/QKz_5LRx5PUzENX3keX-7tXJarXVXMshNC0CZQGo0OFgQgdw_DsVxnvsOhIQRQoD8utw=w240-h480-rw",
+        "title": "Moon Hop",
+        "subtext": "Mobile Video Game",
+        "description": "Celebrate the Mid-Autumn Mooncake Festival with this fun and casual jumping game!",
+        "image": "https://play-lh.googleusercontent.com/UuLrAFOj_f4gkNjIm3QUgsxGUZplH0TubqTeqzk46hrWeGgbaHwmA6s7g7f6uAsh1tsg=w526-h296-rw",
+        "tech": ["unity"],
+        "links": {
+            "play": "https://play.google.com/store/apps/details?id=com.SLTSoftwares.MoonHop"
+        }
+    },
+
+    {
+        "icon": "slt_combat.png",
+        "title": "SLT Combat",
+        "subtext": "Desktop Video Game",
+        "description": "A multiplayer/single-player (Offline Mode), vehicle-based combat game.<br>The successor to SLT Ace Combat.",
+        "image": "https://img.itch.zone/aW1hZ2UvMjAzMTQ5NC8xNzk1NzYwOC5wbmc=/original/5QgAHF.png",
+        "tech": ["unity"],
+    },
+
+    {
+        "icon": "https://img.itch.zone/aW1nLzE0MTExNDgxLnBuZw==/315x250%23c/cUyxXr.png",
+        "title": "Build & Upgrade 2",
+        "subtext": "Desktop Video Game",
+        "description": "An RTS game of expansion.<br>Remake of the first Build & Upgrade game.",
+        "image": "https://img.itch.zone/aW1nLzE0MTExNTE3LnBuZw==/original/xWCoZv.png",
+        "tech": ["unity"],
+        "links": {
+            "itch": "https://sltworld.itch.io/build-upgrade-2"
+        }
+    },
+
+    {
+        "icon": "https://img.itch.zone/aW1nLzcxNDc2ODkucG5n/315x250%23c/1bcClW.png",
+        "title": "SLT Ace Combat",
+        "subtext": "Desktop Video Game",
+        "description": "A low poly, multiplayer vehicle combat game.",
+        "image": "https://img.itch.zone/aW1nLzc5OTA5NTEucG5n/original/56JQhp.png",
+        "tech": ["unity"],
+        "links": {
+            "itch": "https://sltworld.itch.io/slt-ace-combat"
+        }
+    },
+    {
+        "icon": "",
+        "title": "🔵‍🚀 Custom Emojis",
+        "subtext": "Emoji Fonts",
+        "description": "A collection of custom emoji fonts created.<br>🅿‍🧠 🌐‍🅾 🌐‍🎯 🌐‍📄 🌐‍🕸 🌐‍🦁 🌐‍🧪 🌐‍🧭 🌐‍🧿 🍔‍👑 🎨‍📄 🎮‍🟣 🐍‍👨‍💻",
+        "image": "",
+        "links": {
+            "tool": "emoji/"
+        }
+    },
+];
+
+const directoryGrid = document.getElementById("directory_grid");
+
+entries.forEach(i => insert_entry(i));
+
+function insert_entry(entry) {
+    directoryGrid.innerHTML += `<div class="container">
+                <div class="image_container">
+                    <span class="material-symbols-rounded icon">imagesmode</span>
+                    ${entry.image ? `<img src="${entry.image}" loading="lazy" onerror="if (this.style.display != 'none') this.style.display = 'none';">` : ""}
+                </div>
+                <div>
+                    <div class="header">
+                        <div class="icon"${entry.icon ? "" : " style='display: none;'"}>
+                            <img src="${entry.icon}" width="24" height="24" draggable="false">
+                        </div>
+                        <div>
+                            <span>${entry.title}</span>
+                            <span class="subtext">${entry.subtext}</span>
+                        </div>
+                    </div>
+                    <p class="subtext">${entry.description}</p>
+                    ${entry.links || entry.tech  ? `<div class="separator"></div>
+                    <div style="display: flex;">
+                        ${entry.tech ? `<div class="icon_links">
+                            ${entry.tech.includes("javascript") ? `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>JavaScript</title><path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/></svg>` : ""}
+                            ${entry.tech.includes("net") ? `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>.NET</title><path d="M24 8.77h-2.468v7.565h-1.425V8.77h-2.462V7.53H24zm-6.852 7.565h-4.821V7.53h4.63v1.24h-3.205v2.494h2.953v1.234h-2.953v2.604h3.396zm-6.708 0H8.882L4.78 9.863a2.896 2.896 0 0 1-.258-.51h-.036c.032.189.048.592.048 1.21v5.772H3.157V7.53h1.659l3.965 6.32c.167.261.275.442.323.54h.024c-.04-.233-.06-.629-.06-1.185V7.529h1.372zm-8.703-.693a.868.829 0 0 1-.869.829.868.829 0 0 1-.868-.83.868.829 0 0 1 .868-.828.868.829 0 0 1 .869.829Z"/></svg>` : ""}
+                            ${entry.tech.includes("python") ? `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Python</title><path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg>` : ""}
+                            ${entry.tech.includes("unity") ? `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Unity</title><path d="m12.9288 4.2939 3.7997 2.1929c.1366.077.1415.2905 0 .3675l-4.515 2.6076a.4192.4192 0 0 1-.4246 0L7.274 6.8543c-.139-.0745-.1415-.293 0-.3675l3.7972-2.193V0L1.3758 5.5977V16.793l3.7177-2.1456v-4.3858c-.0025-.1565.1813-.2682.318-.1838l4.5148 2.6076a.4252.4252 0 0 1 .2136.3676v5.2127c.0025.1565-.1813.2682-.3179.1838l-3.7996-2.1929-3.7178 2.1457L12 24l9.6954-5.5977-3.7178-2.1457-3.7996 2.1929c-.1341.082-.3229-.0248-.3179-.1838V13.053c0-.1565.087-.2956.2136-.3676l4.5149-2.6076c.134-.082.3228.0224.3179.1838v4.3858l3.7177 2.1456V5.5977L12.9288 0Z"/></svg>` : ""}
+                        </div>` : ""}
+                        ${entry.links ? `<div class="icon_links" style="margin-left:auto;">
+                            ${entry.links.site ? `<a href="${entry.links.site}" target="_blank">
+                                <span class="material-symbols-rounded" title="Website">language</span>
+                            </a>` : ""}
+                            ${entry.links.tool ? `<a href="${entry.links.tool}" target="_blank">
+                                <span class="material-symbols-rounded" title="Others">handyman</span>
+                            </a>` : ""}
+                            ${entry.links.github ? `<a href="${entry.links.github}" target="_blank">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <title>GitHub</title>
+                                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                                </svg>
+                            </a>` : ""}
+                            ${entry.links.itch ? `<a href="${entry.links.itch}" target="_blank">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <title>Itch.io</title>
+                                    <path d="M3.13 1.338C2.08 1.96.02 4.328 0 4.95v1.03c0 1.303 1.22 2.45 2.325 2.45 1.33 0 2.436-1.102 2.436-2.41 0 1.308 1.07 2.41 2.4 2.41 1.328 0 2.362-1.102 2.362-2.41 0 1.308 1.137 2.41 2.466 2.41h.024c1.33 0 2.466-1.102 2.466-2.41 0 1.308 1.034 2.41 2.363 2.41 1.33 0 2.4-1.102 2.4-2.41 0 1.308 1.106 2.41 2.435 2.41C22.78 8.43 24 7.282 24 5.98V4.95c-.02-.62-2.082-2.99-3.13-3.612-3.253-.114-5.508-.134-8.87-.133-3.362 0-7.945.053-8.87.133zm6.376 6.477a2.74 2.74 0 0 1-.468.602c-.5.49-1.19.795-1.947.795a2.786 2.786 0 0 1-1.95-.795c-.182-.178-.32-.37-.446-.59-.127.222-.303.412-.486.59a2.788 2.788 0 0 1-1.95.795c-.092 0-.187-.025-.264-.052-.107 1.113-.152 2.176-.168 2.95v.005l-.006 1.167c.02 2.334-.23 7.564 1.03 8.85 1.952.454 5.545.662 9.15.663 3.605 0 7.198-.21 9.15-.664 1.26-1.284 1.01-6.514 1.03-8.848l-.006-1.167v-.004c-.016-.775-.06-1.838-.168-2.95-.077.026-.172.052-.263.052a2.788 2.788 0 0 1-1.95-.795c-.184-.178-.36-.368-.486-.59-.127.22-.265.412-.447.59a2.786 2.786 0 0 1-1.95.794c-.76 0-1.446-.303-1.948-.793a2.74 2.74 0 0 1-.468-.602 2.738 2.738 0 0 1-.463.602 2.787 2.787 0 0 1-1.95.794h-.16a2.787 2.787 0 0 1-1.95-.793 2.738 2.738 0 0 1-.464-.602zm-2.004 2.59v.002c.795.002 1.5 0 2.373.953.687-.072 1.406-.108 2.125-.107.72 0 1.438.035 2.125.107.873-.953 1.578-.95 2.372-.953.376 0 1.876 0 2.92 2.934l1.123 4.028c.832 2.995-.266 3.068-1.636 3.07-2.03-.075-3.156-1.55-3.156-3.025-1.124.184-2.436.276-3.748.277-1.312 0-2.624-.093-3.748-.277 0 1.475-1.125 2.95-3.156 3.026-1.37-.004-2.468-.077-1.636-3.072l1.122-4.027c1.045-2.934 2.545-2.934 2.92-2.934zM12 12.714c-.002.002-2.14 1.964-2.523 2.662l1.4-.056v1.22c0 .056.56.033 1.123.007.562.026 1.124.05 1.124-.008v-1.22l1.4.055C14.138 14.677 12 12.713 12 12.713z"/>
+                                </svg>
+                            </a>` : ""}
+                            ${entry.links.play ? `<a href="${entry.links.play}" target="_blank">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <title>Google Play</title>
+                                <path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/>
+                                </svg>
+                            </a>` : ""}
+                        </div>` : ""}
+                    </div>` : ""}
+                </div>
+            </div>`;
+}
+</script>
+</body>
+</html>
