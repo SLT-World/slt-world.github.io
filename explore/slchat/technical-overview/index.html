@@ -25,13 +25,16 @@
                 <p>Pseudo-SPA Architecture</p>
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
-                <p>Previously, SLChat relied entirely on server-side rendering using Jinja templates. This approach was the simplest to implement at the time.</p>
-                <p>However, each navigation action resulted in the application generating and returning a fully rendered HTML page. </p>
-                <p>From a performance standpoint, server-side rendering on every single navigation increased server load.</p>
-                <p>From a user experience standpoint, full page reloads made the interface feel less responsive and slower.</p>
-                <p>Therefore, on 28/11/2025, SLChat switched to a pseudo-SPA (Single Page Application) model, partially. Other pages were soon to follow in the conversion to pseudo-SPA.</p>
-                <p>Instead of re-rendering entire pages for each navigation, the application now sends JSON data while the client handles updates and transitions on each navigation.</p>
-                <p>This reduces redundant server-side rendering, improves responsiveness, and provides smoother navigation, without fully implementing a traditional heavy SPA.</p>
+                <p>Previously, SLChat relied entirely on server-side rendering using Jinja templates.</p>
+                <p>While simple to implement at the time, it had several issues:</p>
+                <ol class="container">
+                    <li>Each navigation action generated and returned a fully rendered HTML page</li>
+                    <li>Server-side rendering on every navigation increased server load.</li>
+                    <li>Full page reloads made the interface feel less responsive, impacting user experience.</li>
+                </ol>
+                <p>To address these issues, on 28/11/2025, SLChat switched to a pseudo-SPA (Single Page Application) model, partially. Other pages were soon to follow in the conversion to pseudo-SPA.</p>
+                <p>Now, instead of re-rendering entire pages for each navigation, the application now sends JSON data while the client handles updates and transitions on each navigation.</p>
+                <p>This reduces redundant server-side rendering, improves responsiveness, and provides smoother navigation without the overhead of a full SPA.</p>
             </div>
         </div>
         <div class="container">
@@ -47,10 +50,11 @@
                     <li>Unreliable information</li>
                     <li>Privacy concerns</li>
                     <li>Dependence on a third-party service</li>
+                    <li>Risk of failure which could not be instantly repaired</li>
                 </ol>
 
                 <p>On 1/12/2025, SLChat switched to its own link preview system, Metafetcher.</p>
-                <p>Although Metafetcher runs as a separate service, it is fully managed by the same person, ensuring reliability, security, and reduced dependency on third-party services.</p>
+                <p>Although Metafetcher runs as a separate service, it is fully managed by the same person, ensuring reliability, security, and reduced dependency on external services.</p>
             </div>
         </div>
         <div class="container">
@@ -67,8 +71,8 @@
                     <li>Increased storage requirements, as HTML blocks are larger than plain text</li>
                 </ol>
 
-                <p>To address these issues, SLChat deprecated HTML in favor of Markdown for message formatting on 2/12/2025.</p>
-                <p>Markdown reduces storage and bandwidth usage while maintaining a level of user-customizable rich content.</p>
+                <p>To address these issues, SLChat deprecated HTML in favor of Markdown on 2/12/2025.</p>
+                <p>Markdown reduces storage and bandwidth usage while maintaining a level of user-customizable, standardized rich content.</p>
                 <p>Although the flexibility of HTML customization was lost, future improvements with more custom Markdown syntaxes are planned to restore the lost flexibility.</p>
                 <p>This change simplifies message rendering, standardizes content, and reduces disk space usage.</p>
             </div>
@@ -80,14 +84,14 @@
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>Previously, all messages of a chat were stored in a single, uncompressed JSON file.</p>
-                <p>This caused rapid storage growth, even minor spamming would consume significant disk space.</p>
+                <p>This caused rapid storage growth, even minor spamming could consume significant disk space.</p>
                 <p>At one point, SLChat had only 15% available storage remaining.</p>
 
                 <p>On 26/11/2025, SLChat implemented a new storage system, splitting messages into multiple compressed files.</p>
 
                 <p>This change drastically reduced disk space usage.</p>
                 <p>For example, a set of messages that previously occupied 1 MB now requires approximately 0.05 MB.</p>
-                <p>Some data was however, lost during migration, but overall disk space usage was greatly reduced.</p>
+                <p>Some data was however, lost during migration, but overall disk space usage was greatly reduced as a result.</p>
             </div>
         </div>
         <div class="container">
@@ -96,7 +100,7 @@
                 <p>Storage Abuse Detection</p>
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
-                <p>Before the storage optimization on 26/11/2025, SLChat had an automated system to detect high-storage abuse.</p>
+                <p>Before the storage optimization on 26/11/2025, SLChat included an automated system to detect high-storage abuse.</p>
                 <p>Servers exceeding 1 MB were evaluated to identify spam, and offending accounts and servers were automatically terminated.</p>
 
                 <p>After the storage redesign, this automatic termination system was removed, as storage abuse became less impactful.</p>
