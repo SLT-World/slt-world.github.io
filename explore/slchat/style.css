@@ -251,10 +251,6 @@ blockquote::before {
     border-radius: 10px;
 }
 
-li {
-    list-style-position: inside;
-}
-
 .spoiler {
     cursor: pointer;
 }

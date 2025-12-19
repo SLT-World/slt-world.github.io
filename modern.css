@@ -76,6 +76,9 @@ ol.container {
     padding-left: 20px !important;
     border: none;
 }
+li {
+    list-style-position: inside;
+}
 .material-symbols-rounded {
     user-select: none;
     text-align: center;

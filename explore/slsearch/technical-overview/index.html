@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SLSearch Technical Overview - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <script src="../../../prism.js"></script>
+    <link rel="stylesheet" href="../../../prism.css"/>
+    <link rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+    <div class="content">
+        <div class="navigation">
+            <img src="../../../favicon.png" width="35" height="35" draggable="false">
+            <h3>SLT World</h3>
+        </div>
+        <h1>SLSearch Technical Overview</h1>
+        <p>A <strong>technical overview</strong> of various SLSearch features.</p>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">settings</span>
+                <p>Front-End Rich Results</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>In earlier versions, SLSearch only supported a single rich result, which was a Wikipedia-based knowledge graph.</p>
+                <p>The feature was initially processed entirely on the server, where the backend fetched and rendered the data before returning the final response.</p>
+                <p>While functional, this approach introduced a few issues:</p>
+                <ol class="container">
+                    <li>Additional server-side fetching and processing</li>
+                    <li>Increased response times, even when no valid Wikipedia result was available</li>
+                    <li>Unnecessary load placed on the backend</li>
+                </ol>
+                <p>To address these issues, rich results were migrated from the backend to the frontend.</p>
+                <p>Since Wikipedia data can be fetched directly without CORS restrictions, the client is able to process the information without issue.</p>
+                <p>This change significantly reduces search latency, keeps the backend lightweight, and preserves rich results for users without sacrificing server performance.</p>
+                <p>However, moving rich results to the frontend also introduced its own set of issues:</p>
+                <ol class="container">
+                    <li>CORS-related issues are encountered more frequently</li>
+                    <li>Increased reliance on third-party CORS proxy services</li>
+                    <li>API key–protected services cannot be used, as keys cannot be securely stored on the client side</li>
+                </ol>
+                <p>While frontend processing presents various issues and restricts access to certain APIs, it provides speed improvements and simplicity.</p>
+                <p>An additional benefit of this approach is improved user control.</p>
+                <p>Since rich features are processed client-side, users can enable or disable individual features without the server needing to track feature preferences to modify responses.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">settings</span>
+                <p>Fuzzy Feature Activation</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>In earlier versions, SLSearch heavily relied on keyword-based matching to determine when certain feature panels should be displayed.</p>
+                <p>While simple, this approach several issues:</p>
+                <ol class="container">
+                    <li>Queries in other languages, such as Chinese, would fail to trigger anything</li>
+                    <li>Maintaining keyword lists for every language was impractical</li>
+                </ol>
+                <p>To address these issues, instead of relying solely on the query text, SLSearch now analyzes the search results.</p>
+                <p>By scanning result sources and identifying recurring well known websites, the system can reliably deduce the nature of the query.</p>
+                <p>In addition, SLSearch evaluates which objects appear most frequently across the results.</p>
+                <p>This fuzzy scoring approach allows feature panels to be activated even when the query language varies.</p>
+                <p>This system is used in features such as weather, dictionary, flight, and finance panels.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
