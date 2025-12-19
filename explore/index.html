@@ -208,7 +208,8 @@ const entries = [
         "image": "",
         "tech": ["python", "javascript"],
         "links": {
-            "site": "https://slsearch.eu.org/"
+            "site": "https://slsearch.eu.org/",
+            "info": "slsearch/"
         }
     },
     {
@@ -220,7 +221,7 @@ const entries = [
         "tech": ["python", "javascript"],
         "links": {
             "site": "https://slchat.alwaysdata.net/",
-            "tool": "slchat/"
+            "info": "slchat/"
         }
     },
 
@@ -330,7 +331,7 @@ const entries = [
         "description": "A collection of custom emoji fonts created.<br>🅿‍🧠 🌐‍🅾 🌐‍🎯 🌐‍📄 🌐‍🕸 🌐‍🦁 🌐‍🧪 🌐‍🧭 🌐‍🧿 🍔‍👑 🎨‍📄 🎮‍🟣 🐍‍👨‍💻",
         "image": "",
         "links": {
-            "tool": "emoji/"
+            "info": "emoji/"
         }
     },
 ];
@@ -368,7 +369,7 @@ function insert_entry(entry) {
                             ${entry.links.site ? `<a href="${entry.links.site}" target="_blank">
                                 <span class="material-symbols-rounded" title="Website">language</span>
                             </a>` : ""}
-                            ${entry.links.tool ? `<a href="${entry.links.tool}" target="_blank">
+                            ${entry.links.info ? `<a href="${entry.links.info}" target="_blank">
                                 <span class="material-symbols-rounded" title="Others">info</span>
                             </a>` : ""}
                             ${entry.links.github ? `<a href="${entry.links.github}" target="_blank">
