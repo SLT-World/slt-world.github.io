@@ -70,6 +70,12 @@ p, h1, h2, h3, h4, h5, h6, span, i {
     text-align: center;
     align-content: center;
 }
+ol.container {
+    background: var(--primary-color);
+    list-style: circle;
+    padding-left: 20px !important;
+    border: none;
+}
 .material-symbols-rounded {
     user-select: none;
     text-align: center;
