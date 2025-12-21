@@ -24,6 +24,7 @@
 > - 🔗 [User Agent](../tests/useragent.html)
 > - 🔗 [Script Flood](../tests/flood.html)
 > - 🔗 [Embedded Browser Detection](../tests/embedded.html)
+> - 🔗 [Anti Back Button](../tests/antiback.html)
 
 ## 🌐 External Tests
 > - 🔗 [WebAssembly](https://webassembly.org/features/)
