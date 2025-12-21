@@ -25,8 +25,13 @@
         list.appendChild(h);
       }
       logList(null, 'Navigate backwards to test', '');
-      history.pushState(null, document.title, location.href);
-      window.addEventListener('popstate', function (event) { history.pushState(null, document.title, location.href); });
+      for (let i = 0; i < 10; i++) {
+        history.pushState({}, document.title, location.href);
+      }
+      window.addEventListener("popstate", () => {
+        history.replaceState({}, document.title, location.href);
+        history.pushState({}, document.title, location.href);
+      });
     </script>
   </body>
 </html>
