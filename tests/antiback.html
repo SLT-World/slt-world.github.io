@@ -26,11 +26,20 @@
       }
       logList(null, 'Navigate backwards to test', '');
       for (let i = 0; i < 10; i++) {
-        history.pushState({}, document.title, location.href);
+        history.pushState({}, document.title, `${location.href}?t=${Math.random()}`);
       }
       window.addEventListener("popstate", () => {
-        history.replaceState({}, document.title, location.href);
-        history.pushState({}, document.title, location.href);
+        history.replaceState({}, document.title, `${location.href}?t=${Math.random()}`);
+        history.pushState({}, document.title, `${location.href}?t=${Math.random()}`);
+      });
+      window.addEventListener("pageshow", (e) => {
+        if (e.persisted) location.reload();
+      });
+      if (performance.getEntriesByType("navigation")[0].type === "back_forward") {
+        location.href = `antiback.html?t=${Math.random()}`;
+      }
+      window.addEventListener("popstate", () => {
+        setTimeout(() => location.href = `antiback.html?t=${Math.random()}`, 0);
       });
     </script>
   </body>
