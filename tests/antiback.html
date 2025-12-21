@@ -26,11 +26,11 @@
       }
       logList(null, 'Navigate backwards to test', '');
       for (let i = 0; i < 10; i++) {
-        history.pushState({}, document.title, `${location.href}?t=${Math.random()}`);
+        history.pushState({}, document.title, `antiback.html?t=${Math.random()}`);
       }
       window.addEventListener("popstate", () => {
-        history.replaceState({}, document.title, `${location.href}?t=${Math.random()}`);
-        history.pushState({}, document.title, `${location.href}?t=${Math.random()}`);
+        history.replaceState({}, document.title, `antiback.html?t=${Math.random()}`);
+        history.pushState({}, document.title, `antiback.html?t=${Math.random()}`);
       });
       window.addEventListener("pageshow", (e) => {
         if (e.persisted) location.reload();
