@@ -18,7 +18,7 @@
             <h3>SLT World</h3>
         </div>
         <h1>SLChat's Known Issues & Limitations</h1>
-        <p>SLChat is under active development and is currently hosted on a limited free platform using a non-shared application architecture.</p>
+        <p>SLChat is under <strong>active development</strong> and is currently hosted on a <strong>free, limited platform</strong> using a single application architecture.</p>
         <p>As a result, certain issues and limitations may be occasionally encountered.</p>
         <p>This page documents the most commonly observed issues and explains their underlying causes to clear up any misconceptions and misunderstandings.</p>
         <div class="container">
@@ -31,7 +31,7 @@
                 <p>This issue is most commonly caused by frequent code changes combined with client-side caching.</p>
                 <p>When updated CSS or JavaScript files are deployed, some clients may continue using cached versions of incompatible, older assets, resulting in mismatched or broken rendering.</p>
                 <p>The issue does not indicate permanent data loss or server malfunction.</p>
-                <p>In most cases, this can be resolved by performing a hard refresh or clearing the browser cache.</p>
+                <p>In most cases, this can be resolved by <strong>performing a hard refresh</strong> or <strong>clearing the browser cache</strong>.</p>
             </div>
         </div>
         <div class="container">
@@ -40,12 +40,17 @@
                 <p>Connection Failures</p>
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
-                <p>The error message "Connection to upstream failed: connection failure" typically indicates that SLChat is starting from an idle state.</p>
-                <p>SLChat is hosted on a free platform that automatically shuts down the application when it has been inactive for a period of time.</p>
+                <p>The error message "<strong>Connection to upstream failed: connection failure</strong>" typically indicates that SLChat is starting from an idle state.</p>
+                <p>SLChat is hosted on a free platform that automatically shuts down the application after a period of inactivity.</p>
+                <p>This behavior is intentional and serves two purposes:</p>
+                <ol class="container">
+                    <li>To avoid unnecessary resource usage and prevent abuse of free hosting resources.</li>
+                    <li>To allow SLChat to recover from occasional, rare issues that causes the application to become unresponsive.</li>
+                </ol>
                 <p>When a new request is made after inactivity, SLChat must perform a cold start, which prevents connections until the startup is complete.</p>
                 <p>This behavior is expected under the current hosting constraints and usually resolves itself after a short delay.</p>
                 <p>The issue does not indicate permanent data loss or server malfunction.</p>
-                <p>In most cases, refreshing the page after a few seconds restores the connection.</p>
+                <p>In most cases, <strong>refreshing the page</strong> after a few seconds is sufficient to restore the connection.</p>
             </div>
         </div>
         <div class="container">
@@ -54,9 +59,9 @@
                 <p>Browser Compatibility Limitations</p>
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
-                <p>SLChat heavily relies on modern web technologies.</p>
-                <p>Some older browsers may not fully support certain CSS or JavaScript features.</p>
-                <p>A modern and up-to-date browser is recommended for the best experience.</p>
+                <p>SLChat relies heavily on modern web technologies.</p>
+                <p>Some older browsers may not fully support certain CSS or JavaScript features, which may result in visual or functional inconsistencies.</p>
+                <p>For the best experience, a modern and up-to-date browser is recommended.</p>
             </div>
         </div>
         <div class="container">
@@ -66,7 +71,7 @@
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>Some features may behave inconsistently or change over time as SLChat continues to evolve.</p>
-                <p>This includes:</p>
+                <p>This includes, but is not limited to:</p>
                 <ol class="container">
                     <li>Markdown rendering</li>
                     <li>Link previews</li>
@@ -82,8 +87,8 @@
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>Due to hosting constraints and ongoing architectural changes, message retention and server uptime are not guaranteed.</p>
-                <p>Storage optimizations or migrations may result in temporary data loss or missing history.</p>
-                <p>These events are rare but possible while SLChat remains in development.</p>
+                <p>Storage optimizations or migrations may occasionally result in temporary data loss or missing history.</p>
+                <p>These events are rare but possible while SLChat remains in active development.</p>
             </div>
         </div>
     </div>
