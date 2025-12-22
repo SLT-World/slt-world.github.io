@@ -41,7 +41,7 @@
                 </ol>
                 <p>This transition introduced several additional improvements:</p>
                 <ol class="container">
-                    <li>Enabled the implementation of the Pseudo-SPA Architecture.</li>
+                    <li>Enabled the implementation of the pseudo-SPA Architecture.</li>
                     <li>Real-time synchronization of server and DM updates across all open tabs.</li>
                     <li>Simplified user data delivery, with user data sent immediately upon connection.</li>
                     <li>Removal of Jinja-based rendering, as user data is now supplied over the user socket.</li>
@@ -69,7 +69,7 @@
                     <li>Server-side rendering on every navigation increased server load.</li>
                     <li>Full page reloads made the interface feel less responsive, impacting user experience.</li>
                 </ol>
-                <p>To address these issues, on 28/11/2025, SLChat switched to a pseudo-SPA (Single Page Application) model, partially. Other pages were soon to follow in the conversion to pseudo-SPA.</p>
+                <p>To address these issues, on 28/11/2025, following the introduction of the dual socket architecture, SLChat switched to a pseudo-SPA (Single Page Application) model, partially. Other pages were soon to follow in the conversion to pseudo-SPA.</p>
                 <p>Now, instead of re-rendering entire pages for each navigation, the application now sends JSON data while the client handles updates and transitions on each navigation.</p>
                 <p>This reduces redundant server-side rendering, improves responsiveness, and provides smoother navigation without the overhead of a full SPA.</p>
             </div>
