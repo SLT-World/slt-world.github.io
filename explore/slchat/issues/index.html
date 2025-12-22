@@ -37,6 +37,18 @@
         <div class="container">
             <div class="header">
                 <span class="material-symbols-rounded icon">warning</span>
+                <p>File Uploading Limitations</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>SLChat currently has limited support for file uploads, particularly for large images, videos, and other attachments.</p>
+                <p>SLChat does not have access to a dedicated content delivery network or a first-party media hosting service, and instead relies on free third-party hosting solutions.</p>
+                <p>The current media hosting service also does not support streaming uploads.</p>
+                <p>As a result, files must be fully transferred in a single request, which is not possible with SLChat's current architecture.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
                 <p>Connection Failures</p>
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
@@ -51,6 +63,18 @@
                 <p>This behavior is expected under the current hosting constraints and usually resolves itself after a short delay.</p>
                 <p>The issue does not indicate permanent data loss or server malfunction.</p>
                 <p>In most cases, <strong>refreshing the page</strong> after a few seconds is sufficient to restore the connection.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Third-Party Service Dependency</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>Some SLChat features rely on external services to function correctly, such as media hosting.</p>
+                <p>If these services are unavailable, rate-limited, or change their behavior, related features may stop functioning.</p>
+                <p>Efforts have been made to reduce reliance on third parties where possible.</p>
+                <p>Most recently, link preview rendering was previously handled by a third-party service, but has since been replaced by Metafetcher, a first-party service developed and operated alongside SLChat.</p>
             </div>
         </div>
         <div class="container">
