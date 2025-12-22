@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SLChat's Known Issues & Limitations - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <script src="../../../prism.js"></script>
+    <link rel="stylesheet" href="../../../prism.css"/>
+    <link rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+    <div class="content">
+        <div class="navigation">
+            <img src="../../../favicon.png" width="35" height="35" draggable="false">
+            <h3>SLT World</h3>
+        </div>
+        <h1>SLChat's Known Issues & Limitations</h1>
+        <p>SLChat is under active development and is currently hosted on a limited free platform using a non-shared application architecture.</p>
+        <p>As a result, certain issues and limitations may be occasionally encountered.</p>
+        <p>This page documents the most commonly observed issues and explains their underlying causes to clear up any misconceptions and misunderstandings.</p>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Broken CSS, JavaScript, or UI Glitches</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>Occasionally, SLChat may appear visually broken or certain interface elements may not be functioning as expected.</p>
+                <p>This issue is most commonly caused by frequent code changes combined with client-side caching.</p>
+                <p>When updated CSS or JavaScript files are deployed, some clients may continue using cached versions of incompatible, older assets, resulting in mismatched or broken rendering.</p>
+                <p>The issue does not indicate permanent data loss or server malfunction.</p>
+                <p>In most cases, this can be resolved by performing a hard refresh or clearing the browser cache.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Connection Failures</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>The error message "Connection to upstream failed: connection failure" typically indicates that SLChat is starting from an idle state.</p>
+                <p>SLChat is hosted on a free platform that automatically shuts down the application when it has been inactive for a period of time.</p>
+                <p>When a new request is made after inactivity, SLChat must perform a cold start, which prevents connections until the startup is complete.</p>
+                <p>This behavior is expected under the current hosting constraints and usually resolves itself after a short delay.</p>
+                <p>The issue does not indicate permanent data loss or server malfunction.</p>
+                <p>In most cases, refreshing the page after a few seconds restores the connection.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Browser Compatibility Limitations</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>SLChat heavily relies on modern web technologies.</p>
+                <p>Some older browsers may not fully support certain CSS or JavaScript features.</p>
+                <p>A modern and up-to-date browser is recommended for the best experience.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Feature Instability</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>Some features may behave inconsistently or change over time as SLChat continues to evolve.</p>
+                <p>This includes:</p>
+                <ol class="container">
+                    <li>Markdown rendering</li>
+                    <li>Link previews</li>
+                    <li>Experimental features</li>
+                </ol>
+                <p>Features may be removed, adjusted, disabled, or reworked without notice during development.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Data Persistence Limitations</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>Due to hosting constraints and ongoing architectural changes, message retention and server uptime are not guaranteed.</p>
+                <p>Storage optimizations or migrations may result in temporary data loss or missing history.</p>
+                <p>These events are rare but possible while SLChat remains in development.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
