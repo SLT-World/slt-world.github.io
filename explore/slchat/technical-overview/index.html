@@ -22,6 +22,43 @@
         <div class="container">
             <div class="header">
                 <span class="material-symbols-rounded icon">settings</span>
+                <p>Dual Socket Architecture</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>Originally, SLChat relied on a single WebSocket connection that was primarily responsible for handling chat messages.</p>
+                <p>While sufficient at the time, this design had several limitations:</p>
+                <ol class="container">
+                    <li>The socket was focused on message delivery only.</li>
+                    <li>Updates such as server membership changes were not propagated in real time.</li>
+                    <li>Multiple tabs could become desynchronized, each maintaining its own outdated list of servers and DMs.</li>
+                </ol>
+                <p>As a result, information and updates were not consistently synchronized across multiple tabs.</p>
+                <p>To address these issues, on 27/11/2025, SLChat switched to a dual socket architecture.</p>
+                <p>Under this model:</p>
+                <ol class="container">
+                    <li>The user socket is responsible for user and account data, such as servers and direct messages.</li>
+                    <li>the chat socket is responsible for chat data, such as message delivery and presence updates.</li>
+                </ol>
+                <p>This transition introduced several additional improvements:</p>
+                <ol class="container">
+                    <li>Real-time synchronization of server and DM updates across all open tabs.</li>
+                    <li>Simplified user data delivery, with user data sent immediately upon connection.</li>
+                    <li>Removal of Jinja-based rendering, as user data is now supplied over the user socket.</li>
+                    <li>Improved API wrapper design, as client-side state is initialized from socket data rather than templated HTML.</li>
+                </ol>
+                <p>By removing reliance on server rendered pages for chats, this change also enables greater flexibility going forward.</p>
+                <p>The client is no longer tied to Jinja-rendered pages, making it easier to:</p>
+                <ol class="container">
+                    <li>Develop native applications</li>
+                    <li>Introduce shared or headless clients</li>
+                    <li>Support alternative frontends using the same backend</li>
+                </ol>
+                <p>This lays the foundation for more native, cross-platform SLChat applications.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">settings</span>
                 <p>Pseudo-SPA Architecture</p>
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
