@@ -491,12 +491,11 @@ function parseInlineMarkdown(text) {
             }
             return `<p class="spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'}>${url}</p>`;
         })
-        .replace(/\[progress:(\d{1,3})%(?::([^\]]+))?\]/gi, (m, num, color) => {
+        .replace(/\{progress:(\d{1,3})%(?::([^}]+))?\}/gi, (m, num, color) => {
             const percentage = Math.max(0, Math.min(100, Number(num)));
             return `<progress data-tip="${percentage}%" value="${percentage}" max="100"${color ? ` style="--color:${color};"` : ""}></progress>`;
         })
-        .replace(/\[timestamp:(\d{1,20}):([a-zA-Z])\]/g, (m, unix, fmt) => `<span class="timestamp" data-format="${fmt}" data-unix="${unix}"></span>`)
-        .replace(/\[timestamp:(\d{1,20})\]/g, (m, unix) => `<span class="timestamp" data-unix="${unix}"></span>`)
+        .replace(/\{timestamp:(\d{1,20})(?::([a-zA-Z]))?\}/g, (m, unix, fmt) => `<span class="timestamp" data-unix="${unix}"${fmt ? ` data-format="${fmt}"` : ""}></span>`)
         .replace(/\|\|([^|]+)\|\|/g, `<p class="spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'}>$1</p>`)
         .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
         .replace(/\*([^*]+)\*/g, '<em>$1</em>')
@@ -505,13 +504,13 @@ function parseInlineMarkdown(text) {
         .replace(/__([^_]+)__/g, '<u>$1</u>')
         .replace(/(?<![\w\]\):\/\.])@([a-zA-Z0-9_]{1,32})(?![^<]*>)/g, '<span class="mention">@$1</span>')
         .replace(/\[([^\]]+(?:\[[^\]]*\][^\]]*)*)\]\((https?:\/\/[^\s)]+)\)/g, '<'+'a href="$2" target="_blank" rel="noopener noreferrer nofollow" data-tip="$2">$1<'+'/a>')
-        .replace(/\{color=([^}]+)\}([\s\S]*?)\{\/color\}/g, (m, color, content) => `<span style="color:${color}">${content}</span>`)
-        .replace(/\{size=([0-9.]+)\}([\s\S]*?)\{\/size\}/g, (m, size, content) => {
+        .replace(/\{color:([^}]+)\}([\s\S]*?)\{\/color\}/g, (m, color, content) => `<span style="color:${color}">${content}</span>`)
+        .replace(/\{size:([0-9.]+)\}([\s\S]*?)\{\/size\}/g, (m, size, content) => {
             let scale = parseFloat(size);
             if (isNaN(scale)) return content;
             return `<span style="font-size:${Math.min(1.5, Math.max(0.75, scale))}em">${content}</span>`;
         })
-        .replace(/\{font=([a-zA-Z]+)\}([\s\S]*?)\{\/font\}/g, (m, font, content) => {
+        .replace(/\{font:([a-zA-Z]+)\}([\s\S]*?)\{\/font\}/g, (m, font, content) => {
             const family = getMarkdownFont(font);
             if (!family) return content;
             return `<span style="font-family:${family}">${content}</span>`;
@@ -679,11 +678,11 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "<https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png>",
     "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "||https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4||",
     "https://www.w3schools.com/html/horse.mp3",
-    "[progress:80%]\n[progress:60%:yellow]\n[progress:40%:#ffcc00]\n[progress:20%:rgb(255,0,0)]",
+    "{progress:80%}\n{progress:60%:yellow}\n{progress:40%:#ffcc00}\n{progress:20%:rgb(255,0,0)}",
     "|embed\ntype: error\ntitle: Error encountered\ndescription: Something went wrong\nfooter: Please try again\n|end",
     "|embed\ntype: clean\ntitle: Clean\ndescription: A clean embed\n|end",
     "|embed\ntype: default\nicon: coin\ntitle: [Wiki - Wikipedia](https://en.wikipedia.org/wiki/Wiki)\ndescription: A wiki is a form of hypertext publication...\ncolor: white\nfooter: Footer\navatar: https://wikipedia.com/favicon.ico\nimage: https://upload.wikimedia.org/wikipedia/commons/f/f0/Wikitext-wiki_markup-wikipedia.png\n\nfields:\n- name: Foo\n  value: Bar\n- name: Foo\n  value: Inline Bar\n  inline: true\n- name: Foo\n  value: Inline Bar\n  inline: true\n|end",
-    `[timestamp:${currentTimestamp}:r]\n[timestamp:${currentTimestamp}:t]\n[timestamp:${currentTimestamp}:T]\n[timestamp:${currentTimestamp}:d]\n[timestamp:${currentTimestamp}:D]\n[timestamp:${currentTimestamp}]`,
+    `{timestamp:${currentTimestamp}:r}\n{timestamp:${currentTimestamp}:t}\n{timestamp:${currentTimestamp}:T}\n{timestamp:${currentTimestamp}:d}\n{timestamp:${currentTimestamp}:D}\n{timestamp:${currentTimestamp}}`,
     "# {gold}hello{/gold}",
     "{anaglyph}Hello{/anaglyph}",
     "{rainbow}Hello{/rainbow}",
@@ -691,10 +690,10 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "{glow}Hello{/glow}",
     "\\\\ \\\* \\\[ \\\]",
     "-# Sub**text**",
-    "{font=mono}Monospace{/font}\n{font=sans}Sans-Serif{/font}\n{font=serif}Serif{/font}\n{font=cursive}Cursive{/font}",
-    "{color=red}Red{/color} Color",
-    "{size=0.75}Subtext 2.0{/size}",
-    "{font=cursive}{size=1.5}{color=red}M{/color}{color=lime}i{/color}{color=yellow}x{/color}{/size}{/font}",
+    "{font:mono}Monospace{/font}\n{font:sans}Sans-Serif{/font}\n{font:serif}Serif{/font}\n{font:cursive}Cursive{/font}",
+    "{color:red}Red{/color} Color",
+    "{size:0.75}Subtext 2.0{/size}",
+    "{font:cursive}{size:1.5}{color:red}M{/color}{color:lime}i{/color}{color:yellow}x{/color}{/size}{/font}",
 ];
 for (let syntax of syntaxes) syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${escapeHtml(syntax)}</code></pre>${parseMarkdown(syntax)}</div>`;
     </script>
