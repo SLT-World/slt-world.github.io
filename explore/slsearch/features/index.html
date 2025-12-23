@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SLSearch Rich Results - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <script src="../../../prism.js"></script>
+    <link rel="stylesheet" href="../../../prism.css"/>
+    <style>
+* {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+#directory_grid {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: repeat(auto-fill, 462.5px);
+    width: 100%;
+}
+
+#directory_grid > div {
+    min-height: 375px;
+    width: auto;
+    align-items: center;
+    justify-content: stretch;
+    font-size: medium;
+    padding: 0;
+    gap: 0;
+    overflow: hidden;
+}
+
+#directory_grid > div > div:not(.image_container) {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#directory_grid > div > div > .header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-color: var(--border-color);
+}
+
+#directory_grid > div > div > .separator {
+    height: 1px;
+    min-height: 1px;
+    background: var(--border-color);
+}
+
+#directory_grid > div > .image_container {
+    width: 100%;
+    min-height: 300px;
+    height: 300px;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+#directory_grid > div > .image_container > .material-symbols-rounded {
+    font-size: 48px;
+}
+
+#directory_grid > div > .image_container > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    background: #202225;
+}
+
+#directory_grid > div > div > .header > .icon:first-child {
+    width: 35px;
+    height: 35px;
+    background: var(--primary-color);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#directory_grid > div > div > .header > div:not(:first-child) {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+#directory_grid > div > div > p {
+    height: 100%;
+    white-space: break-spaces;
+}
+
+.material-symbols-rounded {
+    color: var(--gray-color);
+    font-size: 24px;
+}
+
+@media screen and (max-width: 679px) {
+    #directory_grid {
+        display: flex;
+        flex-direction: column;
+    }
+    #directory_grid > div {
+        width: 100%;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="navigation">
+            <img src="../../../favicon.png" width="35" height="35" draggable="false">
+            <h3>SLT World</h3>
+        </div>
+        <h1>SLSearch Rich Results</h1>
+        <p>An <strong>collection</strong> of various SLSearch rich results.</p>
+        <div id="directory_grid"></div>
+    </div>
+<script>
+const entries = [
+    {
+        "icon": "network_intelligence",
+        "title": "AI Overview",
+        "subtext": "AI summary",
+        "description": "Provides a short AI-generated summary for the query.\n\nUseful for getting a quick explanation or overview.",
+        "image": "ai_overview.png",
+        "link": "https://slsearch.eu.org/search?q=who%20created%20linux%3F"
+    },
+    {
+        "icon": "text_snippet",
+        "title": "Wikipedia",
+        "subtext": "Show Wikipedia facts",
+        "description": "Displays relevant Wikipedia facts directly and functions similar to Google's Knowledge Graph.",
+        "image": "wikipedia.png",
+        "link": "https://slsearch.eu.org/search?q=paper"
+    },
+    {
+        "icon": "globe_book",
+        "title": "Wikidata",
+        "subtext": "Show Wikidata information",
+        "description": "Shows structured facts sourced from Wikidata.\n\nThis panel may take slightly longer to load due to the amount of structured data involved.",
+        "image": "wikidata.png",
+        "link": "https://slsearch.eu.org/search?q=google"
+    },
+    {
+        "icon": "book_3",
+        "title": "Dictionary",
+        "subtext": "Show definitions & meanings",
+        "description": "Displays definitions, meanings, and usage for words and phrases.\n\nUseful for looking up unfamiliar terms or checking word meanings quickly.",
+        "image": "dictionary.png",
+        "link": "https://slsearch.eu.org/search?q=hello"
+    },
+    {
+        "icon": "thermometer",
+        "title": "Weather",
+        "subtext": "Show weather information",
+        "description": "Shows the weather conditions and forecasts for specific locations.\n\nTriggers automatically when a query is related to the weather of a specific place.",
+        "image": "weather.png",
+        "link": "https://slsearch.eu.org/search?q=weather"
+    },
+    {
+        "icon": "currency_exchange",
+        "title": "Currency Converter",
+        "subtext": "Convert currency",
+        "description": "Converts between currencies directly in the search results.",
+        "image": "currency.png",
+        "link": "https://slsearch.eu.org/search?q=100%20USD%20to%20SGD"
+    },
+    {
+        "icon": "finance_mode",
+        "title": "Finance",
+        "subtext": "Show financial information",
+        "description": "Displays financial information for stocks and cryptocurrencies.\n\nIncludes price data and basic market information.",
+        "image": "finance.png",
+        "link": "https://slsearch.eu.org/search?q=AAPL"
+    },
+    {
+        "icon": "key_vertical",
+        "title": "Password Generator",
+        "subtext": "Generate random passwords",
+        "description": "Generates random passwords based on strength and length.\n\nSupports queries that specify password strength and character count, such as \"password strong 16\", \"password weak 10\", or \"password average 14\".",
+        "image": "password.png",
+        "link": "https://slsearch.eu.org/search?q=password%20strong%2016"
+    },
+    {
+        "icon": "translate",
+        "title": "Translate",
+        "subtext": "Translate to other languages",
+        "description": "Provides quick translations between languages.",
+        "image": "translate.png",
+        "link": "https://slsearch.eu.org/search?q=translate"
+    },
+    {
+        "icon": "identity_platform",
+        "title": "User Agent",
+        "subtext": "Show web software agent",
+        "description": "Displays information about your current browser and device user agent.",
+        "image": "ua.png",
+        "link": "https://slsearch.eu.org/search?q=user%20agent"
+    },
+    {
+        "icon": "travel",
+        "title": "Flight",
+        "subtext": "Show flight information",
+        "description": "Shows flight information such as status and route details.\n\n\Triggers when searching for flight number queries.",
+        "image": "flight.png",
+        "link": "https://slsearch.eu.org/search?q=LH87"
+    },
+    {
+        "icon": "nest_clock_farsight_analog",
+        "title": "Time",
+        "subtext": "Show time, timezone, sunrise & sunset",
+        "description": "Displays current time, timezone, sunrise, and sunset information based on location.",
+        "image": "",
+        "link": "https://slsearch.eu.org/search?q=sunrise"
+    },
+];
+
+const directoryGrid = document.getElementById("directory_grid");
+
+entries.forEach(i => insert_entry(i));
+
+function insert_entry(entry) {
+    directoryGrid.innerHTML += `<div class="container">
+    <div class="image_container">
+        <span class="material-symbols-rounded icon">imagesmode</span>
+        ${entry.image ? `<img src="${entry.image}" loading="lazy" onerror="if (this.style.display != 'none') this.style.display = 'none';">` : ""}
+    </div>
+    <div>
+        <div class="header">
+            <div class="icon"${entry.icon ? "" : " style='display: none;'"}>
+                <span class="material-symbols-rounded">${entry.icon}</span>
+            </div>
+            <div>
+                <span>${entry.title}</span>
+                <span class="subtext">${entry.subtext}</span>
+            </div>
+        </div>
+        <p class="subtext">${entry.description}</p>
+        ${entry.link ? `<div class="separator"></div>
+            <div style="display: flex;">
+                <a href="${entry.link}" target="_blank">
+                    <span class="material-symbols-rounded" title="Open">open_in_new</span>
+                </a>
+            </div>
+        </div>` : ""}
+    </div>
+</div>`;
+}
+</script>
+</body>
+</html>
