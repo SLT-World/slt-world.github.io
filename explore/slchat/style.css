@@ -52,7 +52,7 @@
 
 .embed {
     word-wrap: break-word;
-    background: var(--secondary-color);
+    background: var(--darker-secondary-color);
     border: 1px solid var(--primary-color);
     padding: 10px;
     border-radius: 5px;
@@ -61,6 +61,7 @@
     align-items: center;
     width: fit-content;
     overflow: hidden;
+    max-width: 100%;
 }
 
 .embed:has(.header) {
@@ -127,34 +128,35 @@
     overflow: hidden;
 }
 .embed.info {
-    border-left: 5px solid dodgerblue;
-}
-.embed.info > .bx, .embed.info > .header > .bx {
-    color: dodgerblue;
+    --color: dodgerblue;
 }
 .embed.warn {
-    border-left: 5px solid darkorange;
-}
-.embed.warn > .bx, .embed.warn > .header > .bx {
-    color: darkorange;
+    --color: darkorange;
 }
 .embed.error {
-    border-left: 5px solid red;
-}
-.embed.error > .bx, .embed.error > .header > .bx {
-    color: red;
+    --color: red;
 }
 .embed.success {
-    border-left: 5px solid springgreen;
-}
-.embed.success > .bx, .embed.success > .header > .bx {
-    color: springgreen;
+    --color: springgreen;
 }
 .embed.note {
-    border-left: 5px solid gold;
+    --color: gold;
 }
-.embed.note > .bx, .embed.note > .header > .bx {
-    color: gold;
+
+.embed.site:has(.attachment), .embed.youtube:has(.attachment) {
+    width: min-content;
+    min-width: min(100%, 300px);
+}
+
+.embed.site > .bx, .embed.site > .header > .bx {
+    color: var(--gray-color);
+}
+
+.embed.youtube {
+    --color: red;
+}
+.embed.youtube > .bxl, .embed.youtube > .header > .bxl {
+    color: red;
 }
 
 .embed.block {
@@ -170,22 +172,22 @@
     align-items:center;
 }*/
 
-.embed .bx {
-    font-size: 20px;
+.embed .bx, .embed .bxl {
+    font-size: 22px;
 }
 
-.embed > .bx, .embed > .header > .bx {
+.embed > .bx, .embed > .header > .bx, .embed > .bxl, .embed > .header > .bxl {
     margin-right: 5px;
     color: var(--color);
 }
 
-.embed.block > .bx, .embed.block > .header > .bx {
+.embed.block > .bx, .embed.block > .header > .bx, .embed.block > .bxl, .embed.block > .header > .bxl {
     top: 2.5px;
     position: relative;
     align-self: baseline;
 }
 
-.embed > .header > .bx {
+.embed > .header > .bx, .embed > .header > .bxl {
     margin-right: 0px;
 }
 
@@ -207,6 +209,75 @@
 .syntax_list > * > pre {
     width: 100%;
 }
+.syntax_list > * {
+    --primary-color: #202225;
+    --secondary-color: #36393F;
+    --darker-secondary-color: #2E3036;
+    --light-gray-color: #646464;
+    --gray-color: #a5a5a5;
+    --font-color: white;
+    --green: #18B357;
+    --theme-color: royalblue;
+    --color: var(--gray-color);
+    --font: Poppins;
+    --sidebar-width: 80px;
+    --memberlist-width: 0px;
+    --bold: 500;
+    --emoji: '';
+}
+
+
+.syntax_list button {
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  font-size: 15px;
+  display: flex;
+  border-radius: 5px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  background: var(--primary-color);
+  color: var(--font-color);
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.syntax_list .button {
+    height: 40px;
+    width: fit-content;
+    padding: 15px;
+    font-size: 15px;
+    display: flex;
+    border-radius: 5px;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    background: var(--primary-color);
+    color: var(--font-color);
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.syntax_list button i, .syntax_list .button i {
+  font-size: 18px;
+  text-align: center;
+}
+.syntax_list button:disabled, .syntax_list .button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+.syntax_list button:disabled:active, .syntax_list .button:disabled:active {
+    pointer-events: none;
+}
+
+.syntax_list button:hover:not(:disabled), .syntax_list .button:hover:not(:disabled){
+  filter: brightness(85%);
+}
+
 
 progress {
     --color: mediumseagreen;
@@ -251,38 +322,163 @@ blockquote::before {
     border-radius: 10px;
 }
 
-.spoiler {
-    cursor: pointer;
+.spoiler:not(.open) {
+  cursor: pointer !important;
 }
 
-.spoiler:not(.embed):not(img):not(video):not(iframe):not(canvas) {
-    border-radius: 5px;
-    background: black;
-    color: transparent;
-    display: inline;
-    --font-color: white;
-    transition: color 0.3s ease;
-    user-select: none;
-    padding: 0 2.5px;
+.spoiler:not(.open) > * {
+  pointer-events: none;
 }
 
-.embed.spoiler, img.spoiler, video.spoiler, iframe.spoiler, canvas.spoiler {
-    filter: blur(75px);
-    transition: filter 0.3s ease;
-    mask-image: linear-gradient(to right, #fff, #fff);
+.spoiler:not(.embed):not(img):not(video) {
+  border-radius: 5px;
+  background: black;
+  color: transparent;
+  display: inline;
+  --font-color: white;
+  transition: color 0.3s ease;
+  user-select: none;
+  padding: 0 2.5px;
+}
+
+.embed.spoiler, img.spoiler, video.spoiler {
+  filter: brightness(0.5) blur(75px);
+  transition: filter 0.3s ease;
+  mask-image: linear-gradient(to right, #fff, #fff);
+}
+
+.spoiler.open {
+    cursor: unset;
+}
+
+.spoiler.open:not(.embed):not(img):not(video) {
+    color: var(--font-color);
+    user-select: unset;
+}
+
+.embed.spoiler.open, img.spoiler.open, video.spoiler.open {
+    filter: none;
+    mask-image: none;
 }
 
 .attachment {
     border-radius: 5px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--light-gray-color);
     display: block;
     width: auto;
-    max-width: 350px;
-    max-height: 350px;
+    max-width: min(100%, 350px);
+    max-height: min(100%, 350px);
     cursor: pointer;
 }
+
 video.attachment {
     height: 100%;
+}
+
+.embed.clean.attachment {
+    --color: var(--font-color);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    overflow: visible;
+    cursor: unset;
+}
+
+.embed.clean.attachment > .header {
+    gap: 10px;
+}
+
+.embed.clean.attachment > .header > div {
+    width: 100%;
+    min-width: 0;
+}
+
+.embed.clean.attachment > .header > div > p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.embed.clean.attachment > .header > i {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    border-radius: 5px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 22px;
+    min-width: 40px;
+}
+
+.embed.clean.attachment > .header > button, .embed.clean.attachment > .header > .button {
+    min-width: 40px;
+    width: 40px;
+}
+
+.embed.clean.attachment > .controls {
+    background: var(--primary-color);
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.embed.clean.attachment > .controls > button {
+    width: unset;
+    height: unset;
+    aspect-ratio: 1/1;
+}
+
+.embed.clean.attachment > .controls > p {
+    white-space: nowrap;
+    font-family: monospace !important;
+}
+
+.embed.clean.attachment > .controls > .audio-progress-container {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    position: relative;
+}
+.embed.clean.attachment > .controls > .audio-progress-container > progress {
+    width: 100%;
+    --color: var(--theme-color);
+    height: 5px;
+    display: block;
+}
+.embed.clean.attachment > .controls > .audio-progress-container > progress::-webkit-progress-bar {
+    border: 0;
+    height: 5px;
+    border-radius: 5px;
+    background: var(--gray-color);
+}
+.embed.clean.attachment > .controls > .audio-progress-container > progress::-webkit-progress-value {
+    border: 0;
+    height: 5px;
+    border-radius: 5px;
+    background: var(--color);
+}
+.embed.clean.attachment > .controls > .audio-progress-container > progress::-moz-progress-bar {
+    border: 0;
+    height: 5px;
+    border-radius: 5px;
+}
+
+.embed.clean.attachment > .controls > .audio-volume-wrapper {
+    position: relative;
+}
+
+.embed.clean.attachment > .controls > .audio-volume-wrapper > input[type='range'].vertical {
+    position: absolute;
+    bottom: 75px;
+    transform: rotate(-90deg);
+    width: 80px;
+    height: 5px;
+    left: -20px;
+    right: 0;
+    accent-color: var(--green);
 }
 
 img, video {

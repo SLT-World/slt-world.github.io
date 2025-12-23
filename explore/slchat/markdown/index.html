@@ -141,12 +141,26 @@ function updateTimestamps() {
 updateTimestamps();
 setInterval(updateTimestamps, 1000);
 
+function getSetting(setting) {
+    switch (setting) {
+        case "spoiler":
+            return "0";
+        case "markdown":
+            return "1";
+        case "audio_volume":
+            return "1.0";
+    }
+}
+liteMode = false;
+
 const EMBED_ICONS = {
     "error": "x-circle",
     "warn": "alert-triangle",
     "info": "info-circle",
     "success": "check-circle",
     "note": "note",
+    "site": "book-content",
+    "youtube": "youtube",
     "clean": null,
     "default": null
 };
@@ -155,15 +169,15 @@ function renderEmbed(embed) {
     const colorHtml = embed.color ? ` style="--color:${embed.color};"` : "";
     let html = `<div class="embed${embed.type ? " " + embed.type : ""}"${colorHtml}>`;
     if (icon || embed.avatar || embed.title || embed.description) html += `<div class="header">
-    ${icon ? `<i class="bx bx-${icon}"></i>` : ""}
+    ${icon ? (embed.type == "youtube" ? `<i class="bxl bx-${icon}"></i>` : `<i class="bx bx-${icon}"></i>`) : ""}
     ${embed.avatar ? `<img loading="lazy" class="avatar" src="${embed.avatar}">` : ""}
     ${embed.title ? `<h4>${parseInlineMarkdown(embed.title)}</h4>` : ""}
     ${embed.description && !embed.title ? `<p style="white-space: pre;">${parseInlineMarkdown(embed.description)}</p>` : ""}
 </div>`;
     if (embed.description && embed.title) html += `<p style="white-space: pre;">${parseInlineMarkdown(embed.description)}</p>`;
     for (const field of embed.fields)  html += `<div class="field${field.inline ? ' inline' : ''}"><strong>${parseInlineMarkdown(field.name) ?? ""}</strong><span>${parseInlineMarkdown(field.value) ?? ""}</span></div>`;
-    if (embed.image) html += `<img loading="lazy" class="attachment" src="${embed.image}">`;
-    if (embed.footer) html += `<div class="footer">${embed.footer}</div>`;
+    if (embed.image) html += `<img loading="lazy" class="attachment" onclick="attachment(this)" src="${embed.image}">`;
+    if (embed.footer) html += `<div class="footer">${parseInlineMarkdown(embed.footer)}</div>`;
     html += `</div>`;
     return html;
 }
@@ -309,18 +323,23 @@ function escapeHtml(text) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;")
-        .replace(/'/g, "&#x27;");
+        .replace(/'/g, "&#x27;")
+        .replace(/’/g, "&#x2019;");
 }
-
-const emojiRegex = /^(?:\p{Extended_Pictographic}(?:\u200D\p{Extended_Pictographic})*)+$/u;
-
-function parseMarkdown(rawText) {
-    rawText = rawText
+function unescapeHtml(text) {
+    return text
         .replace(/&gt;/g, ">")
         .replace(/&quot;/g, "\"")
         .replace(/&#0*39;/g, "'")
         .replace(/&#x*27;/g, "'")
+        .replace(/&#x*2019;/g, "’")
         .replace(/&amp;(?![a-zA-Z0-9#]+;)/g, "&");
+}
+const emojiRegex = /^(?:\p{Extended_Pictographic}(?:\u200D\p{Extended_Pictographic})*)+$/u;
+function parseMarkdown(rawText) {
+    if (getSetting("markdown") == "0")
+        return rawText;
+    rawText = unescapeHtml(rawText);
     if (emojiRegex.test(rawText)) return `<span style="font-size: 45px;">` + rawText + `</span>`;
     let { text, codeBlocks } = extractCodeBlocks(rawText);
     text = text.replace(/\\([^a-zA-Z0-9 ])/g, (_, ch) => `\uE000${ch.charCodeAt(0)}\uE000`);
@@ -417,6 +436,10 @@ function parseMarkdown(rawText) {
 const allowedDecorationClasses = ['rainbow', 'anaglyph', 'gold', 'glow', 'shadow'];
 
 function parseInlineMarkdown(text) {
+    if (getSetting("markdown") == "0")
+        return text;
+    if (text === undefined)
+        return text;
     const literalLinks = [];
     text = text.replace(/<(https?:\/\/[^\s>]+)>/g, (m, url) => {
         literalLinks.push(url);
@@ -433,13 +456,40 @@ function parseInlineMarkdown(text) {
             const finalClasses = potentialClasses.split(/\s+/).filter(Boolean).filter(cls => allowedDecorationClasses.includes(cls)).join(' ');
             return `<span class="${finalClasses}">${content}</span>`;
         })
+        .replace(/(?:<|&lt;)\s*(\+?[0-9][0-9\s\-()]{3,})\s*>/g, (m, phone) => `<a href="tel:${phone.replace(/[^\d+]/g, "")}" class="phone-link">${phone}</a>`)
+        .replace(/(?:<|&lt;)\s*([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\s*>/g, (m, email) => `<a href="mailto:${email}" class="email-link">${email}</a>`)
         .replace(/^\-#\s?(.*)$/gm, '<p class="subtext">$1</p>')
         .replace(/\|\|(https?:\/\/[^\s<>"')]+)\|\|/g, (match, url) => {
             const lowerUrl = url.toLowerCase();
-            if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif)(\?.*)?$/.test(lowerUrl)) return `<img class="attachment spoiler" onclick="spoiler(this)" src="${url}"/>`;
-            if (/\.(mp4|webm|ogg)(\?.*)?$/.test(lowerUrl)) return `<video class="attachment spoiler" onclick="spoiler(this)" width="320" height="240" controls><source src="${url}"></video>`;
-            if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) return `<audio class="attachment spoiler" onclick="spoiler(this)" controls src="${url}"></audio>`;
-            return `<p class="spoiler" onclick="spoiler(this)">${url}</p>`;
+            if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif)(\?.*)?$/.test(lowerUrl)) return `<img loading="lazy" class="attachment spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'} src="${url}"/>`;
+            if (/\.(mp4|webm|ogg)(\?.*)?$/.test(lowerUrl)) return `<video ${liteMode ? 'preload="none" ' : ' '}class="attachment spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'} width="320" height="240" controls><source src="${url}"></video>`;
+            //if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) return `<audio ${liteMode ? 'preload="none" ' : ' '}class="attachment spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'} controls src="${url}"></audio>`;
+            if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) {
+                const filename = new URL(url).pathname.split('/').pop().split('?')[0];
+                return `<div class="embed clean attachment audio-embed spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'}>
+    <audio src="${url}"></audio>
+    <div class="header">
+        <i class="bx bx-music"></i>
+        <div>
+            <p class="file-name">${filename}</p>
+            <!--<p class="subtext file-size">--.-- KB</p>-->
+        </div>
+        <a class="icon button" data-tip="Download" href="${url}" download="${url}" target="_blank"><i class="bx bx-arrow-in-down-square-half"></i></a>
+    </div>
+    <div class="controls">
+        <button class="audio-play-button" data-tip="Play"><i class="bx bx-play"></i></button>
+        <p class="audio-time">0:00/0:00</p>
+        <div class="audio-progress-container">
+            <progress class="audio-progress" value="0"></progress>
+        </div>
+        <div class="audio-volume-wrapper">
+            <button class="audio-volume-button" data-tip="Volume"><i class="bx bx-volume-full"></i></button>
+            <input type="range" min="0" max="1" step="0.01" class="audio-volume-slider vertical" style="display:none;">
+        </div>
+    </div>
+</div>`
+            }
+            return `<p class="spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'}>${url}</p>`;
         })
         .replace(/\[progress:(\d{1,3})%(?::([^\]]+))?\]/gi, (m, num, color) => {
             const percentage = Math.max(0, Math.min(100, Number(num)));
@@ -447,21 +497,49 @@ function parseInlineMarkdown(text) {
         })
         .replace(/\[timestamp:(\d{1,20}):([a-zA-Z])\]/g, (m, unix, fmt) => `<span class="timestamp" data-format="${fmt}" data-unix="${unix}"></span>`)
         .replace(/\[timestamp:(\d{1,20})\]/g, (m, unix) => `<span class="timestamp" data-unix="${unix}"></span>`)
-        .replace(/\|\|([^|]+)\|\|/g, '<p class="spoiler" onclick="spoiler(this)">$1</p>')
+        .replace(/\|\|([^|]+)\|\|/g, `<p class="spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'}>$1</p>`)
         .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
         .replace(/\*([^*]+)\*/g, '<em>$1</em>')
         .replace(/~~([^~]+)~~/g, '<del>$1</del>')
         .replace(/==([^~]+)==/g, '<mark>$1</mark>')
         .replace(/__([^_]+)__/g, '<u>$1</u>')
-        .replace(/@([a-zA-Z0-9_]{1,32})/g, '<span class="mention">@$1</span>')
-        .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<'+'a href="$2" target="_blank" rel="noopener noreferrer nofollow">$1<'+'/a>')
+        .replace(/(?<![\w\]\):\/\.])@([a-zA-Z0-9_]{1,32})(?![^<]*>)/g, '<span class="mention">@$1</span>')
+        .replace(/\[([^\]]+(?:\[[^\]]*\][^\]]*)*)\]\((https?:\/\/[^\s)]+)\)/g, '<'+'a href="$2" target="_blank" rel="noopener noreferrer nofollow" data-tip="$2">$1<'+'/a>')
+
         .replace(/(<[^>]+>)|((?<!["'=\]])https?:\/\/[^\s<>"')]+)/g, (match, tag, url) => {
             if (tag) return tag;
             const lowerUrl = url.toLowerCase();
-            if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) return `<audio controls src="${url}"></audio>`;
-            if (/\.(mp4|webm|ogg)(\?.*)?$/.test(lowerUrl)) return `<video class="attachment" width="320" height="240" controls><source src="${url}"></video>`;
-            if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif)(\?.*)?$/.test(lowerUrl)) return `<img class="attachment" src="${url}"/>`;
-            return `<a href="${url}" target="_blank" rel="noopener noreferrer nofollow">${url}</a>`;
+
+            //if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) return `<audio ${liteMode ? 'preload="none" ' : ' '}controls src="${url}"></audio>`;
+            if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) {
+                const filename = new URL(url).pathname.split('/').pop().split('?')[0];
+                return `<div class="embed clean attachment audio-embed">
+    <audio src="${url}"></audio>
+    <div class="header">
+        <i class="bx bx-music"></i>
+        <div>
+            <p class="file-name">${filename}</p>
+        </div>
+        <button data-tip="Download" onclick="download('${url}')" target="_blank">
+            <i class="bx bx-arrow-in-down-square-half"></i>
+        </button>
+    </div>
+    <div class="controls">
+        <button class="audio-play-button" data-tip="Play"><i class="bx bx-play"></i></button>
+        <p class="audio-time">0:00/0:00</p>
+        <div class="audio-progress-container">
+            <progress class="audio-progress" value="0"></progress>
+        </div>
+        <div class="audio-volume-wrapper">
+            <button class="audio-volume-button" data-tip="Volume"><i class="bx bx-volume-full"></i></button>
+            <input type="range" min="0" max="1" step="0.01" class="audio-volume-slider vertical" style="display:none;">
+        </div>
+    </div>
+</div>`
+            }
+            if (/\.(mp4|webm|ogg)(\?.*)?$/.test(lowerUrl)) return `<video ${liteMode ? 'preload="none" ' : ' '}class="attachment" width="320" height="240" controls><source src="${url}"></video>`
+            if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif)(\?.*)?$/.test(lowerUrl)) return `<img loading="lazy" class="attachment" onclick="attachment(this)" src="${url}"/>`;
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer nofollow" data-tip="${url}">${url}</a>`;
         });
 
     literalLinks.forEach((url, i) => {
@@ -469,6 +547,96 @@ function parseInlineMarkdown(text) {
     });
     return text;
 }
+
+function setupAudioPlayer() {
+    document.querySelectorAll('.audio-embed:not([data-setup])').forEach(embed => {
+        embed.dataset.setup = "";
+        const audio = embed.querySelector('audio');
+        const audioPlayButton = embed.querySelector('.audio-play-button');
+        const audioTime = embed.querySelector('.audio-time');
+        const progress = embed.querySelector('.audio-progress');
+        const progressContainer = embed.querySelector('.audio-progress-container');
+        const audioVolumeButton = embed.querySelector('.audio-volume-button');
+        const audioVolumeSlider = embed.querySelector('.audio-volume-slider');
+
+        let savedVolume = Number(getSetting("audio_volume"));
+        audio.volume = savedVolume;
+        audioVolumeSlider.value = savedVolume;
+
+        if (audioVolumeSlider.value == 0) audioVolumeButton.innerHTML = '<i class="bx bx-volume-mute"></i>';
+        else if (audioVolumeSlider.value < 0.5) audioVolumeButton.innerHTML = '<i class="bx bx-volume-low"></i>';
+        else audioVolumeButton.innerHTML = '<i class="bx bx-volume-full"></i>';
+
+        const fileName = embed.querySelector('.file-name');
+        const fileSize = embed.querySelector('.file-size');
+
+        audio.addEventListener('loadedmetadata', () => {
+            updateTime();
+        });
+
+        audioPlayButton.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                audioPlayButton.innerHTML = '<i class="bx bx-pause"></i>';
+            } else {
+                audio.pause();
+                audioPlayButton.innerHTML = '<i class="bx bx-play"></i>';
+            }
+        });
+
+        audio.addEventListener("ended", function(e){
+            audioPlayButton.innerHTML = '<i class="bx bx-play"></i>';
+            audio.currentTime = 0;
+        }, false);
+
+        audio.addEventListener('timeupdate', () => {
+            const ratio = audio.duration ? (audio.currentTime / audio.duration) : 0;
+            progress.value = isFinite(ratio) ? ratio : 0;
+            updateTime();
+        });
+
+        function updateTime() {
+            audioTime.textContent = `${format(audio.currentTime)}/${format(audio.duration)}`;
+        }
+
+        function format(t) {
+            if (!t || isNaN(t)) return "0:00";
+            const h = Math.floor(t / 3600);
+            const m = Math.floor((t % 3600) / 60);
+            const s = Math.floor(t % 60);
+            if (h > 0) return `${h}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+            else return `${m}:${s.toString().padStart(2, "0")}`;
+        }
+
+        progressContainer.addEventListener('click', e => {
+            const rect = progressContainer.getBoundingClientRect();
+            audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+        });
+
+        audioVolumeButton.addEventListener('click', () => {
+            audioVolumeSlider.style.display = audioVolumeSlider.style.display === 'none' ? 'block' : 'none';
+        });
+
+        audioVolumeSlider.addEventListener('input', () => {
+            const volume = audioVolumeSlider.value;
+            audio.volume = volume;
+            setSetting("audio_volume", volume);
+
+            if (audioVolumeSlider.value == 0) audioVolumeButton.innerHTML = '<i class="bx bx-volume-mute"></i>';
+            else if (audioVolumeSlider.value < 0.5) audioVolumeButton.innerHTML = '<i class="bx bx-volume-low"></i>';
+            else audioVolumeButton.innerHTML = '<i class="bx bx-volume-full"></i>';
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!audioVolumeSlider.contains(e.target) && !audioVolumeButton.contains(e.target)) {
+                audioVolumeSlider.style.display = 'none';
+            }
+        });
+    });
+}
+
+const audioPlayerObserver = new MutationObserver(() => setupAudioPlayer());
+audioPlayerObserver.observe(document.documentElement, { childList: true, subtree: true });
     </script>
     <script>
 let currentTimestamp = Math.floor(Date.now() / 1000);
