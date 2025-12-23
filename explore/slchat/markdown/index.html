@@ -504,7 +504,7 @@ function parseInlineMarkdown(text) {
         .replace(/__([^_]+)__/g, '<u>$1</u>')
         .replace(/(?<![\w\]\):\/\.])@([a-zA-Z0-9_]{1,32})(?![^<]*>)/g, '<span class="mention">@$1</span>')
         .replace(/\[([^\]]+(?:\[[^\]]*\][^\]]*)*)\]\((https?:\/\/[^\s)]+)\)/g, '<'+'a href="$2" target="_blank" rel="noopener noreferrer nofollow" data-tip="$2">$1<'+'/a>')
-        .replace(/\{color:([^}]+)\}([\s\S]*?)\{\/color\}/g, (m, color, content) => `<span style="color:${color}">${content}</span>`)
+        .replace(/\{color:([^}]+)\}([\s\S]*?)\{\/color\}/g, (m, color, content) => `<span style="color:${color};--font-color:${color};">${content}</span>`)
         .replace(/\{size:([0-9.]+)\}([\s\S]*?)\{\/size\}/g, (m, size, content) => {
             let scale = parseFloat(size);
             if (isNaN(scale)) return content;
@@ -691,7 +691,7 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "\\\\ \\\* \\\[ \\\]",
     "-# Sub**text**",
     "{font:mono}Monospace{/font}\n{font:sans}Sans-Serif{/font}\n{font:serif}Serif{/font}\n{font:cursive}Cursive{/font}",
-    "{color:red}Red{/color} Color",
+    "{color:red}{glow}Glowing{/glow}{/color} {color:red}Red{/color} Color",
     "{size:0.75}Subtext 2.0{/size}",
     "{font:cursive}{size:1.5}{color:red}M{/color}{color:lime}i{/color}{color:yellow}x{/color}{/size}{/font}",
 ];
