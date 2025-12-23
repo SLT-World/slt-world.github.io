@@ -198,18 +198,11 @@
 }
 
 .syntax_list > * {
-    display: flex;
+    display: block;
     background: var(--primary-color);
-    flex-direction: column;
-}
-.syntax_list > * > *:not(audio):not(progress) {
-    align-content: center;
-    width: max-content;
-}
-.syntax_list > * > pre {
-    width: 100%;
-}
-.syntax_list > * {
+    max-width: 100%;
+    overflow: auto;
+
     --primary-color: #202225;
     --secondary-color: #36393F;
     --darker-secondary-color: #2E3036;
@@ -224,6 +217,20 @@
     --memberlist-width: 0px;
     --bold: 500;
     --emoji: '';
+}
+.syntax_list > * > pre:first-child {
+    margin-bottom: 10px;
+}
+.syntax_list > * > *:not(audio):not(progress) {
+    align-content: center;
+    width: max-content;
+}
+.syntax_list > * > pre {
+    width: 100%;
+}
+p, h1, h2, h3, h4, h5, h6, span, i {
+    font-family: inherit;
+    color: inherit;
 }
 
 

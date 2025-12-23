@@ -505,7 +505,17 @@ function parseInlineMarkdown(text) {
         .replace(/__([^_]+)__/g, '<u>$1</u>')
         .replace(/(?<![\w\]\):\/\.])@([a-zA-Z0-9_]{1,32})(?![^<]*>)/g, '<span class="mention">@$1</span>')
         .replace(/\[([^\]]+(?:\[[^\]]*\][^\]]*)*)\]\((https?:\/\/[^\s)]+)\)/g, '<'+'a href="$2" target="_blank" rel="noopener noreferrer nofollow" data-tip="$2">$1<'+'/a>')
-
+        .replace(/\{color=([^}]+)\}([\s\S]*?)\{\/color\}/g, (m, color, content) => `<span style="color:${color}">${content}</span>`)
+        .replace(/\{size=([0-9.]+)\}([\s\S]*?)\{\/size\}/g, (m, size, content) => {
+            let scale = parseFloat(size);
+            if (isNaN(scale)) return content;
+            return `<span style="font-size:${Math.min(1.5, Math.max(0.75, scale))}em">${content}</span>`;
+        })
+        .replace(/\{font=([a-zA-Z]+)\}([\s\S]*?)\{\/font\}/g, (m, font, content) => {
+            const family = getMarkdownFont(font);
+            if (!family) return content;
+            return `<span style="font-family:${family}">${content}</span>`;
+        })
         .replace(/(<[^>]+>)|((?<!["'=\]])https?:\/\/[^\s<>"')]+)/g, (match, tag, url) => {
             if (tag) return tag;
             const lowerUrl = url.toLowerCase();
@@ -546,6 +556,21 @@ function parseInlineMarkdown(text) {
         text = text.replace(`__LITERAL_LINK_${i}__`, `<a href="${url}" target="_blank" rel="noopener noreferrer nofollow" data-tip="${url}">${url}</a>`);
     });
     return text;
+}
+
+function getMarkdownFont(font) {
+    switch (font) {
+        case "mono":
+            return "'Courier New', monospace";
+        case "serif":
+            return "Georgia, 'Times New Roman', serif";
+        case "sans":
+            return "'Segoe UI', sans-serif";
+        case "cursive":
+            return "'Brush Script MT', cursive";
+        default:
+            return null;
+    }
 }
 
 function setupAudioPlayer() {
@@ -666,6 +691,10 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "{glow}Hello{/glow}",
     "\\\\ \\\* \\\[ \\\]",
     "-# Sub**text**",
+    "{font=mono}Monospace{/font}\n{font=sans}Sans-Serif{/font}\n{font=serif}Serif{/font}\n{font=cursive}Cursive{/font}",
+    "{color=red}Red{/color} Color",
+    "{size=0.75}Subtext 2.0{/size}",
+    "{font=cursive}{size=1.5}{color=red}M{/color}{color=lime}i{/color}{color=yellow}x{/color}{/size}{/font}",
 ];
 for (let syntax of syntaxes) syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${escapeHtml(syntax)}</code></pre>${parseMarkdown(syntax)}</div>`;
     </script>
