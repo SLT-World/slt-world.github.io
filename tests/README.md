@@ -27,6 +27,8 @@
 > - 🔗 [Anti Back Button](../tests/antiback.html)
 
 ## 🌐 External Tests
+> - 🔗 [HTML5](https://www.html5test.co/)
+> - 🔗 [CSS3](https://css3test.com/)
 > - 🔗 [WebAssembly](https://webassembly.org/features/)
 > - 🔗 [WebGL](https://get.webgl.org/)
 > - 🔗 [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)
@@ -72,3 +74,19 @@
 > - 🔗 [Google IPv6 Test](https://ipv6test.google.com/)
 > - 🔗 [IPv6 Test](https://test-ipv6.com/)
 > - 🔗 [Cloudflare Network Test](https://cloudflare.manfredi.io/test/)
+> - 🔗 [Demo of Stutters and Tearing](https://www.testufo.com/stutter)
+> - 🔗 [Jigsaw](https://jigsaw.w3.org/)
+> - 🔗 [BrowserLeaks](https://browserleaks.com/)
+> - 🔗 [Permissions](https://permission.site/)
+> - 🔗 [Bad SSL](https://badssl.com/)
+> - 🔗 [QUIC](https://quic.nginx.org/)
+> - 🔗 [Widevine](https://bitmovin.com/demos/drm/)
+> - 🔗 [Service Worker](https://googlechrome.github.io/samples/service-worker/basic/)
+> - 🔗 [Prerender Demo](https://chrome.dev/prerender-demos/)
+> - 🔗 [Web Notifications](https://www.bennish.net/web-notifications.html)
+
+## 🖼️ WebGL Samples
+> - 🔗 [HexGL](https://hexgl.bkcore.com/)
+> - 🔗 [Book](https://webglsamples.org/book/book.html)
+> - 🔗 [Interactive Water](https://madebyevan.com/webgl-water/)
+> - 🔗 [Aquarium](https://webglsamples.org/aquarium/aquarium.html)
