@@ -105,11 +105,30 @@
 
 #directory_grid > div > div > p {
     height: 100%;
+    white-space: break-spaces;
 }
 
 .material-symbols-rounded {
     color: var(--gray-color);
     font-size: 24px;
+}
+
+#search_options {
+    flex-direction: row;
+    padding: 5px;
+}
+
+#search_input {
+    margin: 5px;
+    margin-left: auto;
+}
+
+#search_options > div > button {
+    padding: 0 5px;
+    width: 100%;
+}
+#search_options > div > button.selected {
+    outline: 2.5px solid royalblue;
 }
 
 @media screen and (max-width: 679px) {
@@ -119,6 +138,12 @@
     }
     #directory_grid > div {
         width: 100%;
+    }
+    #search_options {
+        flex-direction: column;
+    }
+    #search_input {
+        margin-left: 0;
     }
 }
 path#github {
@@ -136,7 +161,15 @@ path#github {
             <h3>SLT World</h3>
         </div>
         <h1>Explore</h1>
-        <p>Browse active and completed projects.</p>
+        <p>Browse projects.</p>
+        <div class="container" id="search_options">
+            <div style="display: flex;gap: 10px;overflow: auto;padding: 5px;">
+                <button onclick="switchOption(this)" data-type="active">Active</button>
+                <button onclick="switchOption(this)" data-type="completed">Completed</button>
+                <button onclick="switchOption(this)" data-type="cancelled">Graveyard</button>
+            </div>
+            <input id="search_input" type="text">
+        </div>
         <div id="directory_grid"></div>
         <div class="container" style="width: fit-content;margin: 0 auto;">
             <h3 style="text-align: center;">More projects</h3>
@@ -189,6 +222,7 @@ path#github {
 <script>
 const entries = [
     {
+        "state": "active",
         "icon": "../slbr/slbr.png",
         "title": "SLBr",
         "subtext": "Web Browser",
@@ -201,6 +235,7 @@ const entries = [
         }
     },
     {
+        "state": "active",
         "icon": "../slbr/slbr.png",
         "title": "SLSearch",
         "subtext": "Metasearch Engine",
@@ -213,6 +248,7 @@ const entries = [
         }
     },
     {
+        "state": "active",
         "icon": "slchat/icon.svg",
         "title": "SLChat",
         "subtext": "Chat Platform",
@@ -226,6 +262,7 @@ const entries = [
     },
 
     {
+        "state": "active",
         "icon": "",
         "title": "AutoSolve",
         "subtext": "Mobile Utility Application",
@@ -235,6 +272,7 @@ const entries = [
         "links": {}
     },
     {
+        "state": "active",
         "icon": "https://play-lh.googleusercontent.com/LRQFdnxif5SfaCnsLUtChKGDFvzMd7a287SGG0JCZ3I8YM3f1ctBaQRdJ4pFiJr2-jE=w240-h480-rw",
         "title": "PQ",
         "subtext": "Currency Converter",
@@ -246,6 +284,7 @@ const entries = [
         }
     },
     {
+        "state": "active",
         "icon": "https://play-lh.googleusercontent.com/eoPsDrm0x3rRy6FgUe_ujUD9PbZd-p9QQG-gfJfMgJBDvp476naMv3ej9x4tp-D1K-Q=w240-h480-rw",
         "title": "Power Station Inc",
         "subtext": "Mobile Video Game",
@@ -258,6 +297,7 @@ const entries = [
     },
 
     {
+        "state": "completed",
         "icon": "",
         "title": "Metafetcher",
         "subtext": "Link Preview API",
@@ -269,6 +309,7 @@ const entries = [
         }
     },
     {
+        "state": "active",
         "icon": "",
         "title": "slchat.py",
         "subtext": "API Wrapper",
@@ -281,6 +322,7 @@ const entries = [
     },
 
     {
+        "state": "completed",
         "icon": "https://play-lh.googleusercontent.com/QKz_5LRx5PUzENX3keX-7tXJarXVXMshNC0CZQGo0OFgQgdw_DsVxnvsOhIQRQoD8utw=w240-h480-rw",
         "title": "Moon Hop",
         "subtext": "Mobile Video Game",
@@ -293,6 +335,7 @@ const entries = [
     },
 
     {
+        "state": "active",
         "icon": "slt_combat.png",
         "title": "SLT Combat",
         "subtext": "Desktop Video Game",
@@ -302,6 +345,7 @@ const entries = [
     },
 
     {
+        "state": "completed",
         "icon": "https://img.itch.zone/aW1nLzE0MTExNDgxLnBuZw==/315x250%23c/cUyxXr.png",
         "title": "Build & Upgrade 2",
         "subtext": "Desktop Video Game",
@@ -314,6 +358,7 @@ const entries = [
     },
 
     {
+        "state": "completed",
         "icon": "https://img.itch.zone/aW1nLzcxNDc2ODkucG5n/315x250%23c/1bcClW.png",
         "title": "SLT Ace Combat",
         "subtext": "Desktop Video Game",
@@ -325,6 +370,178 @@ const entries = [
         }
     },
     {
+        "state": "completed",
+        "icon": "https://img.itch.zone/aW1nLzY1NjA0NDcucG5n/original/c9ucBJ.png",
+        "title": "SLT Planetarium",
+        "subtext": "Desktop Video Game",
+        "description": "A small, planetarium project.",
+        "image": "https://img.itch.zone/aW1nLzY1NzQ2OTAucG5n/original/fV5x8p.png",
+        "tech": ["unity"],
+        "links": {
+            "itch": "https://sltworld.itch.io/slt-planetarium"
+        }
+    },
+    {
+        "state": "cancelled",
+        "icon": "https://img.itch.zone/aW1nLzY5NTkwNTEucG5n/original/VNx7Qd.png",
+        "title": "SLT Ace",
+        "subtext": "Desktop Video Game",
+        "description": "A multiplayer ace game.",
+        "image": "https://img.itch.zone/aW1nLzY5ODU3MTMucG5n/original/dMQIU1.png",
+        "tech": ["unity"],
+        "links": {
+            "itch": "https://sltworld.itch.io/slt-ace"
+        }
+    },
+    {
+        "state": "completed",
+        "icon": "https://img.itch.zone/aW1nLzY4OTg5NDYucG5n/original/xlWVjO.png",
+        "title": "Build & Upgrade",
+        "subtext": "Desktop Video Game",
+        "description": "An RTS game.",
+        "image": "https://img.itch.zone/aW1nLzY4OTg5NjMucG5n/original/olNdaX.png",
+        "tech": ["unity"],
+        "links": {
+            "itch": "https://sltworld.itch.io/build-upgrade"
+        }
+    },
+    {
+        "state": "completed",
+        "icon": "https://img.itch.zone/aW1nLzE3MjcxMzY5LnBuZw==/original/V0P0QG.png",
+        "title": "Foody Blob",
+        "subtext": "Mobile Video Game",
+        "description": "The game contains a plethora of consumable drinks, sweets, snacks and normal food. Drag the consumables, feed the blobs and see its effects!",
+        "image": "",
+        "tech": ["unity"],
+        "links": {
+            "itch": "https://sltworld.itch.io/foody-blob"
+        }
+    },
+    {
+        "state": "completed",
+        "icon": "https://img.itch.zone/aW1nLzcyMzAyODUucG5n/original/JRWLfB.png",
+        "title": "SLT Pong",
+        "subtext": "Mobile Video Game",
+        "description": "Just another small 2D game.",
+        "image": "",
+        "tech": ["unity"],
+        "links": {
+            "itch": "https://sltworld.itch.io/slt-pong"
+        }
+    },
+    {
+        "state": "completed",
+        "icon": "https://img.itch.zone/aW1nLzcyMjg4MjUucG5n/original/6QBANt.png",
+        "title": "SLT Hot Balloon",
+        "subtext": "Desktop Video Game",
+        "description": "First 2D PC game by me, inspired by google hot balloon game, try to avoid touching the clouds!",
+        "image": "https://img.itch.zone/aW1nLzcyMjg4MzYucG5n/original/h8H21w.png",
+        "tech": ["unity"],
+        "links": {
+            "itch": "https://sltworld.itch.io/slt-hot-balloon"
+        }
+    },
+    {
+        "state": "completed",
+        "icon": "",
+        "title": "SLT Brick Breaker",
+        "subtext": "Mobile Video Game",
+        "description": "A brick breaker game.",
+        "image": "https://img.itch.zone/aW1nLzczNTU1NTEucG5n/original/Ualior.png",
+        "tech": ["unity"],
+        "links": {
+            "itch": "https://sltworld.itch.io/slt-brick-breaker"
+        }
+    },
+    {
+        "state": "cancelled",
+        "icon": "skylight.ico",
+        "title": "Skylight",
+        "subtext": "Web Browser",
+        "description": "The precursor to SLBr, made with Winforms.",
+        "image": "skylight_tech.png",
+        "tech": ["net"]
+    },
+    {
+        "state": "completed",
+        "icon": "",
+        "title": "Discord Store Recreation",
+        "subtext": "Desktop Application",
+        "description": "Recreation of Discord Store, but in the form of a Windows Application.",
+        "image": "dgc.png",
+        "tech": ["net"],
+        "links": {
+            "github": "https://github.com/SLT-World/Discord-Store-Recreation-Project"
+        }
+    },
+    {
+        "state": "cancelled",
+        "icon": "",
+        "title": "SLT War",
+        "subtext": "Desktop Video Game",
+        "description": "An extremely unoptimized RTS war game, taking place on an island.\nA testbed for various agents (ships, tanks, infantry) & weapons (mines, flamethowers).",
+        "image": "",
+        "tech": ["unity"]
+    },
+    {
+        "state": "cancelled",
+        "icon": "",
+        "title": "SLT Battleground",
+        "subtext": "Desktop Video Game",
+        "description": "Precursor to SLT War.",
+        "image": "",
+        "tech": ["unity"]
+    },
+    {
+        "state": "cancelled",
+        "icon": "",
+        "title": "SLT Sandbox",
+        "subtext": "Desktop Video Game",
+        "description": "An incomplete game meant to focus on the world-building part of SLT Worlds 2.",
+        "image": "sandbox.png",
+        "tech": ["unity"]
+    },
+    {
+        "state": "cancelled",
+        "icon": "",
+        "title": "Codeout",
+        "subtext": "Desktop Video Game",
+        "description": "A video game related to code.",
+        "image": "",
+        "tech": ["unity"]
+    },
+    {
+        "state": "cancelled",
+        "icon": "",
+        "title": "The Isolated Kingdom of Ants",
+        "subtext": "Desktop Video Game",
+        "description": "An incomplete game made for a halted game jam.",
+        "image": "ants.png",
+        "tech": ["unity"]
+    },
+    {
+        "state": "cancelled",
+        "icon": "slt_worlds.png",
+        "title": "SLT Worlds 2",
+        "subtext": "Desktop Video Game",
+        "description": "A \"remake\" of the first SLT Worlds game, with a failed multiplayer system named \"SLNet\".\nIncludes world-building features.",
+        "image": "slt_worlds_img.png",
+        "tech": ["unity"]
+    },
+    {
+        "state": "cancelled",
+        "icon": "slt_worlds.png",
+        "title": "SLT Worlds",
+        "subtext": "Desktop Video Game",
+        "description": "A game. First ever attempt at multiplayer.",
+        "image": "",
+        "tech": ["unity"],
+        "links": {
+            "itch": "https://sltworld.itch.io/slt-worlds"
+        }
+    },
+    {
+        "state": "completed",
         "icon": "",
         "title": "🔵‍🚀 Custom Emojis",
         "subtext": "Emoji Fonts",
@@ -337,8 +554,28 @@ const entries = [
 ];
 
 const directoryGrid = document.getElementById("directory_grid");
+const searchInput = document.getElementById("search_input");
 
-entries.forEach(i => insert_entry(i));
+function switchOption(button) {
+    navigateOption(button.dataset.type);
+}
+
+navigateOption('active');
+
+function navigateOption(type) {
+    directoryGrid.innerHTML = "";
+    document.querySelectorAll("#search_options > div > button").forEach(i => i.classList.remove("selected"));
+    document.querySelector(`button[data-type='${type}']`)?.classList.add("selected");
+    entries.filter(i => i.state == type).forEach(i => insert_entry(i));
+}
+
+searchInput.addEventListener("input", function(event) {
+    navigateOption('custom');
+    let query = event.target.value.toLowerCase();
+    if (query == "") navigateOption('active');
+    else entries.filter(i => i.title.toLowerCase().includes(query) || i.subtext.toLowerCase().includes(query) || i.description.toLowerCase().includes(query)).forEach(i => insert_entry(i));
+});
+
 
 function insert_entry(entry) {
     directoryGrid.innerHTML += `<div class="container">
