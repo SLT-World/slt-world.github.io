@@ -695,6 +695,7 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "{color:red}{glow}Glowing{/glow}{/color} {color:red}Red{/color} Color",
     "{size:0.75}Subtext 2.0{/size}",
     "{font:cursive}{size:1.5}{color:red}M{/color}{color:lime}i{/color}{color:yellow}x{/color}{/size}{/font}",
+    "Foo\n---\nBar",
 ];
 for (let syntax of syntaxes) syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${escapeHtml(syntax)}</code></pre>${parseMarkdown(syntax)}</div>`;
     </script>

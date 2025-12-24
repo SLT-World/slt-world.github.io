@@ -201,7 +201,7 @@
 .syntax_list > * > pre:first-child {
     margin-bottom: 10px;
 }
-.syntax_list > * > *:not(audio):not(progress) {
+.syntax_list > * > *:not(audio):not(progress):not(hr) {
     align-content: center;
     width: max-content;
 }
