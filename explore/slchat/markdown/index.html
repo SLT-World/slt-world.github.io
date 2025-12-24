@@ -451,6 +451,7 @@ function parseInlineMarkdown(text) {
     });
 
     text = text
+        .replace(/^\s*-{3,}\s*$/gm,'<hr>')
         .replace(/\{([a-zA-Z]+)(?:\s+([a-zA-Z\s-]+))?\}([\s\S]*?)\{\/\1\}/g, (m, name, classes, content) => {
             const potentialClasses = classes ? `${name} ${classes}` : name;
             const finalClasses = potentialClasses.split(/\s+/).filter(Boolean).filter(cls => allowedDecorationClasses.includes(cls)).join(' ');

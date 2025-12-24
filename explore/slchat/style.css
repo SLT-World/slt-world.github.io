@@ -65,7 +65,8 @@
 }
 
 .embed:has(.header) {
-    display: block;
+    flex-direction: column;
+    align-items: start;
 }
 
 .embed > .header {
@@ -97,20 +98,6 @@
     margin-right: 15px;
 }
 
-.center.vertical {
-    flex-direction: column;
-    align-items: flex-start;
-}
-.embed.vertical {
-    flex-direction: column;
-    align-items: flex-start;
-}
-.embed.middle {
-    align-items: center;
-}
-.center.middle {
-    justify-content: center;
-}
 .embed .video_icon {
     color: var(--light-gray-color);
     opacity: 0.75;
@@ -159,13 +146,6 @@
     color: red;
 }
 
-.embed.block {
-    display: block;
-}
-.embed:has(br) {
-    display: block;
-}
-
 /*.embed:has(i.bx) {
     white-space: pre;
     display: flex;
@@ -181,12 +161,6 @@
     color: var(--color);
 }
 
-.embed.block > .bx, .embed.block > .header > .bx, .embed.block > .bxl, .embed.block > .header > .bxl {
-    top: 2.5px;
-    position: relative;
-    align-self: baseline;
-}
-
 .embed > .header > .bx, .embed > .header > .bxl {
     margin-right: 0px;
 }
@@ -197,7 +171,13 @@
     gap: 10px;
 }
 
-.syntax_list > * {
+
+.syntax_list > * .embed, #output .embed {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.syntax_list > *, #output {
     display: block;
     background: var(--primary-color);
     max-width: 100%;
@@ -491,6 +471,16 @@ video.attachment {
 img, video {
     max-width: 350px;
     max-height: 350px;
+}
+
+hr {
+    margin: 10px 0;
+    background: var(--light-gray-color);
+    height: 1px;
+    border: none;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
 }
 
 mark {
