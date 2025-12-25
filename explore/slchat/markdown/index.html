@@ -317,23 +317,20 @@ function restoreCodeBlocks(text, codeBlocks) {
     return text;
 }
 function escapeHtml(text) {
-    return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;")
-        .replace(/'/g, "&#x27;")
-        .replace(/’/g, "&#x2019;");
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
 }
 function unescapeHtml(text) {
     return text
-        .replace(/&gt;/g, ">")
-        .replace(/&quot;/g, "\"")
-        .replace(/&#0*39;/g, "'")
-        .replace(/&#x*27;/g, "'")
-        .replace(/&#x*2019;/g, "’")
-        .replace(/&amp;(?![a-zA-Z0-9#]+;)/g, "&");
+        .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(n))
+        .replace(/&#x([0-9a-fA-F]+);/g, (_, n) => String.fromCharCode(parseInt(n, 16)))
+        .replace(/&(amp|gt|quot|#39);/g, (_, e) => ({
+            'amp': '&',
+            'gt': '>',
+            'quot': '"',
+            '#39': "'"
+        }[e]));
 }
 const emojiRegex = /^(?:\p{Extended_Pictographic}(?:\u200D\p{Extended_Pictographic})*)+$/u;
 function parseMarkdown(rawText) {
