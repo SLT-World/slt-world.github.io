@@ -27,12 +27,11 @@
 > - 🔗 [Anti Back Button](../tests/antiback.html)
 
 ## 🌐 External Tests
+### Miscellaneous
 > - 🔗 [HTML5](https://www.html5test.co/)
 > - 🔗 [CSS3](https://css3test.com/)
 > - 🔗 [WebAssembly](https://webassembly.org/features/)
 > - 🔗 [WebGL](https://get.webgl.org/)
-> - 🔗 [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)
-> - 🔗 [SmartScreen Demo](https://demo.smartscreen.msft.net/)
 > - 🔗 [HTML5 Audio & Video](https://tools.woolyss.com/html5-audio-video-tester/)
 > - 🔗 [Codecs Support](https://shaka-player-demo.appspot.com/support.html)
 > - 🔗 [WebRTC Experiments](https://www.webrtc-experiment.com/)
@@ -78,14 +77,21 @@
 > - 🔗 [Jigsaw](https://jigsaw.w3.org/)
 > - 🔗 [BrowserLeaks](https://browserleaks.com/)
 > - 🔗 [Permissions](https://permission.site/)
-> - 🔗 [Bad SSL](https://badssl.com/)
 > - 🔗 [QUIC](https://quic.nginx.org/)
 > - 🔗 [Widevine](https://bitmovin.com/demos/drm/)
 > - 🔗 [Service Worker](https://googlechrome.github.io/samples/service-worker/basic/)
 > - 🔗 [Prerender Demo](https://chrome.dev/prerender-demos/)
 > - 🔗 [Web Notifications](https://www.bennish.net/web-notifications.html)
 
-## 🖼️ WebGL Samples
+### Security
+> - 🔗 [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)
+> - 🔗 [SmartScreen Demo](https://demo.smartscreen.msft.net/)
+> - 🔗 [Bad SSL](https://badssl.com/)
+> - 🔗 [Homograph Attack Demo](https://vvikipedia.com/)
+> - 🔗 [Homograph Attack Demo (Punycode)](https://www.xn--80ak6aa92e.com/)
+
+## 🖼️ Samples
+### WebGL
 > - 🔗 [HexGL](https://hexgl.bkcore.com/)
 > - 🔗 [Book](https://webglsamples.org/book/book.html)
 > - 🔗 [Interactive Water](https://madebyevan.com/webgl-water/)
