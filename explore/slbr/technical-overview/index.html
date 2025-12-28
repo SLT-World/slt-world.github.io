@@ -22,32 +22,32 @@
                 <p>Internationalized URL Rendering & Homograph Protection</p>
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
-                <p>SLBr displays internationalized domain names in a readable format instead of a "xn--" representation.</p>
-                <p>This improved readability for users, allowing domains that contain emojis, unicode characters, or symbols to appear as intended, rather than as strings that are difficult to read.</p>
+                <p>SLBr displays internationalized domain names (IDNs) in a readable Unicode format instead of an encoded Punycode representation.</p>
+                <p>This improves readability for users, allowing domains that contain Unicode characters, symbols, or emojis to appear as intended, rather than as encoded "xn--" strings that are difficult for users to interpret.</p>
                 <p>However, rendering Unicode domains directly introduced a significant security concern, that is homograph attacks.</p>
-                <p>Homograph attacks exploit different look alike characters to create deceptive domain names, such as replacing Latin characters with Cyrillic or Greek.</p>
-                <p>A few examples include:</p>
+                <p>Homograph attacks exploit visually similar characters to create deceptive domain names, such as replacing Latin characters with Cyrillic or Greek characters.</p>
+                <p>Examples include:</p>
                 <ol class="container">
                     <li><a href="https://vvikipedia.com/" target="_blank" rel="noreferrer nofollow noopener">vvikipedia.com</a></li>
                     <li><a href="https://www.xn--80ak6aa92e.com/" target="_blank" rel="noreferrer nofollow noopener">аррӏе.com</a></li>
                 </ol>
                 <p>To address this risk, SLBr implemented a homograph detection and highlighting system within the omnibox.</p>
-                <p>When potentially confusable or suspicious characters are detected, they are highlighted in orange, making them distinct from other characters.</p>
-                <p>This approach introduces the following benefits:</p>
+                <p>When potentially confusable or suspicious characters are detected, those characters are highlighted in orange, making them visually distinct from other characters.</p>
+                <p>This approach provides several benefits:</p>
                 <ol class="container">
                     <li>Internationalized domains remain readable.</li>
-                    <li>Suspicious domains are highlighted.</li>
-                    <li>Users are not forced to interpret raw Punycode.</li>
+                    <li>Suspicious domains become visually noticeable.</li>
+                    <li>Users are not forced to interpret encoded Punycode URLs.</li>
                 </ol>
-                <p>However, the initial implementation rendered every single character of the domain as an individual Run.</p>
-                <p>This was inefficient and introduced unnecessary rendering overhead.</p>
-                <p>SLBr now uses a new rendering approach:</p>
+                <p>The initial implementation rendered each character of the domain as an individual text run.</p>
+                <p>This was inefficient and introduced unnecessary rendering overhead, especially during frequent omnibox updates.</p>
+                <p>SLBr now uses a buffered rendering approach:</p>
                 <ol class="container">
                     <li>Characters are grouped into segments.</li>
                     <li>Each segment is rendered as a single text run.</li>
                     <li>Suspicious and normal characters are batched separately.</li>
                 </ol>
-                <p>This significantly reduced the number of elements created, improving performance.</p>
+                <p>This significantly reduced the number of UI elements created per update, improving rendering performance.</p>
             </div>
         </div>
     </div>
