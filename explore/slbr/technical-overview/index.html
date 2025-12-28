@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SLBr Technical Overview - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+</head>
+<body>
+    <div class="content">
+        <div class="navigation">
+            <img src="../../../favicon.png" width="35" height="35" draggable="false">
+            <h3>SLT World</h3>
+        </div>
+        <h1>SLBr Technical Overview</h1>
+        <p>A <strong>technical overview</strong> of various SLBr features.</p>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">settings</span>
+                <p>Internationalized URL Rendering & Homograph Protection</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>SLBr displays internationalized domain names in a readable format instead of a "xn--" representation.</p>
+                <p>This improved readability for users, allowing domains that contain emojis, unicode characters, or symbols to appear as intended, rather than as strings that are difficult to read.</p>
+                <p>However, rendering Unicode domains directly introduced a significant security concern, that is homograph attacks.</p>
+                <p>Homograph attacks exploit different look alike characters to create deceptive domain names, such as replacing Latin characters with Cyrillic or Greek.</p>
+                <p>A few examples include:</p>
+                <ol class="container">
+                    <li><a href="https://vvikipedia.com/" target="_blank" rel="noreferrer nofollow noopener">vvikipedia.com</a></li>
+                    <li><a href="https://www.xn--80ak6aa92e.com/" target="_blank" rel="noreferrer nofollow noopener">аррӏе.com</a></li>
+                </ol>
+                <p>To address this risk, SLBr implemented a homograph detection and highlighting system within the omnibox.</p>
+                <p>When potentially confusable or suspicious characters are detected, they are highlighted in orange, making them distinct from other characters.</p>
+                <p>This approach introduces the following benefits:</p>
+                <ol class="container">
+                    <li>Internationalized domains remain readable.</li>
+                    <li>Suspicious domains are highlighted.</li>
+                    <li>Users are not forced to interpret raw Punycode.</li>
+                </ol>
+                <p>However, the initial implementation rendered every single character of the domain as an individual Run.</p>
+                <p>This was inefficient and introduced unnecessary rendering overhead.</p>
+                <p>SLBr now uses a new rendering approach:</p>
+                <ol class="container">
+                    <li>Characters are grouped into segments.</li>
+                    <li>Each segment is rendered as a single text run.</li>
+                    <li>Suspicious and normal characters are batched separately.</li>
+                </ol>
+                <p>This significantly reduced the number of elements created, improving performance.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
