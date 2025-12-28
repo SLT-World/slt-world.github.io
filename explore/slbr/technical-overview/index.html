@@ -58,7 +58,7 @@
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>SLBr supports multiple web engines through a unified abstraction layer.</p>
                 <p>Rather than binding SLBr directly to a specific web engine, SLBr treats each engine as an implementation behind a shared interface.</p>
-                <p>This allows the browser core to support different web engines.</p>
+                <p>This allows the browser core to remain engine-agnostic while still supporting different web engines.</p>
 
                 <p>Earlier versions of SLBr implemented multi-engine support through conditional logic.</p>
                 <p>Multiple web engines such as CefSharp (Chromium), WebView2 (Microsoft Edge), and WebBrowser (Internet Explorer) were used directly throughout the codebase without a shared interface.</p>
@@ -69,31 +69,35 @@
                     <li>Poor maintainability and limited extensibility.</li>
                     <li>Increasing difficulty adding new features or engines while maintaining parity.</li>
                 </ol>
-                <p>As development continued, the code quickly became a complex and unmanageable set of engine specific cases.</p>
-                <p>Due to these issues, the multi-engine feature was shelved for some time, as maintaining feature parity across engines became impractical over time.</p>
-                <p>In addition, engine features became highly inconsistent. The conditional-based implementation often resulted in features being developed primarily for a single engine, while other engines received no support.</p>
+                <p>As development continued, the code quickly became a complex and unmanageable set of engine-specific cases.</p>
+                <p>Due to these issues, the multi-engine feature was effectively shelved for a period of time, as maintaining feature parity and stability across engines became impractical without a fundamental redesign.</p>
+                <p>In addition, engine features became highly inconsistent. The conditional-based implementation often resulted in features being developed primarily for a single engine, while other engines received incomplete or no support.</p>
 
                 <p>To resolve these issues, SLBr now uses an adapter-based architecture to support multiple web engines.</p>
                 <p>Each web engine is wrapped by an adapter that translates engine-specific APIs into a shared interface.</p>
-                <p>The browser core interacts with the engines through a single interface, remaining unaware of which engine is currently in use.</p>
+                <p>The browser core interacts with the engines through a single interface, remaining mostly unaware of which engine is currently in use.</p>
                 <p>This architecture provides several benefits:</p>
                 <ol class="container">
                     <li>Engine-specific behavior is fully isolated.</li>
-                    <li>New engines can be added without modifying existing browser logic.</li>
+                    <li>New engines can be added without extensively modifying existing browser logic.</li>
                     <li>Conditional engine checks are largely eliminated.</li>
                     <li>Overall codebase remains clean and maintainable.</li>
-                    <li>Feature parity is improved.</li>
+                    <li>Feature parity is significantly improved.</li>
                 </ol>
-                <p>As a result, SLBr can easily support additional engines in the future, such as GeckoFX, Ultralight, or other web engine implementations.</p>
+                <p>As a result, SLBr can more easily support additional engines in the future, such as GeckoFX, Ultralight, or other web engine implementations.</p>
 
-                <p>Despite the improvements, not all web engines provide the same level of functionality.</p>
+                <p>The new architecture also enabled proper handling of custom protocol schemes such as gemini://, gopher://, and slbr:// across different web engines.</p>
+                <p>Under the previous conditional-based implementation, adding protocol support across multiple engines was impractical due to deeply intertwined engine-specific logic.</p>
+                <p>With the new architecture, protocol handling is centralized and applied consistently, making it significantly easier to extend and maintain.</p>
+
+                <p>Despite the architectural improvements, not all web engines provide the same level of functionality.</p>
                 <p>Some limitations include:</p>
                 <ol class="container">
-                    <li>Extension support is not fully standardized across web engines.</li>
-                    <li>Certain features behave inconsistently.</li>
-                    <li>Legacy web engines like Internet Explorer lack modern web capabilities.</li>
+                    <li>Extension support is not fully standardized.</li>
+                    <li>Certain features, such as downloads and popups, behave inconsistently.</li>
+                    <li>Legacy web engines like Internet Explorer lack many modern web capabilities.</li>
                 </ol>
-                <p>These constraints are inherent to the engines rather than the architecture.</p>
+                <p>These constraints are inherent to the underlying engines themselves rather than the architecture.</p>
             </div>
         </div>
     </div>
