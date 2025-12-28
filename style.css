@@ -7,27 +7,50 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: var(--font-color);
 }
+
+html {
+    --primary-color: white;
+    --secondary-color: whitesmoke;
+    --border-color: gainsboro;
+    --gray-color: gray;
+    --font-color: black;
+    --green: green;
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        --primary-color: #202225;
+        --secondary-color: #37393B;
+        --border-color: #4B4C4F;
+        --gray-color: #a5a5a5;
+        --font-color: white;
+        --green: springgreen;
+    }
+}
+
 body {
+    background-color: var(--primary-color);
     font-family: sans-serif;
     padding: 10px;
     margin: 0px;
     max-width: unset;
 }
 h1 { margin: 0; }
-code { background: color-mix(in srgb, transparent, gainsboro 50%); padding: 5px 7.5px; border-radius: 5px; }
+code { background: color-mix(in srgb, transparent, var(--border-color) 50%); padding: 5px 7.5px; border-radius: 5px; }
 ul { gap: 10px; display: flex; flex-direction: column; list-style-type: none; padding: 0; }
-li { background: whitesmoke; border-radius: 5px; padding: 10px; display: flex; align-items: center; gap: 5px; }
-li.success { background: color-mix(in srgb, springgreen, white 75%); }
-li.fail { background: color-mix(in srgb, red, white 75%); }
+li { background: var(--secondary-color); border-radius: 5px; padding: 10px; display: flex; align-items: center; gap: 5px; }
+li.success { background: color-mix(in srgb, springgreen, var(--primary-color) 75%); }
+li.fail { background: color-mix(in srgb, red, var(--primary-color) 75%); }
 canvas { height: 0; width: 0; }
 img { border-radius: 5px; }
 label { display: block; margin-bottom: 5px; font-weight: bold; }
-button { cursor: pointer; background: #0092FF; border: none; height: 35px; border-radius: 5px; color: white; width: fit-content; padding: 0 25px; transition: filter 0.3s ease; }
+button { cursor: pointer; background: #0092FF; border: none; height: 35px; border-radius: 5px; color: var(--primary-color); width: fit-content; padding: 0 25px; transition: filter 0.3s ease; }
 button:hover { filter: brightness(90%); }
 .button { text-decoration: none; cursor: pointer; background: #0092FF; border: none; height: 35px; border-radius: 5px; color: white; width: fit-content; padding: 0 25px; transition: filter 0.3s ease; }
 .button:hover { filter: brightness(90%); }
-h2 { margin: 0; border: solid gainsboro; border-width: 0 0 1px 0; padding: 10px 0; }
+h2 { margin: 0; border: solid var(--border-color); border-width: 0 0 1px 0; padding: 10px 0; }
 
 .fonticon {
     font-family: "Segoe Fluent Icons";
@@ -43,7 +66,7 @@ h2 { margin: 0; border: solid gainsboro; border-width: 0 0 1px 0; padding: 10px 
 .card {
     position: relative;
     height: 250px;
-    border: 1px solid gainsboro;
+    border: 1px solid var(--border-color);
     width: 200px;
     border-radius: 15px;
     overflow: clip;
@@ -51,7 +74,7 @@ h2 { margin: 0; border: solid gainsboro; border-width: 0 0 1px 0; padding: 10px 
 
 .card .thumbnail {
     height: 40%;
-    background: whitesmoke;
+    background: var(--secondary-color);
     display: flex;
     justify-content: center;
 }

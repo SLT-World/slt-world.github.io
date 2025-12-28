@@ -72,8 +72,8 @@
             align-self: center;
             margin-left: 10px;
             padding: 5px 12.5px;
-            background: whitesmoke;
-            border: 1px solid gainsboro;
+            background: var(--secondary-color);
+            border: 1px solid var(--border-color);
             border-radius: 5px;
             font-weight: 600;
         }
@@ -122,7 +122,7 @@
             color:limegreen;
         }
         table {
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
             border-collapse: separate;
             border-left: 0;
             border-radius: 10px;
@@ -148,11 +148,11 @@
             padding: 10px 10px;
             text-align: left;
             vertical-align: top;
-            border-left: 1px solid #ddd;
+            border-left: 1px solid var(--border-color);
             align-content: center;
         }
         td {
-            border-top: 1px solid #ddd;
+            border-top: 1px solid var(--border-color);
         }
         thead:first-child tr:first-child th:first-child, tbody:first-child tr:first-child td:first-child {
             border-radius: 10px 0 0 0;
@@ -162,7 +162,7 @@
         }
         @media (prefers-color-scheme: dark) {
             .green {
-                color:green;
+                color: var(--green);
             }
         }
 
@@ -347,7 +347,7 @@ Ideal for articles, blogs, and long-form content.</pre>
                             <pre>Install Chrome extensions for added functionality.</pre>
                         </div>
                         <div class="overlay" style="background: rgba(0, 100, 0, 0.25)">
-                            <pre class="fonticon" style="color:green;"></pre>
+                            <pre class="fonticon" style="color: var(--green);"></pre>
                         </div>
                     </div>
                     <div class="card">
@@ -473,7 +473,7 @@ Ideal for articles, blogs, and long-form content.</pre>
                             <pre>Install and run websites like native apps.</pre>
                         </div>
                         <div class="overlay" style="background: rgba(0, 100, 0, 0.25)">
-                            <pre class="fonticon" style="color:green;"></pre>
+                            <pre class="fonticon" style="color: var(--green);"></pre>
                         </div>
                     </div>
                     <div class="card">
@@ -575,7 +575,7 @@ Ideal for articles, blogs, and long-form content.</pre>
                             <pre>Always stay on the latest version with automatic updates.</pre>
                         </div>
                         <div class="overlay" style="background: rgba(0, 100, 0, 0.25)">
-                            <pre class="fonticon" style="color:green;"></pre>
+                            <pre class="fonticon" style="color: var(--green);"></pre>
                         </div>
                     </div>
                     <div class="card">
@@ -622,18 +622,18 @@ Ideal for articles, blogs, and long-form content.</pre>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Stability</td>
                             <td><pre class="fonticon" style="color: dimgray;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Proprietary Codecs</td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Image Upload Popup</td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
                         </tr>
@@ -645,74 +645,74 @@ Ideal for articles, blogs, and long-form content.</pre>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Fullscreen</td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Developer Tools</td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Web Risk Service</td>
-                            <td><pre class="fonticon" style="color: green;" title="Google Safe Browsing / Yandex Safe Browsing / PhishTank"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);" title="Google Safe Browsing / Yandex Safe Browsing / PhishTank"></pre></td>
                             <td><pre class="fonticon" style="color: dodgerblue;" title="Microsoft Defender SmartScreen"></pre></td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Ad Blocker</td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Print Preview</td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Spell Check</td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
                             <!--<td><pre class="fonticon" style="color: dimgray;"></pre></td>-->
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Profiles</td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Private Mode</td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                             <td><pre class="fonticon" style="color: dimgray;"></pre></td>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Screenshot</td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Picture-in-Picture</td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                             <td><pre class="fonticon" style="color: dimgray;"></pre></td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Audio Detection</td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
                         </tr>
                         <tr>
                             <td style="display: flex;align-items: center;gap:10px;"><pre class="fonticon"></pre>Font Customization</td>
-                            <td><pre class="fonticon" style="color: green;"></pre></td>
+                            <td><pre class="fonticon" style="color: var(--green);"></pre></td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
                             <td><pre class="fonticon" style="color: red;"></pre></td>
                         </tr>
