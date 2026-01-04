@@ -29,6 +29,7 @@ body {
     gap: 10px;
     max-width: 1000px;
     width: 100%;
+    overflow: auto;
 }
 p, h1, h2, h3, h4, h5, h6, span, i {
     color: var(--font-color);
@@ -259,6 +260,47 @@ input:checked + .slider:before {
 
 .switch input:disabled + .slider:before {
   background-color: gainsboro;
+}
+
+table {
+    background: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    border-collapse: separate;
+    border-left: 0;
+    border-radius: 5px;
+    border-spacing: 0px;
+    width: 100%;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+    border-collapse: separate;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+thead:first-child tr:first-child th:first-child, tbody:first-child tr:first-child td:first-child {
+    border-radius: 5px 0 0 0;
+}
+
+thead:last-child tr:last-child th:first-child, tbody:last-child tr:last-child td:first-child {
+    border-radius: 0 0 0 5px;
+}
+
+th, td {
+    padding: 5px 10px;
+    text-align: left;
+    vertical-align: top;
+    border-left: 1px solid var(--border-color);
+    align-content: center;
 }
 
 @media screen and (max-width: 1000px) {

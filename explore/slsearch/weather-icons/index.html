@@ -37,6 +37,36 @@
     height: 100%;
     aspect-ratio: 1 / 1;
 }
+table {
+    width: min-content;
+    align-self: center;
+}
+tbody td:first-child > div {
+    padding: 10px;
+    background: var(--primary-color);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 75px;
+}
+tbody td:first-child > div > span {
+    background: var(--secondary-color);
+    padding: 0 10px;
+    width: fit-content;
+    height: auto;
+    border-radius: 100px;
+}
+tbody td > img {
+    padding: 10px;
+    background: var(--primary-color);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 75px;
+    width: 75px;
+}
     </style>
 </head>
 <body>
@@ -46,7 +76,7 @@
             <h3>SLT World</h3>
         </div>
         <h1>Weather Icons</h1>
-        <p>A set of <strong>weather icons</strong> used by SLSearch's weather panel.</p>
+        <p>A collection of <strong>weather icons</strong> used by SLSearch's weather panel.</p>
         <p>This page visualizes each icon alongside its corresponding WMO weather code to help avoid confusion during development.</p>
         <div style="display: flex;gap: 10px;align-items: center;">
             <p>Night</p>
@@ -69,6 +99,16 @@
             </div>
             <div id="accuweather" class="icon_grid"></div>
         </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Weather</th>
+                    <th data-title="OpenWeatherMap">OWM</th>
+                    <th data-title="AccuWeather">ACW</th>
+                </tr>
+            </thead>
+            <tbody id="weather_table"></tbody>
+        </table>
     </div>
     <script>
 const wmoDescMap = {
@@ -165,6 +205,10 @@ const wmoIconMapOWM = {
 };
     </script>
     <script>
+const openweathermapPanel = document.getElementById("openweathermap");
+const accuweatherPanel = document.getElementById("accuweather");
+const tableBody = document.getElementById("weather_table");
+
 function changeDayTime(element) {
     generate(!element.checked);
 }
@@ -172,18 +216,21 @@ function changeDayTime(element) {
 function generate(day) {
     const isDay = day ? "day" : "night";
 
-    const openweathermap_panel = document.getElementById("openweathermap");
-    openweathermap_panel.innerHTML = "";
-    for (let code of Object.keys(wmoIconMapOWM)) {
-        const value = wmoIconMapOWM[code][isDay];
-        openweathermap_panel.innerHTML += `<div><p>${code}</p><img src="https://openweathermap.org/img/wn/${value}@4x.png"></div>`;
-    }
+    openweathermapPanel.innerHTML = "";
+    accuweatherPanel.innerHTML = "";
+    tableBody.innerHTML = "";
 
-    const accuweather_panel = document.getElementById("accuweather");
-    accuweather_panel.innerHTML = "";
-    for (let code of Object.keys(wmoIconMapACW)) {
-        const value = wmoIconMapACW[code][isDay];
-        accuweather_panel.innerHTML += `<div><p>${code}</p><img src="https://www.accuweather.com/assets/images/weather-icons/v2a/${value}.svg"></div>`;
+    for (let code of Object.keys(wmoDescMap)) {
+        const desc = wmoDescMap[code][isDay];
+        const owmIcon = wmoIconMapOWM[code][isDay];
+        const acwIcon = wmoIconMapACW[code][isDay];
+        openweathermapPanel.innerHTML += `<div><p>${code}</p><img src="https://openweathermap.org/img/wn/${owmIcon}@4x.png"></div>`;
+        accuweatherPanel.innerHTML += `<div><p>${code}</p><img src="https://www.accuweather.com/assets/images/weather-icons/v2a/${acwIcon}.svg"></div>`;
+        tableBody.innerHTML += `<tr>
+    <td><div><span>${code}</span>${desc}</div></td>
+    <td><img src="https://openweathermap.org/img/wn/${owmIcon}@4x.png"></td>
+    <td><img src="https://www.accuweather.com/assets/images/weather-icons/v2a/${acwIcon}.svg"></td>
+</tr>`;
     }
 }
 
