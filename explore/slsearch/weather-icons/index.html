@@ -99,12 +99,20 @@ tbody td > img {
             </div>
             <div id="accuweather" class="icon_grid"></div>
         </div>
+        <div class="container">
+            <div class="header">
+                <p class="icon">3.</p>
+                <p>Google</p>
+            </div>
+            <div id="google" class="icon_grid"></div>
+        </div>
         <table>
             <thead>
                 <tr>
                     <th>Weather</th>
                     <th data-title="OpenWeatherMap">OWM</th>
                     <th data-title="AccuWeather">ACW</th>
+                    <th data-title="Google">GGL</th>
                 </tr>
             </thead>
             <tbody id="weather_table"></tbody>
@@ -203,10 +211,51 @@ const wmoIconMapOWM = {
     96: { day: "11d", night: "11n" },
     99: { day: "11d", night: "11n" },
 };
+//Google
+//{ day: "mostly_cloudy_day_light", night: "mostly_cloudy_night_light" },
+
+//The following 3 most often appear for locations in Japan and are rarely seen otherwise.
+//sunny_with_cloudy_light - Mostly sunny
+//cloudy_with_sunny_light - Cloudy, periodically clear
+//cloudy_then_sunny_light - Cloudy but clear later
+
+//strong_thunderstorms_light - Thundershower + Heavy thunderstorm
+//heavy_snow_light - Heavy snow showers
+const wmoIconMapGGL = {
+    0: { day: "sunny_light", night: "clear_night_light" },
+    1: { day: "mostly_sunny_light", night: "mostly_clear_night_light" },
+    2: { day: "partly_cloudy_light", night: "partly_cloudy_night_light" },
+    3: { day: "cloudy_light", night: "cloudy_light" },
+    45: { day: "cloudy_light", night: "cloudy_light" },
+    48: { day: "cloudy_light", night: "cloudy_light" },
+    51: { day: "drizzle_light", night: "drizzle_light" },
+    53: { day: "drizzle_light", night: "drizzle_light" },
+    55: { day: "cloudy_with_rain_light", night: "cloudy_with_rain_light" },
+    56: { day: "drizzle_light", night: "drizzle_light" },
+    57: { day: "drizzle_light", night: "drizzle_light" },
+    61: { day: "drizzle_light", night: "drizzle_light" },
+    63: { day: "rain_showers_light", night: "rain_showers_light" },
+    65: { day: "heavy_rain_light", night: "heavy_rain_light" },
+    66: { day: "wintry_mix_light", night: "wintry_mix_light" },
+    67: { day: "wintry_mix_light", night: "wintry_mix_light" },
+    71: { day: "flurries_light", night: "flurries_light" },
+    73: { day: "snow_showers_light", night: "snow_showers_light" },
+    75: { day: "heavy_snow_light", night: "heavy_snow_light" },
+    77: { day: "snow_showers_light", night: "snow_showers_light" },
+    80: { day: "drizzle_light", night: "drizzle_light" },
+    81: { day: "rain_showers_light", night: "rain_showers_light" },
+    82: { day: "cloudy_with_rain_light", night: "cloudy_with_rain_light" },
+    85: { day: "flurries_light", night: "flurries_light" },
+    86: { day: "scattered_snow_showers_day_light", night: "scattered_snow_showers_day_light" },
+    95: { day: "thunderstorms_day_light", night: "thunderstorms_night_light" },
+    96: { day: "thunderstorms_day_light", night: "thunderstorms_night_light" },
+    99: { day: "strong_thunderstorms_light", night: "strong_thunderstorms_light" },
+};
     </script>
     <script>
 const openweathermapPanel = document.getElementById("openweathermap");
 const accuweatherPanel = document.getElementById("accuweather");
+const googlePanel = document.getElementById("google");
 const tableBody = document.getElementById("weather_table");
 
 function changeDayTime(element) {
@@ -218,18 +267,22 @@ function generate(day) {
 
     openweathermapPanel.innerHTML = "";
     accuweatherPanel.innerHTML = "";
+    googlePanel.innerHTML = "";
     tableBody.innerHTML = "";
 
     for (let code of Object.keys(wmoDescMap)) {
         const desc = wmoDescMap[code][isDay];
         const owmIcon = wmoIconMapOWM[code][isDay];
         const acwIcon = wmoIconMapACW[code][isDay];
+        const gglIcon = wmoIconMapGGL[code][isDay];
         openweathermapPanel.innerHTML += `<div><p>${code}</p><img src="https://openweathermap.org/img/wn/${owmIcon}@4x.png"></div>`;
         accuweatherPanel.innerHTML += `<div><p>${code}</p><img src="https://www.accuweather.com/assets/images/weather-icons/v2a/${acwIcon}.svg"></div>`;
+        googlePanel.innerHTML += `<div><p>${code}</p><img src="https://www.gstatic.com/weather/conditions/v1/svg/${gglIcon}.svg"></div>`;
         tableBody.innerHTML += `<tr>
     <td><div><span>${code}</span>${desc}</div></td>
     <td><img src="https://openweathermap.org/img/wn/${owmIcon}@4x.png"></td>
     <td><img src="https://www.accuweather.com/assets/images/weather-icons/v2a/${acwIcon}.svg"></td>
+    <td><img src="https://www.gstatic.com/weather/conditions/v1/svg/${gglIcon}.svg"></td>
 </tr>`;
     }
 }
