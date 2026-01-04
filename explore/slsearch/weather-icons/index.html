@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Icons - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../modern.css">
+    <style>
+.icon_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 75px);
+    gap: 10px !important;
+    justify-content: center;
+}
+
+.icon_grid > * {
+    background: var(--primary-color);
+    width: 75px;
+    height: auto;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    gap: 5px;
+}
+.icon_grid > * > p {
+    background: var(--secondary-color);
+    padding: 0 10px;
+    width: fit-content;
+    height: auto;
+    border-radius: 100px;
+}
+.icon_grid > * > img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+}
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="navigation">
+            <img src="../../../favicon.png" width="35" height="35" draggable="false">
+            <h3>SLT World</h3>
+        </div>
+        <h1>Weather Icons</h1>
+        <p>A set of <strong>weather icons</strong> used by SLSearch's weather panel.</p>
+        <p>This page visualizes each icon alongside its corresponding WMO weather code to help avoid confusion during development.</p>
+        <div style="display: flex;gap: 10px;align-items: center;">
+            <p>Night</p>
+            <label class="switch input">
+                <input type="checkbox" onchange="changeDayTime(this)">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="container">
+            <div class="header">
+                <p class="icon">1.</p>
+                <p>OpenWeatherMap</p>
+            </div>
+            <div id="openweathermap" class="icon_grid"></div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <p class="icon">2.</p>
+                <p>AccuWeather</p>
+            </div>
+            <div id="accuweather" class="icon_grid"></div>
+        </div>
+    </div>
+    <script>
+const wmoDescMap = {
+    0: { day: "Sunny", night: "Clear" },
+    1: { day: "Mainly Sunny", night: "Mainly Clear" },
+    2: { day: "Partly Cloudy", night: "Partly Cloudy" },
+    3: { day: "Cloudy", night: "Cloudy" },
+    45: { day: "Foggy", night: "Foggy" },
+    48: { day: "Rime Fog", night: "Rime Fog" },
+    51: { day: "Light Drizzle", night: "Light Drizzle" },
+    53: { day: "Drizzle", night: "Drizzle" },
+    55: { day: "Heavy Drizzle", night: "Heavy Drizzle" },
+    56: { day: "Light Freezing Drizzle", night: "Light Freezing Drizzle" },
+    57: { day: "Freezing Drizzle", night: "Freezing Drizzle" },
+    61: { day: "Light Rain", night: "Light Rain" },
+    63: { day: "Rain", night: "Rain" },
+    65: { day: "Heavy Rain", night: "Heavy Rain" },
+    66: { day: "Light Freezing Rain", night: "Light Freezing Rain" },
+    67: { day: "Freezing Rain", night: "Freezing Rain" },
+    71: { day: "Light Snow", night: "Light Snow" },
+    73: { day: "Snow", night: "Snow" },
+    75: { day: "Heavy Snow", night: "Heavy Snow" },
+    77: { day: "Snow Grains", night: "Snow Grains" },
+    80: { day: "Light Showers", night: "Light Showers" },
+    81: { day: "Showers", night: "Showers" },
+    82: { day: "Heavy Showers", night: "Heavy Showers" },
+    85: { day: "Light Snow Showers", night: "Light Snow Showers" },
+    86: { day: "Snow Showers", night: "Snow Showers" },
+    95: { day: "Thunderstorm", night: "Thunderstorm" },
+    96: { day: "Light Thunderstorms With Hail", night: "Light Thunderstorms With Hail" },
+    99: { day: "Thunderstorm With Hail", night: "Thunderstorm With Hail" },
+};
+//AccuWeather
+const wmoIconMapACW = {
+    0: { day: "1", night: "33" },
+    1: { day: "2", night: "34" },
+    2: { day: "3", night: "35" },
+    3: { day: "7", night: "7" },
+    45: { day: "5", night: "37" },
+    48: { day: "11", night: "11" },
+    51: { day: "14", night: "39" },
+    53: { day: "13", night: "40" },
+    55: { day: "12", night: "12" },
+    56: { day: "29", night: "29" },
+    57: { day: "29", night: "29" },
+    61: { day: "14", night: "39" },
+    63: { day: "13", night: "40" },
+    65: { day: "12", night: "12" },
+    66: { day: "29", night: "29" },
+    67: { day: "29", night: "29" },
+    71: { day: "23", night: "44" },
+    73: { day: "23", night: "44" },
+    75: { day: "22", night: "22" },
+    77: { day: "23", night: "44" },
+    80: { day: "14", night: "39" },
+    81: { day: "13", night: "40" },
+    82: { day: "12", night: "12" },
+    85: { day: "20", night: "43" },
+    86: { day: "19", night: "19" },
+    95: { day: "16", night: "42" },
+    96: { day: "16", night: "42" },
+    99: { day: "15", night: "15" },
+};
+//OpenWeatherMap
+const wmoIconMapOWM = {
+    0: { day: "01d", night: "01n" },
+    1: { day: "01d", night: "01n" },
+    2: { day: "02d", night: "02n" },
+    3: { day: "03d", night: "03n" },
+    45: { day: "50d", night: "50n" },
+    48: { day: "50d", night: "50n" },
+    51: { day: "09d", night: "09n" },
+    53: { day: "09d", night: "09n" },
+    55: { day: "09d", night: "09n" },
+    56: { day: "09d", night: "09n" },
+    57: { day: "09d", night: "09n" },
+    61: { day: "10d", night: "10n" },
+    63: { day: "10d", night: "10n" },
+    65: { day: "10d", night: "10n" },
+    66: { day: "10d", night: "10n" },
+    67: { day: "10d", night: "10n" },
+    71: { day: "13d", night: "13n" },
+    73: { day: "13d", night: "13n" },
+    75: { day: "13d", night: "13n" },
+    77: { day: "13d", night: "13n" },
+    80: { day: "09d", night: "09n" },
+    81: { day: "09d", night: "09n" },
+    82: { day: "09d", night: "09n" },
+    85: { day: "13d", night: "13n" },
+    86: { day: "13d", night: "13n" },
+    95: { day: "11d", night: "11n" },
+    96: { day: "11d", night: "11n" },
+    99: { day: "11d", night: "11n" },
+};
+    </script>
+    <script>
+function changeDayTime(element) {
+    generate(!element.checked);
+}
+
+function generate(day) {
+    const isDay = day ? "day" : "night";
+
+    const openweathermap_panel = document.getElementById("openweathermap");
+    openweathermap_panel.innerHTML = "";
+    for (let code of Object.keys(wmoIconMapOWM)) {
+        const value = wmoIconMapOWM[code][isDay];
+        openweathermap_panel.innerHTML += `<div><p>${code}</p><img src="https://openweathermap.org/img/wn/${value}@4x.png"></div>`;
+    }
+
+    const accuweather_panel = document.getElementById("accuweather");
+    accuweather_panel.innerHTML = "";
+    for (let code of Object.keys(wmoIconMapACW)) {
+        const value = wmoIconMapACW[code][isDay];
+        accuweather_panel.innerHTML += `<div><p>${code}</p><img src="https://www.accuweather.com/assets/images/weather-icons/v2a/${value}.svg"></div>`;
+    }
+}
+
+generate(true);
+    </script>
+</body>
+</html>
