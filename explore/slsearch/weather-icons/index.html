@@ -106,6 +106,20 @@ tbody td > img {
             </div>
             <div id="google" class="icon_grid"></div>
         </div>
+        <div class="container">
+            <div class="header">
+                <p class="icon">3.</p>
+                <p>MSN</p>
+            </div>
+            <div id="msn" class="icon_grid"></div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <p class="icon">3.</p>
+                <p>Old MSN</p>
+            </div>
+            <div id="omsn" class="icon_grid"></div>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -113,6 +127,8 @@ tbody td > img {
                     <th data-title="OpenWeatherMap">OWM</th>
                     <th data-title="AccuWeather">ACW</th>
                     <th data-title="Google">GGL</th>
+                    <th data-title="MSN">MSN</th>
+                    <th data-title="Old MSN">OMSN</th>
                 </tr>
             </thead>
             <tbody id="weather_table"></tbody>
@@ -214,13 +230,15 @@ const wmoIconMapOWM = {
 //Google
 //{ day: "mostly_cloudy_day_light", night: "mostly_cloudy_night_light" },
 
+//strong_thunderstorms_light - Thundershower + Heavy thunderstorm
+//heavy_snow_light - Heavy snow showers
+//blowing_snow_light
+//windy_light
+
 //The following 3 most often appear for locations in Japan and are rarely seen otherwise.
 //sunny_with_cloudy_light - Mostly sunny
 //cloudy_with_sunny_light - Cloudy, periodically clear
 //cloudy_then_sunny_light - Cloudy but clear later
-
-//strong_thunderstorms_light - Thundershower + Heavy thunderstorm
-//heavy_snow_light - Heavy snow showers
 const wmoIconMapGGL = {
     0: { day: "sunny_light", night: "clear_night_light" },
     1: { day: "mostly_sunny_light", night: "mostly_clear_night_light" },
@@ -246,16 +264,88 @@ const wmoIconMapGGL = {
     81: { day: "rain_showers_light", night: "rain_showers_light" },
     82: { day: "cloudy_with_rain_light", night: "cloudy_with_rain_light" },
     85: { day: "flurries_light", night: "flurries_light" },
-    86: { day: "scattered_snow_showers_day_light", night: "scattered_snow_showers_day_light" },
+    86: { day: "scattered_snow_showers_day_light", night: "scattered_snow_showers_night_light" },
     95: { day: "thunderstorms_day_light", night: "thunderstorms_night_light" },
     96: { day: "thunderstorms_day_light", night: "thunderstorms_night_light" },
     99: { day: "strong_thunderstorms_light", night: "strong_thunderstorms_light" },
+};
+//Old MSN
+//MostlyCloudyDayV2
+//https://github.com/valinet/ExplorerPatcher/discussions/755
+const wmoIconMapOMSN = {
+    0: { day: "SunnyDayV3", night: "ClearNightV3" },
+    1: { day: "MostlySunnyDay", night: "MostlyClearNight" },
+    2: { day: "PartlyCloudyDayV2", night: "PartlyCloudyNightV2" },
+    3: { day: "CloudyV3", night: "CloudyV3" },
+    45: { day: "FogV2", night: "FogV2" },
+    48: { day: "FogV2", night: "FogV2" },
+    51: { day: "LightRainV3", night: "LightRainV3" },
+    53: { day: "LightRainV3", night: "LightRainV3" },
+    55: { day: "LightRainV3", night: "LightRainV3" },
+    56: { day: "LightRainV3", night: "LightRainV3" },
+    57: { day: "LightRainV3", night: "LightRainV3" },
+    61: { day: "LightRainV3", night: "LightRainV3" },
+    63: { day: "ModerateRainV2", night: "ModerateRainV2" },
+    65: { day: "ModerateRainV2", night: "ModerateRainV2" },
+    66: { day: "RainSnowShowersNightV2", night: "RainSnowShowersNightV2" },
+    67: { day: "RainSnowV2", night: "RainSnowV2" },
+    71: { day: "LightSnowV2", night: "LightSnowV2" },
+    73: { day: "LightSnowV2", night: "LightSnowV2" },
+    75: { day: "HeavySnowV2", night: "HeavySnowV2" },
+    77: { day: "LightSnowV2", night: "LightSnowV2" },
+    80: { day: "RainShowersDayV2", night: "RainShowersNightV2" },
+    81: { day: "RainShowersDayV2", night: "RainShowersNightV2" },
+    82: { day: "RainShowersDayV2", night: "RainShowersNightV2" },
+    85: { day: "SnowShowersDayV2", night: "SnowShowersNightV2" },
+    86: { day: "SnowShowersDayV2", night: "SnowShowersNightV2" },
+    95: { day: "ThunderstormsV2", night: "ThunderstormsV2" },
+    96: { day: "ThunderstormsV2", night: "ThunderstormsV2" },
+    99: { day: "ThunderstormsV2", night: "ThunderstormsV2" },
+};
+//MSN
+//MostlyCloudyDayV2, MostlyCloudyNightV2
+//WindyV2
+//D310LightRainShowersV2, D210LightRainShowersV2
+//N310LightRainShowersV2
+//N210LightRainShowersV2
+//N212LightSnowShowersV2, LightSnowShowersNight
+const wmoIconMapMSN = {
+    0: { day: "SunnyDayV3", night: "ClearNightV3" },
+    1: { day: "MostlySunnyDay", night: "MostlyClearNight" },
+    2: { day: "D200PartlySunnyV2", night: "PartlyCloudyNightV2" },
+    3: { day: "CloudyV3", night: "CloudyV3" },
+    45: { day: "FogV2", night: "FogV2" },
+    48: { day: "FogV2", night: "FogV2" },
+    51: { day: "LightRainV3", night: "LightRainV3" },
+    53: { day: "LightRainV3", night: "LightRainV3" },
+    55: { day: "HeavyDrizzle", night: "HeavyDrizzle" },
+    56: { day: "LightRainV3", night: "LightRainV3" },
+    57: { day: "LightRainV3", night: "LightRainV3" },
+    61: { day: "LightRainV3", night: "LightRainV3" },
+    63: { day: "ModerateRainV2", night: "ModerateRainV2" },
+    65: { day: "ModerateRainV2", night: "ModerateRainV2" },
+    66: { day: "RainSnowV2", night: "RainSnowV2" },
+    67: { day: "RainSnowV2", night: "RainSnowV2" },
+    71: { day: "LightSnowV2", night: "LightSnowV2" },
+    73: { day: "LightSnowV2", night: "LightSnowV2" },
+    75: { day: "HeavySnowV2", night: "HeavySnowV2" },
+    77: { day: "LightSnowV2", night: "LightSnowV2" },
+    80: { day: "D210LightRainShowersV2", night: "N210LightRainShowersV2" },
+    81: { day: "D310LightRainShowersV2", night: "N310LightRainShowersV2" },
+    82: { day: "RainShowersDayV2", night: "RainShowersNightV2" },
+    85: { day: "D212LightSnowShowersV2", night: "N212LightSnowShowersV2" },
+    86: { day: "LightSnowShowersDay", night: "LightSnowShowersNight" },
+    95: { day: "ThunderstormsV2", night: "ThunderstormsV2" },
+    96: { day: "ThunderstormsV2", night: "ThunderstormsV2" },
+    99: { day: "ThunderstormsV2", night: "ThunderstormsV2" },
 };
     </script>
     <script>
 const openweathermapPanel = document.getElementById("openweathermap");
 const accuweatherPanel = document.getElementById("accuweather");
 const googlePanel = document.getElementById("google");
+const omsnPanel = document.getElementById("omsn");
+const msnPanel = document.getElementById("msn");
 const tableBody = document.getElementById("weather_table");
 
 function changeDayTime(element) {
@@ -268,6 +358,8 @@ function generate(day) {
     openweathermapPanel.innerHTML = "";
     accuweatherPanel.innerHTML = "";
     googlePanel.innerHTML = "";
+    omsnPanel.innerHTML = "";
+    msnPanel.innerHTML = "";
     tableBody.innerHTML = "";
 
     for (let code of Object.keys(wmoDescMap)) {
@@ -275,14 +367,20 @@ function generate(day) {
         const owmIcon = wmoIconMapOWM[code][isDay];
         const acwIcon = wmoIconMapACW[code][isDay];
         const gglIcon = wmoIconMapGGL[code][isDay];
+        const msnIcon = wmoIconMapMSN[code][isDay];
+        const omsnIcon = wmoIconMapOMSN[code][isDay];
         openweathermapPanel.innerHTML += `<div><p>${code}</p><img src="https://openweathermap.org/img/wn/${owmIcon}@4x.png"></div>`;
         accuweatherPanel.innerHTML += `<div><p>${code}</p><img src="https://www.accuweather.com/assets/images/weather-icons/v2a/${acwIcon}.svg"></div>`;
         googlePanel.innerHTML += `<div><p>${code}</p><img src="https://www.gstatic.com/weather/conditions/v1/svg/${gglIcon}.svg"></div>`;
+        msnPanel.innerHTML += `<div><p>${code}</p><img src="https://assets.msn.com/weathermapdata/1/static/weather/Icons/taskbar_v10/Condition_Card/${msnIcon}.svg"></div>`;
+        omsnPanel.innerHTML += `<div><p>${code}</p><img src="https://assets.msn.com/bundles/v1/weather/latest/${omsnIcon}.svg"></div>`;
         tableBody.innerHTML += `<tr>
     <td><div><span>${code}</span>${desc}</div></td>
     <td><img src="https://openweathermap.org/img/wn/${owmIcon}@4x.png"></td>
     <td><img src="https://www.accuweather.com/assets/images/weather-icons/v2a/${acwIcon}.svg"></td>
     <td><img src="https://www.gstatic.com/weather/conditions/v1/svg/${gglIcon}.svg"></td>
+    <td><img src="https://assets.msn.com/weathermapdata/1/static/weather/Icons/taskbar_v10/Condition_Card/${msnIcon}.svg"></td>
+    <td><img src="https://assets.msn.com/bundles/v1/weather/latest/${omsnIcon}.svg"></td>
 </tr>`;
     }
 }
