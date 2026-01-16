@@ -89,6 +89,7 @@
 > - 🔗 [Service Worker](https://googlechrome.github.io/samples/service-worker/basic/)
 > - 🔗 [Prerender Demo](https://chrome.dev/prerender-demos/)
 > - 🔗 [Web Notifications](https://www.bennish.net/web-notifications.html)
+> - 🔗 [Chromium Checker](https://chromiumchecker.com/)
 
 ### Security
 > - 🔗 [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)
