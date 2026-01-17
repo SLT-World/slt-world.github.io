@@ -109,16 +109,17 @@
                 <p>In SLBr, specific internal browser pages relies on C# and XAML, rather than HTML and Javascript.</p>
                 <p>Relying on HTML and JavaScript posed technical challenges in a multi-engine architecture, as behavior varied between web engines.</p>
 
-                <p>In early versions of SLBr, the Settings page was implemented as a special tab, rather than a navigable page.</p>
-                <p>Users could not access it via <code>slbr://setting</code>, and the tab system required custom handling to support this specialty.</p>
+                <p>In early versions of SLBr, the Settings page was implemented as a special standalone tab, rather than a navigable page.</p>
+                <p>Users could not access it via a URL such as <code style="display: inline-block;">slbr://setting</code>, and the tab system required custom handling to support this exception.</p>
                 <p>This approach resulted in several issues:</p>
                 <ol class="container">
                     <li>Internal pages were not navigable.</li>
-                    <li>Complicated tab system.</li>
+                    <li>Further complicated tab system due to special-case handling.</li>
                     <li>Inconsistent behavior between web engines.</li>
                 </ol>
-                <p>As a result, a new approach was introduced to integrate internal pages with the browser's navigation.</p>
+                <p>As a result, a new approach was introduced to integrate internal pages with the browser's navigation model.</p>
                 <p>SLBr now uses an overlay-based page system, where internal pages are implemented as User Controls rendered on top of the web view.</p>
+                <p>From a user's perspective, these pages behave like normal navigable URLs, while internally they are rendered natively using WPF rather than HTML.</p>
                 <p>This approach provides several advantages:</p>
                 <ol class="container">
                     <li>Internal pages are fully navigable.</li>
@@ -127,15 +128,17 @@
                     <li>Behavior remains consistent across all web engines.</li>
                     <li>Avoids exposing privileged browser information to JavaScript.</li>
                 </ol>
-                <p>Because the overlay is engine-agnostic, it integrates great;y with the existing multi-engine abstraction layer and avoids relying on engine-specific HTML and JavaScript capabilities.</p>
+                <p>Because the overlay is engine-agnostic, it integrates cleanly with the existing multi-engine abstraction layer and avoids relying on engine-specific HTML and JavaScript capabilities.</p>
                 <p>Following the success of the Settings page, other internal pages such as History were also migrated from HTML/JavaScript implementations to native WPF overlays.</p>
                 <p>This transition provides several benefits:</p>
                 <ol class="container">
-                    <li>Simplified development and improved integration.</li>
-                    <li>Browser information can be accessed directly without bridges.</li>
-                    <li>UI updates immediately to changes.</li>
+                    <li>Simplified development and improved internal integration.</li>
+                    <li>Browser information can be accessed directly without polling or scripting bridges.</li>
+                    <li>UI updates react immediately to changes.</li>
+                    <li>Instant loading for instant pages.</li>
                 </ol>
-                <p>This approach results in a cleaner design, while keeping internal pages as a part of a smooth experience.</p>
+                <p>This approach results in a cleaner, more maintainable design, while still presenting internal pages as part of a smooth browsing experience.</p>
+            </div>
         </div>
     </div>
 </body>
