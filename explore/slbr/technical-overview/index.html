@@ -103,7 +103,7 @@
         <div class="container">
             <div class="header">
                 <span class="material-symbols-rounded icon">settings</span>
-                <p>Browser Internal Pages & Overlay Architecture</p>
+                <p>Internal Pages & Overlay Architecture</p>
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>In SLBr, specific internal browser pages relies on C# and XAML, rather than HTML and Javascript.</p>
@@ -138,6 +138,46 @@
                     <li>Instant loading for instant pages.</li>
                 </ol>
                 <p>This approach results in a cleaner, more maintainable design, while still presenting internal pages as part of a smooth browsing experience.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">settings</span>
+                <p>Spellcheck Architecture</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>Early versions of SLBr relied directly on the built-in spellcheck functionality provided by CefSharp.</p>
+                <p>This approach was simple, providing spellchecking without complexity.</p>
+                <p>However, a later Chromium update introduced changes that broke the built-in spellcheck.</p>
+                <p>As a result, spellchecking functionality became unavailable for a period of time.</p>
+
+                <p>To restore spellchecking support, SLBr transitioned to an engine-agnostic, cloud-based solution.</p>
+                <p>SLBr used an on-demand request model rather than performing continuous, real-time spellchecking.</p>
+                <p>Spellcheck requests are only triggered when text is selected and the context menu is opened.</p>
+                <p>This design introduced several benefits:</p>
+                <ol class="container">
+                    <li>Lower request amount compared to traditional real-time spellcheckers.</li>
+                    <li>Significantly reduced bandwidth usage.</li>
+                    <li>Reduced risk of password leakage since text is not transmitted while typing.</li>
+                    <li>Consistent behavior across all web engines.</li>
+                </ol>
+                <p>Despite these advantages, this approach had notable issues:</p>
+                <ol class="container">
+                    <li>Spellchecking required an active internet connection.</li>
+                    <li>Sending requests introduced privacy concerns.</li>
+                    <li>Dependence on an external service.</li>
+                    <li>Increased bandwidth usage.</li>
+                </ol>
+                <p>To address these issues, SLBr added a spellchecking provider based on WPF's built-in spellchecker.</p>
+                <p>This provider contains several advantages:</p>
+                <ol class="container">
+                    <li>Operates on the client side.</li>
+                    <li>Instant spellcheck results.</li>
+                    <li>Remains functional without an internet connection.</li>
+                    <li>Improved responsiveness when opening context menus.</li>
+                </ol>
+                <p>This option significantly improves performance and reliability for common use cases.</p>
+                <p>During further development, Microsoft Edge's cloud-based spellchecker was discovered and integrated as an additional provider.</p>
             </div>
         </div>
     </div>

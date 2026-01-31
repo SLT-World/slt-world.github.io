@@ -22,8 +22,10 @@ body {
     background-repeat: repeat;
 }
 
-@view-transition {
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
     navigation: auto;
+  }
 }
 
 .content {
