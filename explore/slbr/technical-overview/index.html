@@ -146,37 +146,39 @@
                 <p>Spellcheck Architecture</p>
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
-                <p>Early versions of SLBr relied directly on the built-in spellcheck functionality provided by CefSharp.</p>
-                <p>This approach was simple, providing spellchecking without complexity.</p>
-                <p>However, a later Chromium update introduced changes that broke the built-in spellcheck.</p>
-                <p>As a result, spellchecking functionality became unavailable for a period of time.</p>
+                <p>Early versions of SLBr relied directly on the built-in spellcheck functionality provided by the underlying CefSharp & WebView2 engines.</p>
+                <p>This approach was simple, providing real-time spellchecking without additional infrastructure.</p>
+                <p>However, a later Chromium update introduced changes that rendered the built-in spellcheck unreliable.</p>
+                <p>As a result, spellchecking functionality became unavailable for an extended period of time.</p>
 
-                <p>To restore spellchecking support, SLBr transitioned to an engine-agnostic, cloud-based solution.</p>
-                <p>SLBr used an on-demand request model rather than performing continuous, real-time spellchecking.</p>
-                <p>Spellcheck requests are only triggered when text is selected and the context menu is opened.</p>
+                <p>To restore spellchecking support, SLBr transitioned to an engine-agnostic cloud-based solution powered by LanguageTool.</p>
+                <p>Rather than performing continuous, real-time spellchecking, SLBr adopted an on-demand request model.</p>
+                <p>Spellcheck requests are triggered only when text is selected and the context menu is opened.</p>
                 <p>This design introduced several benefits:</p>
                 <ol class="container">
-                    <li>Lower request amount compared to traditional real-time spellcheckers.</li>
+                    <li>Lower request frequency compared to traditional real-time spellcheckers.</li>
                     <li>Significantly reduced bandwidth usage.</li>
-                    <li>Reduced risk of password leakage since text is not transmitted while typing.</li>
+                    <li>Reduced risk of sensitive data leakage since text is not transmitted while typing.</li>
                     <li>Consistent behavior across all web engines.</li>
                 </ol>
-                <p>Despite these advantages, this approach had notable issues:</p>
+                <p>Despite these advantages, the cloud-based approach had notable drawbacks:</p>
                 <ol class="container">
                     <li>Spellchecking required an active internet connection.</li>
-                    <li>Sending requests introduced privacy concerns.</li>
-                    <li>Dependence on an external service.</li>
+                    <li>Sending requests introduced significant privacy concerns.</li>
+                    <li>Network latency affected context menu responsiveness.</li>
+                    <li>Total reliance on an external service.</li>
                     <li>Increased bandwidth usage.</li>
                 </ol>
-                <p>To address these issues, SLBr added a spellchecking provider based on WPF's built-in spellchecker.</p>
+                <p>To address these issues, SLBr added a local spellchecking provider based on WPF's built-in spellchecker.</p>
                 <p>This provider contains several advantages:</p>
                 <ol class="container">
-                    <li>Operates on the client side.</li>
-                    <li>Instant spellcheck results.</li>
-                    <li>Remains functional without an internet connection.</li>
+                    <li>Operates entirely on the client side.</li>
+                    <li>Near-instant spellcheck results.</li>
+                    <li>Remains functional without an active internet connection.</li>
+                    <li>Zero network usage.</li>
                     <li>Improved responsiveness when opening context menus.</li>
                 </ol>
-                <p>This option significantly improves performance and reliability for common use cases.</p>
+                <p>While this option does not offer the same language depth as cloud-based solutions, it significantly improves performance and reliability for common use cases.</p>
                 <p>During further development, Microsoft Edge's cloud-based spellchecker was discovered and integrated as an additional provider.</p>
             </div>
         </div>
