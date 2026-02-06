@@ -83,6 +83,18 @@ ol.container {
     padding-left: 20px !important;
     border: none;
 }
+ul.container {
+    background: var(--primary-color);
+    padding-left: 20px !important;
+    border: none;
+}
+ul.container ul {
+    padding-inline-start: 30px;
+    margin-top: 10px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
 li {
     list-style-position: inside;
 }

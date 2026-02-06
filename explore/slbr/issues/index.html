@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SLBr Known Issues & Limitations - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <script src="../../../prism.js"></script>
+    <link rel="stylesheet" href="../../../prism.css"/>
+    <link rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+    <div class="content">
+        <div class="navigation">
+            <img src="../../../favicon.png" width="35" height="35" draggable="false">
+            <h3>SLT World</h3>
+        </div>
+        <h1>SLBr Known Issues & Limitations</h1>
+        <p>This page documents the most commonly observed issues in SLBr and explains their underlying causes to clear up any misconceptions and misunderstandings.</p>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Embedded Web Engine Constraints</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>SLBr is built on top of embedded web engines and is limited by the APIs exposed by those engines.</p>
+                <p>This means that SLBr does not have access to low-level Chromium internals and must rely entirely on the public interfaces provided by each embedded browser.</p>
+                <p>As a result, certain browser behaviors cannot be fully modified.</p>
+                <p>Furthermore, any breakages in upstream features directly affect SLBr.</p>
+                <p>Here are the following engine-specific limitations:</p>
+                <ul class="container">
+                    <li>WebView2 (Microsoft Edge)
+                        <ul>
+                            <li>Inability to intercept or modify all requests, preventing full user agent branding.</li>
+                            <li>Difficult to reliably determine whether a new tab should open in the foreground or background.</li>
+                            <li>Missing APIs for features such as image upload popups and font customization.</li>
+                        </ul>
+                    </li>
+                    <li>Trident (Internet Explorer)
+                        <ul>
+                            <li>No access to Internet Explorer's developer tools.</li>
+                            <li>No reliable way to modify the native context menu.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p>Because SLBr embeds these engines directly, any crash within an engine may result in a crash of the browser itself.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Emoji Limitations in WPF</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>SLBr's UI is built using WPF, which does not natively support full-color emoji rendering without workarounds.</p>
+                <p>As a result, colored emojis are not supported in the WPF UI.</p>
+                <p>Web content rendered inside the web engines remain unaffected.</p>
+                <p>This is a <a href="https://github.com/dotnet/wpf/issues/91" target="_blank">limitation</a> of WPF and is outside SLBr's control.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Limited Extension Support</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>SLBr's multi-engine architecture significantly complicates extension support.</p>
+                <p>Each web engine implements extension APIs differently, and none of them prioritize full extension APIs.</p>
+                <p>This has several disadvantages:</p>
+                <ol class="container">
+                    <li>Extensions cannot be implemented consistently across all engines.</li>
+                    <li>Extension capabilities are limited.</li>
+                </ol>
+                <p>Due to these issues, SLBr currently only offers minimal extension support.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Platform Dependency</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>SLBr relies heavily on WPF and Windows-specific web engines such as WebView2, CefSharp, and Trident.</p>
+                <p>As a result, SLBr cannot be easily ported to cross-platform frameworks such as MAUI or Avalonia.</p>
+                <p>Equivalent browser controls on cross-platform frameworks are often significantly more limited and maintaining the same feature set across platforms would be impossible.</p>
+                <p>A cross-platform implementation may be theoretically possible but SLBr's current architecture is Windows-focused.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
