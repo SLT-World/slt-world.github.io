@@ -25,16 +25,16 @@
                 <p>Embedded Web Engine Constraints</p>
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
-                <p>SLBr is built on top of embedded web engines and is limited by the APIs exposed by those engines.</p>
-                <p>This means that SLBr does not have access to low-level Chromium internals and must rely entirely on the public interfaces provided by each embedded browser.</p>
-                <p>As a result, certain browser behaviors cannot be fully modified.</p>
-                <p>Furthermore, any breakages in upstream features directly affect SLBr.</p>
+                <p>SLBr is built on top of embedded web engines, and is therefore inherently constrained by the APIs and behaviors exposed by those engines.</p>
+                <p>This means that SLBr does not have access to low-level Chromium internals and must rely entirely on the public interfaces provided by each embedded browser library.</p>
+                <p>As a result, certain browser behaviors cannot be fully intercepted and modified.</p>
+                <p>Furthermore, any breakages in upstream features (such as spellcheck) directly affect SLBr.</p>
                 <p>Here are the following engine-specific limitations:</p>
                 <ul class="container">
                     <li>WebView2 (Microsoft Edge)
                         <ul>
-                            <li>Inability to intercept or modify all requests, preventing full user agent branding.</li>
-                            <li>Difficult to reliably determine whether a new tab should open in the foreground or background.</li>
+                            <li>Inability to intercept or modify all network requests, preventing full user agent branding and request-level modification.</li>
+                            <li>Limited control over new window creation, making it difficult to reliably determine whether a new tab should open in the foreground or background.</li>
                             <li>Missing APIs for features such as image upload popups and font customization.</li>
                         </ul>
                     </li>
@@ -45,19 +45,19 @@
                         </ul>
                     </li>
                 </ul>
-                <p>Because SLBr embeds these engines directly, any crash within an engine may result in a crash of the browser itself.</p>
+                <p>Because SLBr embeds these engines directly, any crash or instability within an engine may result in a crash of the browser itself.</p>
             </div>
         </div>
         <div class="container">
             <div class="header">
                 <span class="material-symbols-rounded icon">warning</span>
-                <p>Emoji Limitations in WPF</p>
+                <p>Emoji Rendering Limitations in WPF</p>
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>SLBr's UI is built using WPF, which does not natively support full-color emoji rendering without workarounds.</p>
-                <p>As a result, colored emojis are not supported in the WPF UI.</p>
-                <p>Web content rendered inside the web engines remain unaffected.</p>
-                <p>This is a <a href="https://github.com/dotnet/wpf/issues/91" target="_blank">limitation</a> of WPF and is outside SLBr's control.</p>
+                <p>As a result, colored emojis are not supported <strong>only</strong> in the WPF UI.</p>
+                <p>Web content rendered inside the web engines remain unaffected and displays emojis correctly.</p>
+                <p>This is a long-standing <a href="https://github.com/dotnet/wpf/issues/91" target="_blank">limitation</a> of WPF and is outside SLBr's control.</p>
             </div>
         </div>
         <div class="container">
@@ -67,13 +67,13 @@
             </div>
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>SLBr's multi-engine architecture significantly complicates extension support.</p>
-                <p>Each web engine implements extension APIs differently, and none of them prioritize full extension APIs.</p>
+                <p>Each web engine implements extension APIs differently, and none of the embedding libraries prioritize full extension APIs.</p>
                 <p>This has several disadvantages:</p>
                 <ol class="container">
                     <li>Extensions cannot be implemented consistently across all engines.</li>
-                    <li>Extension capabilities are limited.</li>
+                    <li>Extension capabilities are limited compared to single-engine browsers.</li>
                 </ol>
-                <p>Due to these issues, SLBr currently only offers minimal extension support.</p>
+                <p>Due to these constraints, SLBr currently only offers minimal extension support.</p>
             </div>
         </div>
         <div class="container">
@@ -84,8 +84,8 @@
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>SLBr relies heavily on WPF and Windows-specific web engines such as WebView2, CefSharp, and Trident.</p>
                 <p>As a result, SLBr cannot be easily ported to cross-platform frameworks such as MAUI or Avalonia.</p>
-                <p>Equivalent browser controls on cross-platform frameworks are often significantly more limited and maintaining the same feature set across platforms would be impossible.</p>
-                <p>A cross-platform implementation may be theoretically possible but SLBr's current architecture is Windows-focused.</p>
+                <p>Equivalent browser controls on cross-platform frameworks are often significantly more limited and maintaining the same feature set across platforms would not be feasible.</p>
+                <p>While a cross-platform implementation may be theoretically possible in a separate project, SLBr's current architecture is inherently Windows-focused.</p>
             </div>
         </div>
     </div>
