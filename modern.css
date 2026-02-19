@@ -156,7 +156,6 @@ input:not([type="image"], [type="range"], [type="checkbox"], [type="radio"]), se
     border: 1px solid var(--border-color);
     border-radius: 5px;
     padding: 5px;
-    font-size: medium;
 }
 
 input:not([type="image"], [type="range"], [type="checkbox"], [type="radio"]):focus, select:focus, textarea:focus {
@@ -177,6 +176,10 @@ a:hover {
 code {
     font-family: Consolas, monospace !important;
     display: block;
+    font-size: inherit;
+}
+code.inline {
+    display: inline-block;
 }
 
 textarea {

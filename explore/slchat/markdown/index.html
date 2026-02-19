@@ -40,8 +40,8 @@
                 <p>Live Preview</p>
             </div>
             <div id="preview_container">
-                <textarea id="input"></textarea>
-                <div id="output" class="input textarea" style="width: 100%;overflow-y: scroll;"></div>
+                <textarea id="input" style="height: 100%;"></textarea>
+                <div id="output" class="input textarea" style="width: 100%;overflow-y: scroll;height: 100%;"></div>
             </div>
         </div>
         <div class="container">
@@ -470,7 +470,6 @@ function parseInlineMarkdown(text) {
         <i class="bx bx-music"></i>
         <div>
             <p class="file-name">${filename}</p>
-            <!--<p class="subtext file-size">--.-- KB</p>-->
         </div>
         <a class="icon button" data-tip="Download" href="${url}" download="${url}" target="_blank"><i class="bx bx-arrow-in-down-square-half"></i></a>
     </div>
@@ -493,7 +492,7 @@ function parseInlineMarkdown(text) {
             const percentage = Math.max(0, Math.min(100, Number(num)));
             return `<progress data-tip="${percentage}%" value="${percentage}" max="100"${color ? ` style="--color:${color};"` : ""}></progress>`;
         })
-        .replace(/\{timestamp:(\d{1,20})(?::([a-zA-Z]))?\}/g, (m, unix, fmt) => `<span class="timestamp" data-unix="${unix}"${fmt ? ` data-format="${fmt}"` : ""}></span>`)
+        .replace(/\{time:(\d{1,20})(?::([a-zA-Z]))?\}/g, (m, unix, fmt) => `<span class="timestamp" data-unix="${unix}"${fmt ? ` data-format="${fmt}"` : ""}></span>`)
         .replace(/\|\|([^|]+)\|\|/g, `<p class="spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'}>$1</p>`)
         .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
         .replace(/\*([^*]+)\*/g, '<em>$1</em>')
@@ -680,7 +679,7 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "|embed\ntype: error\ntitle: Error encountered\ndescription: Something went wrong\nfooter: Please try again\n|end",
     "|embed\ntype: clean\ntitle: Clean\ndescription: A clean embed\n|end",
     "|embed\ntype: default\nicon: coin\ntitle: [Wiki - Wikipedia](https://en.wikipedia.org/wiki/Wiki)\ndescription: A wiki is a form of hypertext publication...\ncolor: white\nfooter: Footer\navatar: https://wikipedia.com/favicon.ico\nimage: https://upload.wikimedia.org/wikipedia/commons/f/f0/Wikitext-wiki_markup-wikipedia.png\n\nfields:\n- name: Foo\n  value: Bar\n- name: Foo\n  value: Inline Bar\n  inline: true\n- name: Foo\n  value: Inline Bar\n  inline: true\n|end",
-    `{timestamp:${currentTimestamp}:r}\n{timestamp:${currentTimestamp}:t}\n{timestamp:${currentTimestamp}:T}\n{timestamp:${currentTimestamp}:d}\n{timestamp:${currentTimestamp}:D}\n{timestamp:${currentTimestamp}}`,
+    `{time:${currentTimestamp}:r}\n{time:${currentTimestamp}:t}\n{time:${currentTimestamp}:T}\n{time:${currentTimestamp}:d}\n{time:${currentTimestamp}:D}\n{time:${currentTimestamp}}`,
     "# {gold}hello{/gold}",
     "{anaglyph}Hello{/anaglyph}",
     "{rainbow}Hello{/rainbow}",
@@ -693,6 +692,8 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "{size:0.75}Subtext 2.0{/size}",
     "{font:cursive}{size:1.5}{color:red}M{/color}{color:lime}i{/color}{color:yellow}x{/color}{/size}{/font}",
     "Foo\n---\nBar",
+    "<example@example.com>",
+    "<+15055034455>",
 ];
 for (let syntax of syntaxes) syntax_list.innerHTML += `<div class="container"><pre><code class="multiline">${escapeHtml(syntax)}</code></pre>${parseMarkdown(syntax)}</div>`;
     </script>
