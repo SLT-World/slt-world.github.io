@@ -94,6 +94,9 @@
 ### Security
 > - 🔗 [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)
 > - 🔗 [SmartScreen Demo](https://demo.smartscreen.msft.net/)
+> - 🔗 [Yandex Demo](http://malware-driveby.test.safebrowsing.yandex)
+> - 🔗 [Yandex Phishing Demo](https://ydx-phish-shavar.cepera.ru)
+> - 🔗 [Yandex Malware Demo](https://ydx-malware-driveby-shavar.cepera.ru)
 > - 🔗 [Bad SSL](https://badssl.com/)
 > - 🔗 [Homograph Attack Demo](https://vvikipedia.com/)
 > - 🔗 [Homograph Attack Demo (Punycode)](https://www.xn--80ak6aa92e.com/)
