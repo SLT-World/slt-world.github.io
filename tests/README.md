@@ -25,7 +25,7 @@
 > - 🔗 [Script Flood](../tests/flood.html)
 > - 🔗 [Embedded Browser Detection](../tests/embedded.html)
 > - 🔗 [Anti Back Button](../tests/antiback.html)
-> - 🔗 [Cross-Tab Communication](../tests/crosstabcommunication.html)
+> - 🔗 [Cross-Tab Communication Latency](../tests/crosstabcommunication.html)
 
 ## 🖼️ External Samples
 ### WebGL

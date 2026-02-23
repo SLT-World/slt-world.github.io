@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
-    <h1>Test: Cross-Tab Communication</h1>
-    <p>Tests the availability & compares the Broadcast Channel API and LocalStorage events.</p>
+    <h1>Test: Cross-Tab Communication Latency</h1>
+    <p>Tests the availability & compares delivery time between the Broadcast Channel API and LocalStorage events across tabs.</p>
     <hr>
     <ul id="results">
       <button onclick="broadcast()">Broadcast</button>
@@ -32,9 +32,11 @@
       logList(bs, "Broadcast Channel API", bs ? "Supported" : "Unsupported");
       if (bs) {
         const sltBroadcastChannel = new BroadcastChannel("slt");
-        sltBroadcastChannel.onmessage = (e) => { logList(null, 'Broadcast', 'Received'); };
+        sltBroadcastChannel.onmessage = (e) => {
+          logList(null, "Broadcast", `Received [Latency: ${Date.now() - e.data} ms]`);
+        };
         function broadcast() {
-          sltBroadcastChannel.postMessage("");
+          sltBroadcastChannel.postMessage(Date.now());
           logList(null, "Broadcast", "Sent");
         }
       }
@@ -47,7 +49,9 @@
         logList(null, "LocalStorage", "Sent");
       }
       window.addEventListener("storage", (e) => {
-        if (e.key == "onmessage_test") logList(null, "LocalStorage", "Received");
+        if (e.key == "onmessage_test") {
+          logList(null, "LocalStorage", `Received [Latency: ${Date.now() - parseInt(e.newValue, 10)} ms]`);
+        }
       });
     </script>
   </body>
