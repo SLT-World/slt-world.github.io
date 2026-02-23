@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <h1>Test: Cross-Tab Communication</h1>
+    <p>Tests the availability & compares the Broadcast Channel API and LocalStorage events.</p>
+    <hr>
+    <ul id="results">
+      <button onclick="broadcast()">Broadcast</button>
+      <button onclick="localStorageChange()">LocalStorage Change</button>
+    </ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
+        list.appendChild(li);
+      }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
+
+      var bs = 'BroadcastChannel' in window;
+      logList(bs, "Broadcast Channel API", bs ? "Supported" : "Unsupported");
+      if (bs) {
+        const sltBroadcastChannel = new BroadcastChannel("slt");
+        sltBroadcastChannel.onmessage = (e) => { logList(null, 'Broadcast', 'Received'); };
+        function broadcast() {
+          sltBroadcastChannel.postMessage("");
+          logList(null, "Broadcast", "Sent");
+        }
+      }
+      else {
+        function broadcast() { logList(false, "Broadcast", "Unsupported"); }
+      }
+
+      function localStorageChange() {
+        localStorage.setItem("onmessage_test", Date.now().toString());
+        logList(null, "LocalStorage", "Sent");
+      }
+      window.addEventListener("storage", (e) => {
+        if (e.key == "onmessage_test") logList(null, "LocalStorage", "Received");
+      });
+    </script>
+  </body>
+</html>
