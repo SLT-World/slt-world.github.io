@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <h1>Test: Drag & Drop</h1>
+    <p>Tests the capabilities of drag transfer.</p>
+    <hr>
+    <div id="dropZone" style="border-radius: 10px;border: 2.5px dashed color-mix(in srgb, gray 25%, transparent);padding: 25px;">Drop anything here (files, text, links, etc)</div>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      const dropZone = document.getElementById("dropZone");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result !== "") {
+          li.insertAdjacentHTML('beforeend', " - ");
+          const code = document.createElement("code");
+          code.textContent = result;
+          li.appendChild(code);
+        }
+        list.appendChild(li);
+        return li;
+      }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
+      dropZone.addEventListener("dragover", e => {
+        e.preventDefault();
+      });
+      dropZone.addEventListener("drop", e => {
+        e.preventDefault();
+        list.innerHTML = "";
+        const dt = e.dataTransfer;
+        if (!dt) {
+          logList(false, "Data Transfer", "Unsupported");
+          return;
+        }
+        logList(true, "Data Transfer", "Supported");
+        logHeader("General");
+        logList(null, "Drop Effect", dt.dropEffect);
+        logList(null, "Effect Allowed", dt.effectAllowed);
+        logHeader("Types");
+        if (dt.types && dt.types.length) {
+          [...dt.types].forEach(type => {
+            logList(null, "Type", type);
+          });
+        } else logList(null, "Types", "None");
+        logHeader("Items");
+        if (dt.items && dt.items.length) {
+          [...dt.items].forEach((item, i) => {
+            logList(null, `Item ${i} Kind`, item.kind);
+            logList(null, `Item ${i} Type`, item.type);
+            if (item.kind === "string") {
+              const placeholder = logList(null, `Item ${i} Data`, "-");
+              item.getAsString(str => {
+                placeholder.querySelector("code").textContent = str;
+              });
+            }
+            if (item.kind === "file") {
+              const file = item.getAsFile();
+              if (file) {
+                logList(null, `Item ${i} File Name`, file.name);
+                logList(null, `Item ${i} File Type`, file.type);
+                logList(null, `Item ${i} File Size`, file.size + " bytes");
+                logList(null, `Item ${i} Last Modified`, new Date(file.lastModified).toString());
+              }
+            }
+          });
+        } else logList(null, "Items", "None");
+        logHeader("Files");
+        if (dt.files && dt.files.length) {
+          [...dt.files].forEach((file, i) => {
+            logList(null, `File ${i} Name`, file.name);
+            logList(null, `File ${i} Type`, file.type);
+            logList(null, `File ${i} Size`, file.size + " bytes");
+            logList(null, `File ${i} Last Modified`, new Date(file.lastModified).toString());
+          });
+        } else logList(null, "Files", "None");
+        logHeader("Get Data");
+        if (dt.types) {
+          [...dt.types].forEach(type => {
+            try {
+              const data = dt.getData(type);
+              if (data) logList(null, `getData(${type})`, data);
+            } catch (err) {
+              logList(false, `getData(${type})`, "Error");
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

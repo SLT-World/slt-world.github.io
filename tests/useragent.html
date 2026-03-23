@@ -20,8 +20,14 @@
         const li = document.createElement("li");
         if (success != null) { li.classList.add(success ? "success" : "fail"); }
         li.innerHTML = `<strong>${text}</strong>`;
-        if (result != "") { li.innerHTML += ` - <code>${result}</code>`; }
+        if (result !== "") {
+          li.insertAdjacentHTML('beforeend', " - ");
+          const code = document.createElement("code");
+          code.textContent = result;
+          li.appendChild(code);
+        }
         list.appendChild(li);
+        return li;
       }
       function logHeader(text) {
         const h = document.createElement("h2");
