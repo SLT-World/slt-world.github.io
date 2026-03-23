@@ -26,6 +26,7 @@
 > - 🔗 [Embedded Browser Detection](../tests/embedded.html)
 > - 🔗 [Anti Back Button](../tests/antiback.html)
 > - 🔗 [Cross-Tab Communication Latency](../tests/crosstabcommunication.html)
+> - 🔗 [Drag & Drop](../tests/dragdrop.html)
 
 ## 🖼️ External Samples
 ### WebGL
