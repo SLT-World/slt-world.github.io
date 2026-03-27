@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: monospace, Tahoma, sans-serif;
     color: var(--font-color);
 }
 
@@ -12,6 +12,7 @@ html {
     --border-color: gainsboro;
     --gray-color: gray;
     --font-color: black;
+    --accent-color: rgb(51, 145, 255);
 }
 
 body {
@@ -35,7 +36,8 @@ body {
     gap: 10px;
     max-width: 1000px;
     width: 100%;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: clip;
 }
 p, h1, h2, h3, h4, h5, h6, span, i {
     color: var(--font-color);
@@ -132,6 +134,7 @@ button, .button {
     transition: 0.25s filter;
     text-decoration: none;
     font-size: medium;
+    gap: 5px;
 }
 button.icon, .button.icon {
     width: 35px;
@@ -156,11 +159,13 @@ input:not([type="image"], [type="range"], [type="checkbox"], [type="radio"]), se
     border: 1px solid var(--border-color);
     border-radius: 5px;
     padding: 5px;
+    outline: 1px solid transparent;
+    transition: 0.25s;
 }
 
 input:not([type="image"], [type="range"], [type="checkbox"], [type="radio"]):focus, select:focus, textarea:focus {
-  border: 1px solid rgb(51, 145, 255);
-  outline: 1px solid rgb(51, 145, 255);
+  border: 1px solid var(--accent-color);
+  outline: 1px solid var(--accent-color);
 }
 
 a {
@@ -323,12 +328,6 @@ th, td {
     vertical-align: top;
     border-left: 1px solid var(--border-color);
     align-content: center;
-}
-
-@media screen and (max-width: 1000px) {
-    body {
-        background-image: none !important;
-    }
 }
 
 @media (prefers-color-scheme: dark) {

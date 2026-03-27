@@ -6,7 +6,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../modern.css">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@0..1">
     <style>
 @font-face {
     font-family: brands;
@@ -14,7 +14,7 @@
 }
 
 * {
-    font-family: 'Segoe UI', Tahoma, sans-serif, 'brands';
+    font-family: monospace, Tahoma, sans-serif, 'brands';
 }
 
 #directory_grid {
@@ -32,7 +32,12 @@
     font-size: medium;
     padding: 0;
     gap: 0;
-    overflow: hidden;
+    position: relative;
+    transition: transform 0.25s ease;
+}
+
+#directory_grid > div:hover {
+    transform: scale(1.025);
 }
 
 #directory_grid > div > div:not(.image_container) {
@@ -52,6 +57,7 @@
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-color: var(--border-color);
+    overflow: clip;
 }
 
 #directory_grid > div > div > .header > .icon > img {
@@ -74,11 +80,25 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
 }
 
 #directory_grid > div > .image_container > .material-symbols-rounded {
     font-size: 48px;
 }
+
+/*#directory_grid > div > .featured_star {
+    z-index: 1;
+    font-variation-settings: 'FILL' 1;
+    color: gold;
+    transform: rotate(45deg);
+    position: absolute;
+    top: -17.5px;
+    right: -17.5px;
+    text-shadow: 0 0 5px gold, 0 0 10px gold;
+    font-size: 35px;
+}*/
 
 #directory_grid > div > .image_container > img {
     width: 100%;
@@ -121,15 +141,18 @@
 #search_input {
     margin: 5px;
     margin-left: auto;
+    height: 35px;
 }
 
 #search_options > div > button {
     padding: 0 5px;
     width: 100%;
     background: var(--primary-color);
+    outline: 1px solid transparent;
 }
 #search_options > div > button.selected {
-    outline: 2.5px solid royalblue;
+    border: 1px solid var(--accent-color);
+    outline: 1px solid var(--accent-color);
 }
 
 @media screen and (max-width: 679px) {
@@ -166,23 +189,26 @@ path#unity_right { fill: #000000; }
     <div class="content">
         <div class="navigation">
             <img src="../favicon.png" width="35" height="35" draggable="false">
-            <h3>SLT World</h3>
+            <a href="/"><h3>SLT World</h3></a>
         </div>
         <h1>Explore</h1>
-        <p>Browse projects.</p>
+        <p>Browse through active, completed, and abandoned projects.</p>
         <div class="container" id="search_options">
             <div style="display: flex;gap: 10px;overflow: auto;padding: 5px;">
-                <button onclick="switchOption(this)" data-type="active">Active</button>
-                <button onclick="switchOption(this)" data-type="completed">Completed</button>
-                <button onclick="switchOption(this)" data-type="cancelled">Graveyard</button>
+                <button onclick="switchOption(this)" data-type="featured"><span class="material-symbols-rounded icon">star</span>Featured</button>
+                <button onclick="switchOption(this)" data-type="all"><span class="material-symbols-rounded icon">apps</span>All</button>
+                <button onclick="switchOption(this)" data-type="active"><span class="material-symbols-rounded icon">code</span>Active</button>
+                <button onclick="switchOption(this)" data-type="paused"><span class="material-symbols-rounded icon">hourglass_pause</span>Paused</button>
+                <button onclick="switchOption(this)" data-type="completed"><span class="material-symbols-rounded icon">done_all</span>Completed</button>
+                <button onclick="switchOption(this)" data-type="cancelled"><span class="material-symbols-rounded icon">deceased</span>Graveyard</button>
             </div>
             <input id="search_input" type="text">
         </div>
         <div id="directory_grid"></div>
-        <div class="container" style="width: fit-content;margin: 0 auto;">
+        <div class="container" style="width: fit-content;margin: 0 auto;max-width: 100%;">
             <h3 style="text-align: center;">More projects</h3>
-            <p style="text-align: center;">Projects that are not included in this site.</p>
-            <div class="icon_links" style="gap: 15px;justify-content: center;">
+            <p style="text-align: center;">Additional work not listed on this site.</p>
+            <div class="icon_links" style="gap: 15px;justify-content: center;overflow-x: auto;overflow-y: clip;">
                 <a style="width: 25px;height: 25px;" href="https://github.com/SLT-World?tab=repositories" target="_blank">
                     <svg style="width: 25px;height: 25px;" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <title>GitHub</title>
@@ -266,6 +292,7 @@ path#unity_right { fill: #000000; }
 <script>
 const entries = [
     {
+        "featured": true,
         "state": "active",
         "icon": "../slbr/slbr.png",
         "title": "SLBr",
@@ -281,6 +308,7 @@ const entries = [
         }
     },
     {
+        "featured": true,
         "state": "active",
         "icon": "../slbr/slbr.png",
         "title": "SLSearch",
@@ -295,6 +323,7 @@ const entries = [
         }
     },
     {
+        "featured": true,
         "state": "active",
         "icon": "https://store-images.s-microsoft.com/image/apps.8865.14009613241251235.7039aa34-82a4-4e33-92fa-d92cf9346076.0a1bca75-d532-4ac3-8727-2226c681ecce?h=115",
         "title": "Fluent GIF Picker",
@@ -309,22 +338,36 @@ const entries = [
         }
     },
     {
+        "featured": true,
         "state": "active",
-        "icon": "slchat/icon.svg",
-        "title": "SLChat",
-        "subtext": "Chat Platform",
-        "description": "A chat platform that was initially made to experiment with web sockets.\nInitially started as a social media platform, then reworked to a messaging platform.",
-        "image": "",
-        "creation": "2021",
-        "tech": ["python", "javascript", "fastapi"],
+        "icon": "",
+        "title": "Tixel",
+        "subtext": "Multiplayer Canvas",
+        "description": "A small, lightweight pixel canvas inspired by r/place.\nMade to experiment with Golang & WebSockets.",
+        "image": "tixel.png",
+        "creation": "2026",
+        "tech": ["go", "javascript"],
         "links": {
-            "site": "https://slchat.alwaysdata.net/",
-            "info": "slchat/"
+            "site": "http://sltworld.alwaysdata.net/",
         }
     },
-
     {
-        "state": "active",
+        "featured": true,
+        "state": "paused",
+        "icon": "https://play-lh.googleusercontent.com/LRQFdnxif5SfaCnsLUtChKGDFvzMd7a287SGG0JCZ3I8YM3f1ctBaQRdJ4pFiJr2-jE=w240-h480-rw",
+        "title": "PQ",
+        "subtext": "Currency Converter",
+        "description": "A clean and intuitive currency converter designed for simplicity and speed.",
+        "image": "https://play-lh.googleusercontent.com/JceIPT21LGIBUWy6NgNzlg6qnoEBaR4oLY1o7026lCJT85g1GQ1hKABnIxI-YCrQ_WU=w526-h296-rw",
+        "creation": "2024",
+        "tech": ["net", "maui"],
+        "links": {
+            "play": "https://play.google.com/store/apps/details?id=com.sltsoftwares.pq"
+        }
+    },
+    {
+        "featured": true,
+        "state": "paused",
         "icon": "https://store-images.s-microsoft.com/image/apps.58691.13898912279120316.8da41c07-3cc3-44ba-bd9b-1c2043e43dde.2ac91842-1528-427c-bcd6-d4b99b819c6e?h=210",
         "title": "Recodite",
         "subtext": "Media Compressor",
@@ -339,20 +382,22 @@ const entries = [
         }
     },
     {
+        "featured": true,
         "state": "active",
-        "icon": "",
-        "title": "Tixel",
-        "subtext": "Multiplayer Canvas",
-        "description": "A small, lightweight pixel canvas inspired by r/place.\nMade to experiment with Golang & WebSockets.",
-        "image": "tixel.png",
-        "creation": "2026",
-        "tech": ["go", "javascript"],
+        "icon": "slchat/icon.svg",
+        "title": "SLChat",
+        "subtext": "Chat Platform",
+        "description": "A chat platform that was initially made to experiment with web sockets.\nInitially started as a social media platform, then reworked to a messaging platform.",
+        "image": "",
+        "creation": "2021",
+        "tech": ["python", "javascript", "fastapi"],
         "links": {
-            "site": "http://sltworld.alwaysdata.net/",
+            "site": "https://slchat.alwaysdata.net/",
+            "info": "slchat/"
         }
     },
     {
-        "state": "active",
+        "state": "paused",
         "icon": "",
         "title": "AutoSolve",
         "subtext": "Mobile Utility Application",
@@ -363,20 +408,8 @@ const entries = [
         "links": {}
     },
     {
-        "state": "completed",
-        "icon": "https://play-lh.googleusercontent.com/LRQFdnxif5SfaCnsLUtChKGDFvzMd7a287SGG0JCZ3I8YM3f1ctBaQRdJ4pFiJr2-jE=w240-h480-rw",
-        "title": "PQ",
-        "subtext": "Currency Converter",
-        "description": "A clean and intuitive currency converter designed for simplicity and speed.",
-        "image": "https://play-lh.googleusercontent.com/JceIPT21LGIBUWy6NgNzlg6qnoEBaR4oLY1o7026lCJT85g1GQ1hKABnIxI-YCrQ_WU=w526-h296-rw",
-        "creation": "2024",
-        "tech": ["net", "maui"],
-        "links": {
-            "play": "https://play.google.com/store/apps/details?id=com.sltsoftwares.pq"
-        }
-    },
-    {
-        "state": "active",
+        "featured": true,
+        "state": "paused",
         "icon": "https://play-lh.googleusercontent.com/eoPsDrm0x3rRy6FgUe_ujUD9PbZd-p9QQG-gfJfMgJBDvp476naMv3ej9x4tp-D1K-Q=w240-h480-rw",
         "title": "Power Station Inc",
         "subtext": "Mobile Video Game",
@@ -403,7 +436,7 @@ const entries = [
         }
     },
     {
-        "state": "active",
+        "state": "paused",
         "icon": "",
         "title": "slchat.py",
         "subtext": "API Wrapper",
@@ -417,7 +450,7 @@ const entries = [
     },
 
     {
-        "state": "completed",
+        "state": "paused",
         "icon": "https://play-lh.googleusercontent.com/QKz_5LRx5PUzENX3keX-7tXJarXVXMshNC0CZQGo0OFgQgdw_DsVxnvsOhIQRQoD8utw=w240-h480-rw",
         "title": "Moon Hop",
         "subtext": "Mobile Video Game",
@@ -431,7 +464,8 @@ const entries = [
     },
 
     {
-        "state": "active",
+        "featured": true,
+        "state": "paused",
         "icon": "slt_combat.png",
         "title": "SLT Combat",
         "subtext": "Desktop Video Game",
@@ -442,6 +476,7 @@ const entries = [
     },
 
     {
+        "featured": true,
         "state": "completed",
         "icon": "https://img.itch.zone/aW1nLzE0MTExNDgxLnBuZw==/315x250%23c/cUyxXr.png",
         "title": "Build & Upgrade 2",
@@ -656,7 +691,7 @@ const entries = [
         }
     },
     {
-        "state": "completed",
+        "state": "paused",
         "icon": "",
         "title": "🔵‍🚀 Custom Emojis",
         "subtext": "Emoji Fonts",
@@ -676,29 +711,40 @@ function switchOption(button) {
     navigateOption(button.dataset.type);
 }
 
-navigateOption('active');
+let entriesDisplayed;
+
+navigateOption('featured');
 
 function navigateOption(type) {
+    if (type != 'custom') {
+        if (type == 'all') entriesDisplayed = entries;
+        else if (type != 'featured') entriesDisplayed = entries.filter(i => i.state == type);
+        else entriesDisplayed = entries.filter(i => "featured" in i);
+    }
+    renderEntries(type);
+}
+
+function renderEntries(type) {
     if (document.startViewTransition) {
         document.startViewTransition(() => {
             directoryGrid.innerHTML = "";
             document.querySelectorAll("#search_options > div > button").forEach(i => i.classList.remove("selected"));
             document.querySelector(`button[data-type='${type}']`)?.classList.add("selected");
-            entries.filter(i => i.state == type).forEach(i => insert_entry(i));
+            entriesDisplayed.forEach(i => insert_entry(i));
         });
     } else {
         directoryGrid.innerHTML = "";
         document.querySelectorAll("#search_options > div > button").forEach(i => i.classList.remove("selected"));
         document.querySelector(`button[data-type='${type}']`)?.classList.add("selected");
-        entries.filter(i => i.state == type).forEach(i => insert_entry(i));
+        entriesDisplayed.forEach(i => insert_entry(i));
     }
 }
 
 searchInput.addEventListener("input", function(event) {
-    navigateOption('custom');
     let query = event.target.value.toLowerCase();
-    if (query == "") navigateOption('active');
-    else entries.filter(i => i.title.toLowerCase().includes(query) || i.subtext.toLowerCase().includes(query) || i.description.toLowerCase().includes(query)).forEach(i => insert_entry(i));
+    if (query == "") return navigateOption('featured');
+    entriesDisplayed = entries.filter(i => i.title.toLowerCase().includes(query) || i.subtext.toLowerCase().includes(query) || i.description.toLowerCase().includes(query));
+    navigateOption('custom');
 });
 
 
@@ -708,16 +754,17 @@ function insert_entry(entry) {
                     <span class="material-symbols-rounded icon">imagesmode</span>
                     ${entry.image ? `<img src="${entry.image}" loading="lazy" onerror="if (this.style.display != 'none') this.style.display = 'none';">` : ""}
                 </div>
+                <!--${entry.featured ? `<span title="Featured" class="material-symbols-rounded icon featured_star">star</span>` : ""}-->
                 <div>
                     <div class="header">
                         <div class="icon"${entry.icon ? "" : " style='display: none;'"}>
                             <img src="${entry.icon}" width="24" height="24" draggable="false">
                         </div>
                         <div>
-                            <span>${entry.title}</span>
+                            <span style="font-weight: bold;">${entry.title}</span>
                             <span class="subtext">${entry.subtext}</span>
                         </div>
-                        <p style="background: var(--primary-color);border: 1px solid var(--border-color);padding: 0 7.5px;border-radius: 10px;height: 20px;line-height: 20px;" class="subtext">${entry.creation}</p>
+                        <p style="background: var(--primary-color);border: 1px solid var(--border-color);padding: 10px 7.5px;display: flex;align-items: center;justify-content: center;border-radius: 100px;height: 20px;line-height: 20px;" class="subtext">${entry.creation}</p>
                     </div>
                     <p class="subtext">${entry.description}</p>
                     ${entry.links || entry.tech ? `<div class="separator"></div>

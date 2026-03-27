@@ -177,6 +177,7 @@
 }
 
 .syntax_list > *, #output {
+    font-family: Poppins, sans-serif;
     display: block;
     background: var(--primary-color);
     max-width: 100%;
