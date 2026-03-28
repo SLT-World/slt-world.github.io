@@ -170,10 +170,14 @@
 > - 🔗 [Very short URL that uses a number](https://1.com)
 > - 🔗 [Very short URL that uses an underscore](https://_.com)
 
-## 🤖 LLM-Friendly URLs
+## Miscellaneous URLs
 ### Accept: `text/markdown`
 > - 🔗 [Cloudflare](https://developers.cloudflare.com/)
 > - 🔗 [Bun](https://bun.sh/docs/runtime/file-types)
 > - 🔗 [Apidog](https://docs.apidog.com/)
 > - 🔗 [Mintlify](https://www.mintlify.com/docs/quickstart)
 > - 🔗 [Skeptrune](https://www.skeptrune.com/posts/use-the-accept-header-to-serve-markdown-instead-of-html-to-llms/)
+
+### 404
+> - 🔗 [The White House](https://www.whitehouse.gov/energy/climate-change)
+> - 🔗 [Raspberry Pi Foundation](https://www.raspberrypi.org/piphone-home-made-raspberry-pi-smartphone/)
