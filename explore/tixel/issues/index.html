@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Tixel Known Issues & Limitations - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <script src="../../../prism.js"></script>
+    <link rel="stylesheet" href="../../../prism.css"/>
+</head>
+<body>
+    <div class="content">
+        <div class="navigation">
+            <img src="../../../favicon.png" width="35" height="35" draggable="false">
+            <a href="/"><h3>SLT World</h3></a>
+        </div>
+        <h1>Tixel Known Issues & Limitations</h1>
+        <p>Tixel is under <strong>active development</strong> and is currently hosted on a <strong>free, limited platform</strong>.</p>
+        <p>As a result, certain issues and limitations may be occasionally encountered.</p>
+        <p>This page documents the most commonly observed issues and explains their underlying causes to clear up any misconceptions and misunderstandings.</p>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Missing Historical Pixel Data</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>Tixel does not display the earliest pixel changes from its initial release.</p>
+                <p>In earlier versions, Tixel used a <strong>forward-logging system</strong>, where each pixel update stored the new color applied at that moment in time.</p>
+                <p>Following a later redesign, Tixel adopted a <strong>backward-logging system</strong>, where each change records the previous color of a pixel and reconstructs history by applying changes in reverse against the current canvas state.</p>
+                <p>This architectural change significantly improved storage efficiency and reconstruction flexibility, but introduced incompatibility with the original logging format.</p>
+                <p>As a result:</p>
+                <ol class="container">
+                    <li>Legacy logs cannot be directly interpreted by the current systems.</li>
+                    <li>Migrating legacy logs would require complex transformation logic.</li>
+                </ol>
+                <p>Due to these constraints, the current logging system starts from a new baseline, and earlier pixel history is not included.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Connection Stability</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>Tixel is hosted on a free, limited platform, which imposes constraints on connection duration and resource usage.</p>
+                <p>To ensure stability and avoid excessive resource consumption, Tixel terminates inactive and idle connections.</p>
+                <p>This measure is necessary to maintain service availability while operating within platform constraints.</p>
+                <p>However, users may still experience occasional unexpected disconnects.</p>
+                <p>These may be caused by:</p>
+                <ol class="container">
+                    <li>Platform-level limitations or throttling</li>
+                    <li>Network instability</li>
+                    <li>Backend restarts</li>
+                </ol>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">warning</span>
+                <p>Browser Compatibility Limitations</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>Tixel relies heavily on modern web technologies.</p>
+                <p>Some older browsers may not fully support certain CSS or JavaScript features, which may result in visual or functional inconsistencies.</p>
+                <p>For the best experience, a modern and up-to-date browser is recommended.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
