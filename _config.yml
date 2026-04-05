@@ -1,2 +1,23 @@
 title: ''
 remote_theme: jekyll/minima
+plugins:
+  - jekyll-remote-theme
+minima:
+  skin: auto
+  hide_site_feed_link: true
+  social_links:
+    - title: GitHub
+      icon: github
+      url: "https://github.com/SLT-World"
+    - title: YouTube
+      icon: youtube
+      url: "https://www.youtube.com/@SLT-World"
+    - title: Google Play Store
+      icon: google-play
+      url: "https://play.google.com/store/apps/developer?id=SLT+World"
+    - title: Microsoft Store
+      icon: microsoft
+      url: "https://apps.microsoft.com/search/publisher?name=SLT%20Softwares"
+    - title: Itch.io
+      icon: itch-io
+      url: "https://sltworld.itch.io/"

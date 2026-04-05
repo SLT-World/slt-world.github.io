@@ -3,8 +3,11 @@
     <title>Tests Pages</title>
 </head>
 
-# 📄 Test Pages
-> A collection of browser capability tests used to evaluate feature support for SLBr and general web compatibility.
+---
+title: Test Pages
+---
+
+A collection of browser capability tests used to evaluate feature support for SLBr and general web compatibility.
 
 ## ✅ Available Tests
 > - 🔗 [Miscellaneous](../tests/misc.html)
