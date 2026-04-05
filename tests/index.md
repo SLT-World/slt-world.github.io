@@ -1,10 +1,7 @@
-<head>
-    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
-    <title>Tests Pages</title>
-</head>
-
 ---
+layout: page
 title: Test Pages
+permalink: /tests/
 ---
 
 A collection of browser capability tests used to evaluate feature support for SLBr and general web compatibility.
