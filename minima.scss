@@ -11,4 +11,23 @@
 
 .social-media-list li a {
     border: none;
+    padding: 10px;
+    background: var(--minima-border-color-01);
+    border-radius: 5px;
+}
+
+.fa-itch-io {
+    color: #FA5C5C;
+}
+
+.fa-youtube {
+    color: #FF0000;
+}
+
+.fa-microsoft {
+    color: #009DEB;
+}
+
+.fa-github {
+    color: var(--minima-heading-color);
 }
