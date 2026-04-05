@@ -31,3 +31,14 @@
 .fa-github {
     color: var(--minima-heading-color);
 }
+
+.fa-google-play {
+    color: #33A451;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --minima-background-color: #202225;
+        --minima-border-color-01: #37393B;
+    }
+}
