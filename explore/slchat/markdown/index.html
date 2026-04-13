@@ -171,13 +171,13 @@ function renderEmbed(embed) {
     if (icon || embed.avatar || embed.title || embed.description) html += `<div class="header">
     ${icon ? (embed.type == "youtube" ? `<i class="bxl bx-${icon}"></i>` : `<i class="bx bx-${icon}"></i>`) : ""}
     ${embed.avatar ? `<img loading="lazy" class="avatar" src="${embed.avatar}">` : ""}
-    ${embed.title ? `<h4>${parseInlineMarkdown(embed.title)}</h4>` : ""}
-    ${embed.description && !embed.title ? `<p style="white-space: pre;">${parseInlineMarkdown(embed.description)}</p>` : ""}
+    ${embed.title ? `<h4 style="white-space: break-spaces;">${parseInlineMarkdown(embed.title)}</h4>` : ""}
+    ${embed.description && !embed.title ? `<p style="white-space: break-spaces;">${parseInlineMarkdown(embed.description)}</p>` : ""}
 </div>`;
-    if (embed.description && embed.title) html += `<p style="white-space: pre;">${parseInlineMarkdown(embed.description)}</p>`;
-    for (const field of embed.fields)  html += `<div class="field${field.inline ? ' inline' : ''}"><strong>${parseInlineMarkdown(field.name) ?? ""}</strong><span>${parseInlineMarkdown(field.value) ?? ""}</span></div>`;
+    if (embed.description && embed.title) html += `<p style="white-space: break-spaces;">${parseInlineMarkdown(embed.description)}</p>`;
+    for (const field of embed.fields) html += `<div class="field${field.inline ? ' inline' : ''}"><strong>${parseInlineMarkdown(field.name) ?? ""}</strong><span style="white-space: break-spaces;">${parseInlineMarkdown(field.value) ?? ""}</span></div>`;
     if (embed.image) html += `<img loading="lazy" class="attachment" onclick="attachment(this)" src="${embed.image}">`;
-    if (embed.footer) html += `<div class="footer">${parseInlineMarkdown(embed.footer)}</div>`;
+    if (embed.footer) html += `<div class="footer" style="white-space: break-spaces;">${parseInlineMarkdown(embed.footer)}</div>`;
     html += `</div>`;
     return html;
 }
@@ -185,11 +185,8 @@ function extractEmbedBlocks(text) {
     const embedRegex = /\|embed([\s\S]*?)\|end/g;
     const embeds = [];
     let match;
-
     while ((match = embedRegex.exec(text)) !== null) {
-        const raw = match[1].trim();
-        const lines = raw.split(/\r?\n/);
-
+        const lines = match[1].split(/\r?\n/);
         const embed = {
             type: null,
             title: null,
@@ -201,76 +198,76 @@ function extractEmbedBlocks(text) {
             icon: null,
             fields: [],
         };
-
-        let inFields = false;
         let currentField = null;
-
-        let inMultiline = false;
-        let multilineKey = null;
-        let multilineBuffer = [];
-
-        for (let line of lines) {
-            const trimmed = line.trim();
-            const multilineStart = line.match(/^([a-zA-Z0-9_-]+):\s*"(.*)$/);
-            if (!inMultiline && multilineStart) {
-                multilineKey = multilineStart[1];
-                let after = multilineStart[2];
-                if (after.endsWith('"') && after.length > 0) {
-                    embed[multilineKey] = after.slice(0, -1);
-                    multilineKey = null;
+        let inFields = false;
+        let multiline = null;
+        function assign(key, value, target) {
+            if (target === "field" && currentField) currentField[key] = value;
+            else embed[key] = value;
+        }
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i];
+            let trimmed = line.trim();
+            if (multiline) {
+                const endMatch = line.match(/^(.*?)(?<!\\)"\s*$/);
+                if (endMatch) {
+                    multiline.buffer.push(endMatch[1]);
+                    const content = multiline.buffer.join("\n");
+                    assign(multiline.key, content, multiline.target);
+                    multiline = null;
                 }
-                else {
-                    inMultiline = true;
-                    multilineBuffer.push(after);
-                }
-                continue;
-            }
-            if (inMultiline) {
-                if (trimmed.endsWith('"')) {
-                    let content = (multilineBuffer.join("\n") + "\n" + line.slice(0, line.lastIndexOf('"'))).trim();
-                    if (inFields && currentField) currentField[multilineKey] = content;
-                    else embed[multilineKey] = content;
-                    inMultiline = false;
-                    multilineKey = null;
-                    multilineBuffer = [];
-                }
-                else multilineBuffer.push(line);
+                else multiline.buffer.push(line);
                 continue;
             }
             if (!trimmed) continue;
+            const multiStart = line.match(/^\s*(\w+):\s*"(.*)$/);
+            if (multiStart) {
+                const key = multiStart[1];
+                let rest = multiStart[2];
+                const closed = rest.match(/^(.*?)(?<!\\)"\s*$/);
+                if (closed) assign(key, closed[1], inFields ? "field" : "embed");
+                else {
+                    multiline = {
+                        key,
+                        target: inFields ? "field" : "embed",
+                        buffer: [rest.replace(/^"/, "")],
+                    };
+                }
+                continue;
+            }
             if (trimmed === "fields:") {
                 inFields = true;
                 continue;
             }
-            if (inFields) {
-                if (trimmed.startsWith("- ")) {
-                    if (currentField) embed.fields.push(currentField);
-                    currentField = {};
-                    line = trimmed.slice(2).trim();
-
-                    const idx = line.indexOf(":");
-                    if (idx !== -1) currentField.name = line.slice(idx + 1).trim();
-                    continue;
-                }
-
-                const fieldMatch = trimmed.match(/^(\w+):\s*(.*)$/);
-                if (fieldMatch) {
-                    const key = fieldMatch[1];
-                    let val = fieldMatch[2];
-                    if (key === "inline") val = val.toLowerCase() === "true";
-                    if (currentField) currentField[key] = val;
+            if (inFields && trimmed.startsWith("- ")) {
+                if (currentField) embed.fields.push(currentField);
+                currentField = {};
+                const rest = trimmed.slice(2).trim();
+                const idx = rest.indexOf(":");
+                if (idx !== -1) {
+                    const key = rest.slice(0, idx).trim();
+                    const value = rest.slice(idx + 1).trim();
+                    currentField[key] = value;
                 }
                 continue;
             }
-
-            const m = line.match(/^([a-zA-Z0-9_-]+):\s*(.*)$/);
+            if (inFields && currentField) {
+                const m = trimmed.match(/^\s*(\w+):\s*(.*)$/);
+                if (m) {
+                    const key = m[1];
+                    let value = m[2];
+                    if (key === "inline") currentField[key] = value.toLowerCase() === "true";
+                    else currentField[key] = value;
+                }
+                continue;
+            }
+            const m = trimmed.match(/^\s*([a-zA-Z0-9_-]+):\s*(.*)$/);
             if (m) {
                 const key = m[1];
-                const val = m[2];
-                if (key in embed) embed[key] = val;
+                const value = m[2];
+                if (key in embed) embed[key] = value;
             }
         }
-
         if (currentField) embed.fields.push(currentField);
         embeds.push(embed);
     }
@@ -423,8 +420,8 @@ function parseMarkdown(rawText) {
 
     closeList();
     closeBlockquote();
-    html = html.replace(/\uE000(\d+)\uE000/g, (m, code) => String.fromCharCode(code));
     for (const embed of embeds) html = html.replace(embed.placeholder, renderEmbed(embed));
+    html = html.replace(/\uE000(\d+)\uE000/g, (m, code) => String.fromCharCode(code));
     html = html.trim();
     if (html.endsWith("<br>")) html = html.slice(0, -4);
     return restoreCodeBlocks(html, codeBlocks);
@@ -433,8 +430,6 @@ function parseMarkdown(rawText) {
 const allowedDecorationClasses = ['rainbow', 'anaglyph', 'gold', 'glow', 'shadow'];
 
 function parseInlineMarkdown(text) {
-    if (getSetting("markdown") == "0")
-        return text;
     if (text === undefined)
         return text;
     const literalLinks = [];
@@ -446,7 +441,6 @@ function parseInlineMarkdown(text) {
         literalLinks.push(url);
         return `__LITERAL_LINK_${literalLinks.length - 1}__`;
     });
-
     text = text
         .replace(/^\s*-{3,}\s*$/gm,'<hr>')
         .replace(/\{([a-zA-Z]+)(?:\s+([a-zA-Z\s-]+))?\}([\s\S]*?)\{\/\1\}/g, (m, name, classes, content) => {
@@ -457,32 +451,33 @@ function parseInlineMarkdown(text) {
         .replace(/(?:<|&lt;)\s*(\+?[0-9][0-9\s\-()]{3,})\s*>/g, (m, phone) => `<a href="tel:${phone.replace(/[^\d+]/g, "")}" class="phone-link">${phone}</a>`)
         .replace(/(?:<|&lt;)\s*([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\s*>/g, (m, email) => `<a href="mailto:${email}" class="email-link">${email}</a>`)
         .replace(/^\-#\s?(.*)$/gm, '<p class="subtext">$1</p>')
-        .replace(/\|\|(https?:\/\/[^\s<>"')]+)\|\|/g, (match, url) => {
+        .replace(/\|\|(?:!\[([^\]]*)\]\(([^)]+)\)(?:\{([^}]+)\})?|([^\s|{}]+)(?:\{([^}]+)\})?)\|\|/g, (m, alt, url, attrs, nUrl, nAttrs) => {
+            if (nUrl) {
+                url = nUrl;
+                alt = "";
+                attrs = nAttrs || "";
+            }
             const lowerUrl = url.toLowerCase();
-            if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif)(\?.*)?$/.test(lowerUrl)) return `<img loading="lazy" class="attachment spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'} src="${url}"/>`;
-            if (/\.(mp4|webm|ogg)(\?.*)?$/.test(lowerUrl)) return `<video ${liteMode ? 'preload="none" ' : ' '}class="attachment spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'} width="320" height="240" controls><source src="${url}"></video>`;
-            //if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) return `<audio ${liteMode ? 'preload="none" ' : ' '}class="attachment spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'} controls src="${url}"></audio>`;
-            if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) {
+            let style = "";
+            let isGif = false;
+            if (attrs) {
+                isGif = /\bgif\b/i.test(attrs);
+                const wMatch = attrs.match(/width\s*=\s*([\d%]+)/i);
+                const hMatch = attrs.match(/height\s*=\s*([\d%]+)/i);
+                if (wMatch) style += `width:${wMatch[1]}px;`;
+                if (hMatch) style += ` height:${hMatch[1]}px`;
+            }
+            if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif|avif)(\?.*)?$/.test(lowerUrl)) return `<img${!!style?` style="${style}"`:""}${!!alt?` data-tip="${alt}"`:""} onerror="handleMediaError(this)" loading="lazy" class="attachment spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'} src="${url}"/>`;
+            if (/\.(mp4|webm|ogg|mov|mkv)(\?.*)?$/.test(lowerUrl)) return `<video${!!style?` style="${style}"`:""}${!!alt?` data-tip="${alt}"`:""} ${isGif?"autoplay loop muted playsinline ":"controls "}${liteMode ? 'preload="none" ' : ' '}class="attachment spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'}><source src="${url}"></video>`;
+            if (/\.(mp3|wav|flac|aac)(\?.*)?$/.test(lowerUrl)) {
                 const filename = new URL(url).pathname.split('/').pop().split('?')[0];
                 return `<div class="embed clean attachment audio-embed spoiler${getSetting('spoiler') == '1' ? ' open' : ''}"${getSetting('spoiler') == '1' ? '' : ' onclick="spoiler(this)"'}>
     <audio src="${url}"></audio>
-    <div class="header">
-        <i class="bx bx-music"></i>
-        <div>
-            <p class="file-name">${filename}</p>
-        </div>
-        <a class="icon button" data-tip="Download" href="${url}" download="${url}" target="_blank"><i class="bx bx-arrow-in-down-square-half"></i></a>
-    </div>
+    <div class="header"><i class="bx bx-music"></i><div><p class="file-name">${filename}</p></div><a class="icon button" data-tip="Download" href="${url}" download="${url}" target="_blank"><i class="bx bx-arrow-in-down-square-half"></i></a></div>
     <div class="controls">
-        <button class="audio-play-button" data-tip="Play"><i class="bx bx-play"></i></button>
-        <p class="audio-time">0:00/0:00</p>
-        <div class="audio-progress-container">
-            <progress class="audio-progress" value="0"></progress>
-        </div>
-        <div class="audio-volume-wrapper">
-            <button class="audio-volume-button" data-tip="Volume"><i class="bx bx-volume-full"></i></button>
-            <input type="range" min="0" max="1" step="0.01" class="audio-volume-slider vertical" style="display:none;">
-        </div>
+        <button class="audio-play-button" data-tip="Play"><i class="bx bx-play"></i></button><p class="audio-time">0:00/0:00</p>
+        <div class="audio-progress-container"><progress class="audio-progress" value="0"></progress></div>
+        <div class="audio-volume-wrapper"><button class="audio-volume-button" data-tip="Volume"><i class="bx bx-volume-full"></i></button><input type="range" min="0" max="1" step="0.01" class="audio-volume-slider vertical" style="display:none;"></div>
     </div>
 </div>`
             }
@@ -500,7 +495,7 @@ function parseInlineMarkdown(text) {
         .replace(/==([^~]+)==/g, '<mark>$1</mark>')
         .replace(/__([^_]+)__/g, '<u>$1</u>')
         .replace(/(?<![\w\]\):\/\.])@([a-zA-Z0-9_]{1,32})(?![^<]*>)/g, '<span class="mention">@$1</span>')
-        .replace(/\[([^\]]+(?:\[[^\]]*\][^\]]*)*)\]\((https?:\/\/[^\s)]+)\)/g, '<'+'a href="$2" target="_blank" rel="noopener noreferrer nofollow" data-tip="$2">$1<'+'/a>')
+        .replace(/(?<!!)\[([^\]]+(?:\[[^\]]*\][^\]]*)*)\]\((https?:\/\/[^\s)]+)\)/g, '<'+'a href="$2" target="_blank" rel="noopener noreferrer nofollow" data-tip="$2">$1<'+'/a>')
         .replace(/\{color:([^}]+)\}([\s\S]*?)\{\/color\}/g, (m, color, content) => `<span style="color:${color};--font-color:${color};">${content}</span>`)
         .replace(/\{size:([0-9.]+)\}([\s\S]*?)\{\/size\}/g, (m, size, content) => {
             let scale = parseFloat(size);
@@ -512,42 +507,39 @@ function parseInlineMarkdown(text) {
             if (!family) return content;
             return `<span style="font-family:${family}">${content}</span>`;
         })
-        .replace(/(<[^>]+>)|((?<!["'=\]])https?:\/\/[^\s<>"')]+)/g, (match, tag, url) => {
+        .replace(/(<[^>]+>)|(!\[([^\]]*)\]\(([^)]+)\)(?:\{([^}]+)\})?)|((?<!["'=\]])https?:\/\/[^\s<>"'){}]+)(?:\{([^}]+)\})?/gi, (match, tag, mdimg, alt, url, attrs, nUrl, nAttrs) => {
             if (tag) return tag;
+            if (nUrl) {
+                url = nUrl;
+                alt = "";
+                attrs = nAttrs || "";
+            }
             const lowerUrl = url.toLowerCase();
-
-            //if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) return `<audio ${liteMode ? 'preload="none" ' : ' '}controls src="${url}"></audio>`;
-            if (/\.(mp3|ogg|wav)(\?.*)?$/.test(lowerUrl)) {
+            let style = "";
+            let isGif = false;
+            if (attrs) {
+                isGif = /\bgif\b/i.test(attrs);
+                const wMatch = attrs.match(/width\s*=\s*([\d%]+)/i);
+                const hMatch = attrs.match(/height\s*=\s*([\d%]+)/i);
+                if (wMatch) style += `width:${wMatch[1]}px;`;
+                if (hMatch) style += ` height:${hMatch[1]}px`;
+            }
+            if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif|avif)(\?.*)?$/.test(lowerUrl)) return `<img${!!style?` style="${style}"`:""}${!!alt?` data-tip="${alt}"`:""} onerror="handleMediaError(this)" loading="lazy" class="attachment" onclick="attachment(this)" src="${url}"/>`;
+            if (/\.(mp4|webm|ogg|mov|mkv)(\?.*)?$/.test(lowerUrl)) return `<video${!!style?` style="${style}"`:""}${!!alt?` data-tip="${alt}"`:""} ${isGif?"autoplay loop muted playsinline ":"controls "} ${liteMode ? 'preload="none" ' : ' '}class="attachment"><source src="${url}"></video>`
+            if (/\.(mp3|wav|flac|aac)(\?.*)?$/.test(lowerUrl)) {
                 const filename = new URL(url).pathname.split('/').pop().split('?')[0];
                 return `<div class="embed clean attachment audio-embed">
     <audio src="${url}"></audio>
-    <div class="header">
-        <i class="bx bx-music"></i>
-        <div>
-            <p class="file-name">${filename}</p>
-        </div>
-        <button data-tip="Download" onclick="download('${url}')" target="_blank">
-            <i class="bx bx-arrow-in-down-square-half"></i>
-        </button>
-    </div>
+    <div class="header"><i class="bx bx-music"></i><div><p class="file-name">${filename}</p></div><button data-tip="Download" onclick="download('${url}')" target="_blank"><i class="bx bx-arrow-in-down-square-half"></i></button></div>
     <div class="controls">
-        <button class="audio-play-button" data-tip="Play"><i class="bx bx-play"></i></button>
-        <p class="audio-time">0:00/0:00</p>
-        <div class="audio-progress-container">
-            <progress class="audio-progress" value="0"></progress>
-        </div>
-        <div class="audio-volume-wrapper">
-            <button class="audio-volume-button" data-tip="Volume"><i class="bx bx-volume-full"></i></button>
-            <input type="range" min="0" max="1" step="0.01" class="audio-volume-slider vertical" style="display:none;">
-        </div>
+        <button class="audio-play-button" data-tip="Play"><i class="bx bx-play"></i></button><p class="audio-time">0:00/0:00</p>
+        <div class="audio-progress-container"><progress class="audio-progress" value="0"></progress></div>
+        <div class="audio-volume-wrapper"><button class="audio-volume-button" data-tip="Volume"><i class="bx bx-volume-full"></i></button><input type="range" min="0" max="1" step="0.01" class="audio-volume-slider vertical" style="display:none;"></div>
     </div>
 </div>`
             }
-            if (/\.(mp4|webm|ogg)(\?.*)?$/.test(lowerUrl)) return `<video ${liteMode ? 'preload="none" ' : ' '}class="attachment" width="320" height="240" controls><source src="${url}"></video>`
-            if (/\.(png|jpg|jpeg|gif|bmp|svg|webp|jfif)(\?.*)?$/.test(lowerUrl)) return `<img loading="lazy" class="attachment" onclick="attachment(this)" src="${url}"/>`;
             return `<a href="${url}" target="_blank" rel="noopener noreferrer nofollow" data-tip="${url}">${url}</a>`;
         });
-
     literalLinks.forEach((url, i) => {
         text = text.replace(`__LITERAL_LINK_${i}__`, `<a href="${url}" target="_blank" rel="noopener noreferrer nofollow" data-tip="${url}">${url}</a>`);
     });
@@ -673,12 +665,15 @@ const syntaxes = ["# Header 1", "## Header 2", "### Header 3", "#### Header 4", 
     "@everyone",
     "https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png", "||https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png||",
     "<https://upload.wikimedia.org/wikipedia/commons/1/14/Animated_PNG_example_bouncing_beach_ball.png>",
-    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "||https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4||",
+    "https://www.w3schools.com/html/mov_bbb.mp4", "||https://www.w3schools.com/html/mov_bbb.mp4||",
+    "https://media.tenor.com/MeZ0gLUVRRkAAAPs/odjeb-je-lansiran.webm{gif}",
+    "![Artemis Launch](https://media.tenor.com/MeZ0gLUVRRkAAAPs/odjeb-je-lansiran.webm)",
+    "![Alt Text](https://media.tenor.com/1Omp3fcfdJAAAAPs/2b-9s.webm){gif width=180 height=160}",
     "https://www.w3schools.com/html/horse.mp3",
     "{progress:80%}\n{progress:60%:yellow}\n{progress:40%:#ffcc00}\n{progress:20%:rgb(255,0,0)}",
     "|embed\ntype: error\ntitle: Error encountered\ndescription: Something went wrong\nfooter: Please try again\n|end",
     "|embed\ntype: clean\ntitle: Clean\ndescription: A clean embed\n|end",
-    "|embed\ntype: default\nicon: coin\ntitle: [Wiki - Wikipedia](https://en.wikipedia.org/wiki/Wiki)\ndescription: A wiki is a form of hypertext publication...\ncolor: white\nfooter: Footer\navatar: https://wikipedia.com/favicon.ico\nimage: https://upload.wikimedia.org/wikipedia/commons/f/f0/Wikitext-wiki_markup-wikipedia.png\n\nfields:\n- name: Foo\n  value: Bar\n- name: Foo\n  value: Inline Bar\n  inline: true\n- name: Foo\n  value: Inline Bar\n  inline: true\n|end",
+    "|embed\ntype: default\nicon: coin\ntitle: [Wiki - Wikipedia](https://en.wikipedia.org/wiki/Wiki)\ndescription: A wiki is a form of hypertext publication...\ncolor: white\nfooter: Footer\navatar: https://wikipedia.com/favicon.ico\nimage: https://upload.wikimedia.org/wikipedia/commons/f/f0/Wikitext-wiki_markup-wikipedia.png\n\nfields:\n- name: Foo\n  value: Bar\n- name: Foo\n  value: Inline Bar\n  inline: true\n- name: Foo\n  value: \"Inline\nBar\"\n  inline: true\n|end",
     `{time:${currentTimestamp}:r}\n{time:${currentTimestamp}:t}\n{time:${currentTimestamp}:T}\n{time:${currentTimestamp}:d}\n{time:${currentTimestamp}:D}\n{time:${currentTimestamp}}`,
     "# {gold}hello{/gold}",
     "{anaglyph}Hello{/anaglyph}",
