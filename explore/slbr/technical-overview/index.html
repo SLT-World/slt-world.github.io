@@ -182,6 +182,34 @@
                 <p>During further development, Microsoft Edge's cloud-based spellchecker was discovered and integrated as an additional provider.</p>
             </div>
         </div>
+        <div class="container">
+            <div class="header">
+                <span class="material-symbols-rounded icon">settings</span>
+                <p>Adaptive Per-Tab Unload Scheduling</p>
+            </div>
+            <div style="display: flex;gap: 10px;flex-direction: column;">
+                <p>Earlier versions of SLBr used a single global timer to manage tab unloading.</p>
+                <p>Under this system, all inactive tabs were evaluated and unloaded at the same time once the timer elapsed.</p>
+                <p>While simple, this approach introduced several usability issues:</p>
+                <ol class="container">
+                    <li>The system did not account for tab usage.</li>
+                    <li>Recently visited tabs could be unloaded shortly after switching away.</li>
+                </ol>
+                <p>This resulted in unnecessary reloads and a disruptive browsing experience.</p>
+                <p>To address these issues, SLBr now uses a per-tab unload scheduling architecture.</p>
+                <p>Each tab tracks its own last active time and is assigned an independent expiry window.</p>
+                <p>This ensures that tabs that were recently accessed are preserved and remain available for a longer duration, while older inactive tabs are unloaded progressively.</p>
+                <p>In addition to per-tab tracking, adaptive timer scheduling was introduced to the system.</p>
+                <p>Instead of using a fixed interval, the system dynamically adjusts its scheduling based on the nearest tab expiry time.</p>
+                <p>This is implemented using a timer that recalibrates itself to trigger precisely when the next tab is due for unloading.</p>
+                <p>This approach provides:</p>
+                <ol class="container">
+                    <li>More precise unload timing.</li>
+                    <li>Reduced unnecessary timer wake-ups.</li>
+                    <li>Improved overall efficiency.</li>
+                </ol>
+            </div>
+        </div>
     </div>
 </body>
 </html>
