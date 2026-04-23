@@ -24,12 +24,17 @@
   100% { transform: scale(1.0) rotate(0deg); opacity: 1.0; }
 }
 
-.glitch > span {
-    white-space: pre;
+.glitch > .word > span {
     opacity: 0;
     display: inline-block;
     animation: glitch var(--duration, 1s) steps(1) var(--delay, 0s) forwards;
     animation-fill-mode: forwards;
+    color: inherit;
+}
+
+.word {
+    display: inline-block;
+    white-space: nowrap;
     color: inherit;
 }
 
@@ -98,8 +103,8 @@ path#github {
 <body style="height: 100vh;">
     <div class="content" style="align-items: center;justify-content: center;">
         <img src="favicon.png" width="100" height="100" draggable="false">
-        <h1 class="glitch">Schuyler Tan</h1>
-        <h3 class="glitch" style="color: var(--gray-color);">SLT World</h3>
+        <h1 class="glitch" style="text-align: center;">Schuyler Tan</h1>
+        <h3 class="glitch" style="color: var(--gray-color);text-align: center;">SLT World</h3>
         <p class="glitch" style="text-align: center;">Application, web, and game developer.</p>
         <div class="icon_links">
             <a href="https://www.youtube.com/@SLT-World" target="_blank">
@@ -223,7 +228,10 @@ path#github {
     </div>
 <script>
 document.querySelectorAll('.glitch').forEach(el => {
-  el.innerHTML = el.innerText.split('').map(i => { return `<span style="--delay:${(Math.random()*0.75).toFixed(2)}s;--duration:${(0.5+Math.random()*0.5).toFixed(2)}s;">${i}</span>`; }).join('');
+  el.innerHTML = el.innerText.split(' ').map(word => {
+    const letters = word.split('').map(i => { return `<span style="--delay:${(Math.random()*0.75).toFixed(2)}s;--duration:${(0.5+Math.random()*0.5).toFixed(2)}s;">${i}</span>`; }).join('');
+    return `<span class="word">${letters}</span>`;
+  }).join(' ');
 });
 </script>
 </body>
