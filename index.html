@@ -228,10 +228,7 @@ path#github {
     </div>
 <script>
 document.querySelectorAll('.glitch').forEach(el => {
-  el.innerHTML = el.innerText.split(' ').map(word => {
-    const letters = word.split('').map(i => { return `<span style="--delay:${(Math.random()*0.75).toFixed(2)}s;--duration:${(0.5+Math.random()*0.5).toFixed(2)}s;">${i}</span>`; }).join('');
-    return `<span class="word">${letters}</span>`;
-  }).join(' ');
+  el.innerHTML = el.innerText.split(' ').map(word => { return `<span class="word">${word.split('').map(i => { return `<span style="--delay:${(Math.random()*0.75).toFixed(2)}s;--duration:${(0.5+Math.random()*0.5).toFixed(2)}s;">${i}</span>`; }).join('')}</span>`; }).join(' ');
 });
 </script>
 </body>

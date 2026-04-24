@@ -27,6 +27,7 @@ A collection of browser capability tests used to evaluate feature support for SL
 > - 🔗 [Anti Back Button](../tests/antiback.html)
 > - 🔗 [Cross-Tab Communication Latency](../tests/crosstabcommunication.html)
 > - 🔗 [Drag & Drop](../tests/dragdrop.html)
+> - 🔗 [Color Font Formats](../tests/colorfont.html)
 
 ## 🖼️ External Samples
 ### WebGL

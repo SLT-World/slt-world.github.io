@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <h1>Test: Color Font Formats</h1>
+    <p>Tests for the availability & support of various color font formats.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result !== "") {
+          li.insertAdjacentHTML('beforeend', " - ");
+          const code = document.createElement("code");
+          code.textContent = result;
+          li.appendChild(code);
+        }
+        list.appendChild(li);
+        return li;
+      }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
+      const cbdt = CSS.supports("font-tech(color-cbdt)");
+      logList(cbdt, "CBDT/CBLC", cbdt ? "Supported" : "Unsupported");
+      const sbix = CSS.supports("font-tech(color-sbix)");
+      logList(sbix, "SBIX", sbix ? "Supported" : "Unsupported");
+      const svg = CSS.supports("font-tech(color-svg)");
+      logList(svg, "OpenType-SVG", svg ? "Supported" : "Unsupported");
+      const colrv0 = CSS.supports("font-tech(color-colrv0)");
+      logList(colrv0, "COLRv0", colrv0 ? "Supported" : "Unsupported");
+      const colrv1 = CSS.supports("font-tech(color-colrv1)");
+      logList(colrv1, "COLRv1", colrv1 ? "Supported" : "Unsupported");
+    </script>
+  </body>
+</html>
