@@ -4,21 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <style>li { display: block; }</style>
   </head>
   <body>
     <h1>Test: History API</h1>
     <p>Tests for the availability & support of the History API.</p>
     <hr>
     <ul id="results">
-      <button onclick="pushStateA()">History Push State</button>
-      <button onclick="pushStateB()">History Push State Hash</button>
-      <button onclick="replaceStateA()">History Replace State</button>
-      <button onclick="replaceStateB()">History Replace State Hash</button>
-      <button onclick="assignA()">Location Assign</button>
-      <button onclick="assignB()">Location Assign Hash</button>
-      <button onclick="replaceA()">Location Replace</button>
-      <button onclick="replaceB()">Location Replace Hash</button>
+      <li>
+        <strong>History:</strong>
+        <button onclick="pushStateA()">Push State</button>
+        <button onclick="pushStateB()">Push State (Hash)</button>
+        <button onclick="replaceStateA()">Replace State</button>
+        <button onclick="replaceStateB()">Replace State (Hash)</button>
+      </li>
+      <li>
+        <strong>Location:</strong>
+        <button onclick="assignA()">Assign</button>
+        <button onclick="assignB()">Assign (Hash)</button>
+        <button onclick="replaceA()">Replace</button>
+        <button onclick="replaceB()">Replace (Hash)</button>
+      </li>
     </ul>
     <script>
       const list = document.getElementById("results");

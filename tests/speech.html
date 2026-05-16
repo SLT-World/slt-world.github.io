@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <h1>Test: Web Speech API</h1>
+    <p>Tests for the availability & support of the Web Speech API.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result !== "") {
+          li.insertAdjacentHTML('beforeend', " - ");
+          const code = document.createElement("code");
+          code.textContent = result;
+          li.appendChild(code);
+        }
+        list.appendChild(li);
+        return li;
+      }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
+      const sp = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+      logList(sp, "SpeechSynthesis", sp ? "Supported" : "Unsupported");
+      if (sp) {
+        const textLi = document.createElement("li");
+        const textLabel = document.createElement("strong");
+        textLabel.textContent = "Text:";
+        textLi.appendChild(textLabel);
+
+        const textBox = document.createElement("input");
+        textBox.className = "input";
+        textBox.type = "text";
+        textBox.value = "Hello World";
+        textLi.appendChild(textBox);
+        list.appendChild(textLi);
+
+        const voiceLi = document.createElement("li");
+        const voiceLabel = document.createElement("strong");
+
+        voiceLabel.textContent = "Voice:";
+        voiceLi.appendChild(voiceLabel);
+        const select = document.createElement("select");
+        select.className = "input";
+        voiceLi.appendChild(select);
+        list.appendChild(voiceLi);
+
+        let voices = [];
+        function populateVoices() {
+          voices = speechSynthesis.getVoices();
+          select.innerHTML = "";
+          if (voices.length === 0) {
+            const option = document.createElement("option");
+            option.textContent = "No voices available";
+            select.appendChild(option);
+            return;
+          }
+          voices.forEach((voice, index) => {
+            const option = document.createElement("option");
+            option.value = index;
+            option.textContent = `${voice.name} (${voice.lang})` + (voice.default ? " [Default]" : "");
+            select.appendChild(option);
+          });
+        }
+        populateVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = populateVoices;
+        const buttonLi = document.createElement("li");
+        const playButton = document.createElement("button");
+        playButton.textContent = "Play";
+        playButton.addEventListener("click", () => {
+          speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(textBox.value);
+          const selectedVoice = voices[select.value];
+          if (selectedVoice) utterance.voice = selectedVoice;
+          speechSynthesis.speak(utterance);
+        });
+        buttonLi.appendChild(playButton);
+        list.appendChild(buttonLi);
+      }
+    </script>
+  </body>
+</html>

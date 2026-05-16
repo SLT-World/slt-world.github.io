@@ -54,6 +54,7 @@
 
         let eyeDropper = new EyeDropper();
 
+        const buttonLi = document.createElement("li");
         const dropButton = document.createElement("button");
         dropButton.innerHTML = "Eye Dropper";
         dropButton.addEventListener('click', e => {
@@ -69,7 +70,8 @@
             hexli.className = "fail";
           });
         });
-        list.appendChild(dropButton);
+        buttonLi.appendChild(dropButton);
+        list.appendChild(buttonLi);
       }
     </script>
   </body>

@@ -28,6 +28,7 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [Media Codecs](../tests/codecs.html)
 > - [Color Font Formats](../tests/colorfont.html)
 > - [Cross-Tab Communication Latency](../tests/crosstabcommunication.html)
+> - [Web Speech API](../tests/speech.html)
 
 ## External
 ### Tests
@@ -87,6 +88,9 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [Prerender Demo](https://chrome.dev/prerender-demos/)
 > - [Web Notifications](https://www.bennish.net/web-notifications.html)
 > - [Chromium Checker](https://chromiumchecker.com/)
+> - [Keyboard Checker](https://keyboardchecker.com/)
+> - [Simple Push Demo](https://simple-push-demo.vercel.app/)
+> - [WebGL Report](https://webglreport.com/)
 
 ### Security
 > - [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)
