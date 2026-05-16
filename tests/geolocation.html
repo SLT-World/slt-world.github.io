@@ -3,14 +3,19 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
     <h1>Test: Geolocation API</h1>
     <p>Tests for the availability & support of the Geolocation API.</p>
     <hr>
-    <ul id="results"></ul>
+    <ul id="results">
+      <div id="map" style="height:400px;width:100%;border-radius:5px;"></div>
+    </ul>
     <script>
+      const mapEl = document.getElementById("map");
       const list = document.getElementById("results");
       function logList(success, text, result) {
         const li = document.createElement("li");
@@ -22,38 +27,57 @@
           code.textContent = result;
           li.appendChild(code);
         }
-        list.appendChild(li);
+        list.insertBefore(li, mapEl);
         return li;
       }
       function logHeader(text) {
         const h = document.createElement("h2");
         h.innerHTML = text;
-        list.appendChild(h);
+        list.insertBefore(h, mapEl);
       }
       const geo = ('geolocation' in navigator)
       logList(geo, "Geolocation API", geo ? "Supported" : "Unsupported");
       if (geo) {
         const latli = document.createElement("li");
         latli.innerHTML = "<strong>Latitude</strong> - <code>NaN</code>";
-        list.appendChild(latli);
+        list.insertBefore(latli, mapEl);
         const longli = document.createElement("li");
         longli.innerHTML = "<strong>Longitude</strong> - <code>NaN</code>";
-        list.appendChild(longli);
+        list.insertBefore(longli, mapEl);
 
+        const buttonLi = document.createElement("li");
         const geoButton = document.createElement("button");
         geoButton.innerHTML = "Location";
         geoButton.addEventListener('click', e => {
           navigator.geolocation.getCurrentPosition(onSuccess, onError);
         });
-        list.appendChild(geoButton);
+        buttonLi.appendChild(geoButton);
+        list.insertBefore(buttonLi, mapEl);
 
         function onSuccess(position) {
           const {latitude, longitude} = position.coords;
           latli.innerHTML = `<strong>Latitude</strong> - <code>${latitude}</code>`;
           longli.innerHTML = `<strong>Longitude</strong> - <code>${longitude}</code>`;
+          updateMapLocation(latitude, longitude);
         }
         function onError() {
           logList(false, "Error", "Failed");
+        }
+        let map;
+        let currentCircle = null;
+        function updateMapLocation(newLat, newLong) {
+          if (!map) {
+            map = L.map('map');
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+          }
+          map.setView([newLat, newLong], 18);
+          if (currentCircle) map.removeLayer(currentCircle);
+          currentCircle = L.circle([newLat, newLong], {
+            color: 'red',
+            fillColor: 'red',
+            fillOpacity: 0.4,
+            radius: 7.5
+          }).addTo(map);
         }
       }
     </script>
