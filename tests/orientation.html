@@ -142,9 +142,9 @@
                     value = event.gamma || 0;
                     break;
                 }
-                ali.innerHTML = `<strong>Alpha</strong> - <code>${event.alpha || 0}</code>`;
-                bli.innerHTML = `<strong>Beta</strong> - <code>${event.beta || 0}</code>`;
-                gli.innerHTML = `<strong>Gamma</strong> - <code>${event.gamma || 0}</code>`;
+                ali.innerHTML = `<strong>Alpha</strong> - <code>${(event.alpha || 0).toFixed(1)}</code>`;
+                bli.innerHTML = `<strong>Beta</strong> - <code>${(event.beta || 0).toFixed(1)}</code>`;
+                gli.innerHTML = `<strong>Gamma</strong> - <code>${(event.gamma || 0).toFixed(1)}</code>`;
                 updateMeter(value);
               });
               enableButton.disabled = true;

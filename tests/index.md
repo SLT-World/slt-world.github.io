@@ -92,6 +92,8 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [Keyboard Checker](https://keyboardchecker.com/)
 > - [Simple Push Demo](https://simple-push-demo.vercel.app/)
 > - [WebGL Report](https://webglreport.com/)
+> - [Sensor Tester](https://intel.github.io/generic-sensor-demos/sensor-tester/build/bundled/)
+> - [JavaScript Sensor Access Demo](https://sensor-js.xyz/demo)
 
 ### Security
 > - [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)
