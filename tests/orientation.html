@@ -13,8 +13,8 @@
     </style>
   </head>
   <body>
-    <h1>Test: Gyroscope API</h1>
-    <p>Tests for the availability & support of the Gyroscope API.</p>
+    <h1>Test: DeviceOrientationEvent API</h1>
+    <p>Tests for the availability & support of the DeviceOrientationEvent API.</p>
     <hr>
     <ul id="results"></ul>
     <script>
@@ -38,8 +38,24 @@
         list.appendChild(h);
       }
       const gr = 'DeviceOrientationEvent' in window;
-      logList(gr, "Gyroscope", gr ? "Supported" : "Unsupported");
+      logList(gr, "Device Orientation Event", gr ? "Supported" : "Unsupported");
       if (gr) {
+        const axisLi = document.createElement("li");
+        const axisLabel = document.createElement("strong");
+
+        axisLabel.textContent = "Axis:";
+        axisLi.appendChild(axisLabel);
+        const axisSelect = document.createElement("select");
+        axisSelect.className = "input";
+        ["Alpha (Z)", "Beta (X)", "Gamma (Y)"].forEach((text, index) => {
+            const option = document.createElement("option");
+            option.value = index;
+            option.textContent = text;
+            axisSelect.appendChild(option);
+        });
+        axisLi.appendChild(axisSelect);
+        list.appendChild(axisLi);
+
         const buttonLi = document.createElement("li");
         const enableButton = document.createElement("button");
         enableButton.textContent = "Enable";
@@ -92,7 +108,21 @@
                 logList(granted, "Permission", granted ? "Granted" : "Denied");
                 if (!granted) return;
               }
-              window.addEventListener("deviceorientation", (event) => { updateMeter(event.alpha || 0); });
+              window.addEventListener("deviceorientation", (event) => {
+                let value = 0;
+                switch (axisSelect.value) {
+                  case 0:
+                    value = event.alpha || 0;
+                    break;
+                  case 1:
+                    value = event.beta || 0;
+                    break;
+                  case 2:
+                    value = event.gamma || 0;
+                    break;
+                }
+                updateMeter(value);
+              });
               enableButton.disabled = true;
               enableButton.textContent = "Enabled";
             }

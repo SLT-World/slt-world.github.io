@@ -29,7 +29,7 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [Color Font Formats](../tests/colorfont.html)
 > - [Cross-Tab Communication Latency](../tests/crosstabcommunication.html)
 > - [Web Speech API](../tests/speech.html)
-> - [Gyroscope API](../tests/gyroscope.html)
+> - [DeviceOrientationEvent API](../tests/orientation.html)
 
 ## External
 ### Tests
