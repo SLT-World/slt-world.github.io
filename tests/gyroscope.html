@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+      svg {
+        width: 300px;
+        max-width: 100%;
+        aspect-ratio: 1 / 1;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Test: Gyroscope API</h1>
+    <p>Tests for the availability & support of the Gyroscope API.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result !== "") {
+          li.insertAdjacentHTML('beforeend', " - ");
+          const code = document.createElement("code");
+          code.textContent = result;
+          li.appendChild(code);
+        }
+        list.appendChild(li);
+        return li;
+      }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
+      const gr = 'DeviceOrientationEvent' in window;
+      logList(gr, "Gyroscope", gr ? "Supported" : "Unsupported");
+      if (gr) {
+        const buttonLi = document.createElement("li");
+        const enableButton = document.createElement("button");
+        enableButton.textContent = "Enable";
+        buttonLi.appendChild(enableButton);
+        list.appendChild(buttonLi);
+
+        const meterLi = document.createElement("li");
+        meterLi.style.flexDirection = "column";
+        meterLi.innerHTML = `<svg viewBox="0 0 260 260">
+  <circle cx="130" cy="130" r="125" fill="none" stroke="lightgray" stroke-width="5"/>
+  <path id="arc" fill="none" stroke="#0092FF" stroke-width="10" stroke-linecap="round"/>
+  <line id="needle" x1="130" y1="130" x2="130" y2="17.5" stroke="red" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="130" cy="130" r="10" fill="#000"/>
+</svg>
+<h1 id="angleText">0.0°</h1>`;
+        list.appendChild(meterLi);
+
+        const needle = document.getElementById("needle");
+        const arc = document.getElementById("arc");
+        const text = document.getElementById("angleText");
+
+        function polarToCartesian(cx, cy, r, angle) {
+          const radians = (angle - 90) * Math.PI / 180;
+          return { x: cx + r * Math.cos(radians), y: cy + r * Math.sin(radians) };
+        }
+
+        function describeArc(x, y, radius, startAngle, endAngle) {
+          const start = polarToCartesian(x, y, radius, endAngle);
+          const end = polarToCartesian(x, y, radius, startAngle);
+          const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+          return ["M", start.x, start.y, "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y].join(" ");
+        }
+
+        function updateMeter(angle) {
+          let normalized = ((angle % 360) + 360) % 360;
+          text.textContent = `${normalized.toFixed(1)}°`;
+          const point = polarToCartesian(130, 130, 130 - 17.5, normalized);
+          needle.setAttribute("x2", point.x);
+          needle.setAttribute("y2", point.y);
+          if (normalized > 0.1) arc.setAttribute("d", describeArc(130, 130, 125, 0, normalized));
+          else arc.setAttribute("d", "");
+        }
+
+        enableButton.addEventListener("click",
+          async () => {
+            try {
+              if (typeof DeviceOrientationEvent.requestPermission === "function") {
+                const permission = await DeviceOrientationEvent.requestPermission();
+                const granted = permission == "granted";
+                logList(granted, "Permission", granted ? "Granted" : "Denied");
+                if (!granted) return;
+              }
+              window.addEventListener("deviceorientation", (event) => { updateMeter(event.alpha || 0); });
+              enableButton.disabled = true;
+              enableButton.textContent = "Enabled";
+            }
+            catch (error) {
+              logList(false, "Error", error);
+            }
+          }
+        );
+      }
+    </script>
+  </body>
+</html>
