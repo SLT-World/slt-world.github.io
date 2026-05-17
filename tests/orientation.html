@@ -13,7 +13,7 @@
     </style>
   </head>
   <body>
-    <h1>Test: DeviceOrientationEvent API</h1>
+    <h1>Test: Device Orientation Event</h1>
     <p>Tests for the availability & support of the DeviceOrientationEvent API.</p>
     <hr>
     <ul id="results"></ul>
@@ -100,18 +100,7 @@
         }
 
         function updateMeter(angle) {
-          let normalized = 0;
-          switch (axisSelect.value) {
-            case "0":
-              normalized = ((angle % 360) + 360) % 360;
-              break;
-            case "1":
-              normalized = angle + 180;
-              break;
-            case "2":
-              normalized = angle + 90;
-              break;
-          }
+          let normalized = ((angle % 360) + 360) % 360;
           text.textContent = `${normalized.toFixed(1)}°`;
           const point = polarToCartesian(130, 130, 130 - 17.5, normalized);
           needle.setAttribute("x2", point.x);

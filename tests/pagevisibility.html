@@ -34,17 +34,14 @@
       var hiddenProperty = 'hidden' in document ? 'hidden' : 'webkitHidden' in document ? 'webkitHidden' : 'mozHidden' in document ? 'mozHidden' : null;
       var visibilityStateProperty = 'visibilityState' in document ? 'visibilityState' : 'webkitVisibilityState' in document ? 'webkitVisibilityState' : 'mozVisibilityState' in document ? 'mozVisibilityState' : null;
 
-      if (hiddenProperty === null || visibilityStateProperty === null) {
-        logList(false, 'Page Visibility API', 'Unsupported');
-      } else {
+      if (hiddenProperty === null || visibilityStateProperty === null) logList(false, 'Page Visibility API', 'Unsupported');
+      else {
         logList(true, 'Page Visibility API', 'Supported');
         var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
         var views = 0;
         function onVisibilityChange() {
-          if (!document[hiddenProperty]) {
-            views++;
-          }
-          logList(null, 'Page', (document[hiddenProperty] ? 'Hidden' : 'Visible') + ` [State: ${document[visibilityStateProperty]}] [Viewed: ${views}]`);
+          if (!document[hiddenProperty]) views++;
+          logList(null, document[hiddenProperty] ? 'Hidden' : 'Visible', `State: ${document[visibilityStateProperty]} | Viewed: ${views}`);
         }
         document.addEventListener(visibilityChangeEvent, onVisibilityChange);
         onVisibilityChange();

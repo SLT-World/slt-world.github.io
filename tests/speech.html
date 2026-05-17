@@ -14,7 +14,7 @@
       const list = document.getElementById("results");
       function logList(success, text, result) {
         const li = document.createElement("li");
-        if (success != null) { li.classList.add(success ? "success" : "fail"); }
+        if (success != null) li.classList.add(success ? "success" : "fail");
         li.innerHTML = `<strong>${text}</strong>`;
         if (result !== "") {
           li.insertAdjacentHTML('beforeend', " - ");
@@ -29,6 +29,33 @@
         const h = document.createElement("h2");
         h.innerHTML = text;
         list.appendChild(h);
+      }
+      function createSlider(labelText, min, max, step, value) {
+        const li = document.createElement("li");
+        const label = document.createElement("strong");
+        label.textContent = `${labelText}: `;
+        li.appendChild(label);
+
+        const slider = document.createElement("input");
+        slider.type = "range";
+        slider.className = "input";
+        slider.min = min;
+        slider.max = max;
+        slider.step = step;
+        slider.value = value;
+
+        const valueDisplay = document.createElement("code");
+        valueDisplay.textContent = value;
+
+        slider.addEventListener("input", () => {
+          valueDisplay.textContent = slider.value;
+        });
+
+        li.appendChild(slider);
+        li.appendChild(document.createTextNode(" "));
+        li.appendChild(valueDisplay);
+        list.appendChild(li);
+        return slider;
       }
       const sp = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
       logList(sp, "SpeechSynthesis", sp ? "Supported" : "Unsupported");
@@ -55,6 +82,10 @@
         voiceLi.appendChild(select);
         list.appendChild(voiceLi);
 
+        const rateSlider = createSlider("Rate", 0.5, 2, 0.1, 1);
+        const pitchSlider = createSlider("Pitch", 0, 2, 0.1, 1);
+        const volumeSlider = createSlider("Volume", 0, 1, 0.1, 1);
+
         let voices = [];
         function populateVoices() {
           voices = speechSynthesis.getVoices();
@@ -80,8 +111,14 @@
         playButton.addEventListener("click", () => {
           speechSynthesis.cancel();
           const utterance = new SpeechSynthesisUtterance(textBox.value);
-          const selectedVoice = voices[select.value];
-          if (selectedVoice) utterance.voice = selectedVoice;
+          const selectedVoice = voices[parseInt(select.value, 10)];
+          if (selectedVoice) {
+            utterance.voice = selectedVoice;
+            utterance.lang = selectedVoice.lang;
+          }
+          utterance.rate = parseFloat(rateSlider.value);
+          utterance.pitch = parseFloat(pitchSlider.value);
+          utterance.volume = parseFloat(volumeSlider.value);
           speechSynthesis.speak(utterance);
         });
         buttonLi.appendChild(playButton);

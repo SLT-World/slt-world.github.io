@@ -29,7 +29,7 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [Color Font Formats](../tests/colorfont.html)
 > - [Cross-Tab Communication Latency](../tests/crosstabcommunication.html)
 > - [Web Speech API](../tests/speech.html)
-> - [DeviceOrientationEvent API](../tests/orientation.html)
+> - [Device Orientation Event](../tests/orientation.html)
 
 ## External
 ### Tests
@@ -94,6 +94,7 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [WebGL Report](https://webglreport.com/)
 > - [Sensor Tester](https://intel.github.io/generic-sensor-demos/sensor-tester/build/bundled/)
 > - [JavaScript Sensor Access Demo](https://sensor-js.xyz/demo)
+> - [CSS Grid Lanes](https://webkit.org/demos/grid3/photos/)
 
 ### Security
 > - [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)
