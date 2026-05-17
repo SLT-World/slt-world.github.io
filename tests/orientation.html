@@ -73,6 +73,16 @@
 <h1 id="angleText">0.0°</h1>`;
         list.appendChild(meterLi);
 
+        const ali = document.createElement("li");
+        ali.innerHTML = "<strong>Alpha</strong> - <code>NaN</code>";
+        list.appendChild(ali);
+        const bli = document.createElement("li");
+        bli.innerHTML = "<strong>Beta</strong> - <code>NaN</code>";
+        list.appendChild(bli);
+        const gli = document.createElement("li");
+        gli.innerHTML = "<strong>Gamma</strong> - <code>NaN</code>";
+        list.appendChild(gli);
+
         const needle = document.getElementById("needle");
         const arc = document.getElementById("arc");
         const text = document.getElementById("angleText");
@@ -90,7 +100,18 @@
         }
 
         function updateMeter(angle) {
-          let normalized = ((angle % 360) + 360) % 360;
+          let normalized = 0;
+          switch (axisSelect.value) {
+            case "0":
+              normalized = ((angle % 360) + 360) % 360;
+              break;
+            case "1":
+              normalized = angle + 180;
+              break;
+            case "2":
+              normalized = angle + 90;
+              break;
+          }
           text.textContent = `${normalized.toFixed(1)}°`;
           const point = polarToCartesian(130, 130, 130 - 17.5, normalized);
           needle.setAttribute("x2", point.x);
@@ -111,16 +132,19 @@
               window.addEventListener("deviceorientation", (event) => {
                 let value = 0;
                 switch (axisSelect.value) {
-                  case 0:
+                  case "0":
                     value = event.alpha || 0;
                     break;
-                  case 1:
+                  case "1":
                     value = event.beta || 0;
                     break;
-                  case 2:
+                  case "2":
                     value = event.gamma || 0;
                     break;
                 }
+                ali.innerHTML = `<strong>Alpha</strong> - <code>${event.alpha || 0}</code>`;
+                bli.innerHTML = `<strong>Beta</strong> - <code>${event.beta || 0}</code>`;
+                gli.innerHTML = `<strong>Gamma</strong> - <code>${event.gamma || 0}</code>`;
                 updateMeter(value);
               });
               enableButton.disabled = true;
