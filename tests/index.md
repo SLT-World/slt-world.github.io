@@ -95,6 +95,7 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [Sensor Tester](https://intel.github.io/generic-sensor-demos/sensor-tester/build/bundled/)
 > - [JavaScript Sensor Access Demo](https://sensor-js.xyz/demo)
 > - [CSS Grid Lanes](https://webkit.org/demos/grid3/photos/)
+> - [WebGPU Samples](https://webgpu.github.io/webgpu-samples/)
 
 ### Security
 > - [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <style>li { display: block; }</style>
+    <style>li { display: block; }
+li > *:not(:first-child) { all: revert; }
+li > *:not(:first-child) * { all: revert; }</style>
   </head>
   <body>
     <h1>Test: Inputs</h1>
@@ -22,28 +24,58 @@
       </li>
 
       <li>
-        <label for="password-input">Password Input</label>
+        <label for="password-input">Password</label>
         <input type="password" id="password-input">
       </li>
 
       <li>
-        <label for="url-input">URL Input</label>
+        <label for="url-input">URL</label>
         <input type="url" id="url-input"/>
       </li>
 
       <li>
-        <label for="search-input">Search Input</label>
+        <label for="search-input">Search</label>
         <input type="search" id="search-input"/>
       </li>
 
       <li>
-        <label for="email-input">Email Input</label>
+        <label for="email-input">Email</label>
         <input type="email" id="email-input"/>
       </li>
 
       <li>
-        <label for="tel-input">Telephone Input</label>
+        <label for="tel-input">Telephone</label>
         <input type="tel" id="tel-input"/>
+      </li>
+
+      <li>
+        <label for="button-input">Button</label>
+        <input type="button" value="Button" id="button-input">
+      </li>
+
+      <li>
+        <label>Checkbox</label>
+        <input checked type="checkbox" id="c1" value="1">
+        <label for="c1">Option 1</label>
+        <br>
+        <input type="checkbox" id="c2" value="2">
+        <label for="c2">Option 2</label>
+        <br>
+        <input type="checkbox" id="c3" value="3">
+        <label for="c3">Option 3</label>
+      </li>
+
+      <li>
+        <label>Radio</label>
+        <input checked type="radio" id="r1" name="radio_option" value="1">
+        <label for="r1">Option 1</label>
+        <br>
+        <input type="radio" id="r2" name="radio_option" value="2">
+        <label for="r2">Option 2</label>
+        <br>
+        <input type="radio" id="r3" name="radio_option" value="3">
+        <label for="r3">Option 3</label>
+        <br>
       </li>
     </ul>
   </body>

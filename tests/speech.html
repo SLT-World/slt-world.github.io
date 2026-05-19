@@ -58,7 +58,7 @@
         return slider;
       }
       const sp = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
-      logList(sp, "SpeechSynthesis", sp ? "Supported" : "Unsupported");
+      logList(sp, "Speech Synthesis", sp ? "Supported" : "Unsupported");
       if (sp) {
         const textLi = document.createElement("li");
         const textLabel = document.createElement("strong");

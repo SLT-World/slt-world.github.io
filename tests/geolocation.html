@@ -38,12 +38,8 @@
       const geo = ('geolocation' in navigator)
       logList(geo, "Geolocation API", geo ? "Supported" : "Unsupported");
       if (geo) {
-        const latli = document.createElement("li");
-        latli.innerHTML = "<strong>Latitude</strong> - <code>NaN</code>";
-        list.insertBefore(latli, mapEl);
-        const longli = document.createElement("li");
-        longli.innerHTML = "<strong>Longitude</strong> - <code>NaN</code>";
-        list.insertBefore(longli, mapEl);
+        const latli = logList(null, "Latitude", "NaN");
+        const longli = logList(null, "Longitude", "NaN");
 
         const buttonLi = document.createElement("li");
         const geoButton = document.createElement("button");
@@ -61,11 +57,13 @@
           updateMapLocation(latitude, longitude);
         }
         function onError(error) {
-          let msg = "Unknown";
-          if (error.code === 1) msg = "Permission denied";
-          if (error.code === 2) msg = "Position unavailable";
-          if (error.code === 3) msg = "Timeout";
-          logList(false, "Error", msg);
+          if (error.code === 1) logList(false, "Permission", "Denied");
+          else {
+            let msg = "Unknown";
+            if (error.code === 2) msg = "Position unavailable";
+            if (error.code === 3) msg = "Timeout";
+            logList(false, "Error", msg);
+          }
         }
         let map;
         let currentCircle = null;
