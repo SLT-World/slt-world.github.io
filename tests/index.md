@@ -96,6 +96,12 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [JavaScript Sensor Access Demo](https://sensor-js.xyz/demo)
 > - [CSS Grid Lanes](https://webkit.org/demos/grid3/photos/)
 > - [WebGPU Samples](https://webgpu.github.io/webgpu-samples/)
+> - [HTML5 Video Events](https://www.w3.org/2010/05/video/mediaevents.html)
+> - [Google Chrome Samples](https://github.com/GoogleChrome/samples)
+> - [Microsoft Edge Demos](https://github.com/MicrosoftEdge/Demos)
+> - [Web Speech API Playground](https://speech.evanliu.com/)
+> - [Happy Eyeballs Webtester](https://www.happy-eyeballs.net/)
+> - [Test Happy Eyeballs](https://he.test-ipv6.com/)
 
 ### Security
 > - [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)
@@ -106,6 +112,8 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [Bad SSL](https://badssl.com/)
 > - [Homograph Attack Demo](https://vvikipedia.com/)
 > - [Homograph Attack Demo (Punycode)](https://www.xn--80ak6aa92e.com/)
+> - [Firefox Trap](https://www.itisatrap.org/firefox/its-a-trap.html)
+> - [Anti-Malware Testfile](https://www.eicar.org/download-anti-malware-testfile/)
 
 ### WebGL
 > - [HexGL](https://hexgl.bkcore.com/)
