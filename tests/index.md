@@ -30,6 +30,7 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [Cross-Tab Communication Latency](../tests/crosstabcommunication.html)
 > - [Web Speech API](../tests/speech.html)
 > - [Device Orientation Event](../tests/orientation.html)
+> - [Notifications API](../tests/notifications.html)
 
 ## External
 ### Tests
@@ -102,9 +103,14 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [Web Speech API Playground](https://speech.evanliu.com/)
 > - [Happy Eyeballs Webtester](https://www.happy-eyeballs.net/)
 > - [Test Happy Eyeballs](https://he.test-ipv6.com/)
+> - [1.1.1.1](https://one.one.one.one/help/)
+> - [Notification Generator | Peter.sh](https://tests.peter.sh/notification-generator/)
 
 ### Security
 > - [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)
+> - [SafeBrowsing Malware Demo](http://malware.testing.google.test/testing/malware/)
+> - [SafeBrowsing v4 Phishing Demo](http://testsafebrowsing.appspot.com/apiv4/ANY_PLATFORM/SOCIAL_ENGINEERING/URL/)
+> - [SafeBrowsing v4 Malware Demo](http://testsafebrowsing.appspot.com/apiv4/ANY_PLATFORM/MALWARE/URL/)
 > - [SmartScreen Demo](https://demo.smartscreen.msft.net/)
 > - [Yandex Demo](http://malware-driveby.test.safebrowsing.yandex)
 > - [Yandex Phishing Demo](https://ydx-phish-shavar.cepera.ru)
@@ -114,6 +120,7 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [Homograph Attack Demo (Punycode)](https://www.xn--80ak6aa92e.com/)
 > - [Firefox Trap](https://www.itisatrap.org/firefox/its-a-trap.html)
 > - [Anti-Malware Testfile](https://www.eicar.org/download-anti-malware-testfile/)
+> - [WICAR.org](https://www.wicar.org/)
 
 ### WebGL
 > - [HexGL](https://hexgl.bkcore.com/)
@@ -196,3 +203,7 @@ A collection of browser capability tests used to evaluate feature support and we
 ### 404
 > - [The White House](https://www.whitehouse.gov/energy/climate-change)
 > - [Raspberry Pi Foundation](https://www.raspberrypi.org/piphone-home-made-raspberry-pi-smartphone/)
+
+### PDF
+> - [Sample PDF](https://ontheline.trincoll.edu/images/bookdown/sample-local-pdf.pdf)
+> - [PDF Tables](https://assets.accessible-digital-documents.com/uploads/2017/01/sample-tables.pdf)

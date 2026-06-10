@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <h1>Test: Notifications API</h1>
+    <p>Tests for the availability & support of the Notifications API.</p>
+    <hr>
+    <ul id="results"></ul>
+    <script>
+      const list = document.getElementById("results");
+      function logList(success, text, result) {
+        const li = document.createElement("li");
+        if (success != null) li.classList.add(success ? "success" : "fail");
+        li.innerHTML = `<strong>${text}</strong>`;
+        if (result !== "") {
+          li.insertAdjacentHTML('beforeend', " - ");
+          const code = document.createElement("code");
+          code.textContent = result;
+          li.appendChild(code);
+        }
+        list.appendChild(li);
+        return li;
+      }
+      function logHeader(text) {
+        const h = document.createElement("h2");
+        h.innerHTML = text;
+        list.appendChild(h);
+      }
+      function createInput(text, type, value, options = {}) {
+        const li = document.createElement("li");
+        const label = document.createElement("strong");
+        label.textContent = `${text}: `;
+        li.appendChild(label);
+
+        let input;
+        if (type == "select") {
+          input = document.createElement("select");
+          options.choices.forEach(choice => {
+            const opt = document.createElement("option");
+            opt.value = choice;
+            opt.textContent = choice;
+            if (choice == value) opt.selected = true;
+            input.appendChild(opt);
+          });
+        }
+        else {
+          input = document.createElement("input");
+          input.type = type;
+          if (type == "checkbox") input.checked = value;
+          else input.value = value;
+        }
+        input.className = "input";
+        li.appendChild(input);
+        list.appendChild(li);
+        return input;
+      }
+      const supported = 'Notification' in window;
+      logList(supported, "Notifications API", supported ? "Supported" : "Unsupported");
+
+      if (supported) {
+        const permissionLi = logList(Notification.permission == 'default' ? null : Notification.permission == 'granted', "Current Permission", Notification.permission);
+        const reqBtnLi = document.createElement("li");
+        const reqButton = document.createElement("button");
+        reqButton.textContent = "Request Permission";
+        reqButton.addEventListener("click", () => {
+          Notification.requestPermission().then(permission => {
+            permissionLi.querySelector("code").textContent = permission;
+            if (permission == "granted") permissionLi.className = "success";
+            else if (permission == "denied") permissionLi.className = "fail";
+          });
+        });
+        reqBtnLi.appendChild(reqButton);
+        list.appendChild(reqBtnLi);
+
+        const titleInput = createInput("Title", "text", "Test Notification");
+        const bodyInput = createInput("Body", "text", "This is a sample notification body.");
+        const dirInput = createInput("Direction", "select", "auto", { choices: ["auto", "ltr", "rtl"] });
+        const tagInput = createInput("Tag", "text", "");
+        const langInput = createInput("Language", "text", "en-US");
+        const iconInput = createInput("Icon URL", "text", "");
+        const imageInput = createInput("Image URL", "text", "");
+        const badgeInput = createInput("Badge URL", "text", "");
+        const vibrateInput = createInput("Vibrate", "text", "200,100,200");
+        const silentInput = createInput("Silent", "checkbox", false);
+        const interactionInput = createInput("Require Interaction", "checkbox", false);
+        const renotifyInput = createInput("Renotify (Tag required)", "checkbox", false);
+
+        silentInput.addEventListener("change", () => {
+          vibrateInput.disabled = silentInput.checked;
+        });
+
+        const triggerBtnLi = document.createElement("li");
+        const triggerButton = document.createElement("button");
+        triggerButton.textContent = "Show";
+
+        triggerButton.addEventListener("click", () => {
+          try {
+            if (Notification.permission !== "granted") {
+              logList(false, "Permission", "Denied");
+              return;
+            }
+            const isSilent = silentInput.checked;
+            const vibrateStr = vibrateInput.value.trim();
+            const vibratePattern = (!isSilent && vibrateStr) ? vibrateStr.split(",").map(num => parseInt(num.trim(), 10)) : [];
+
+            const options = {
+              body: bodyInput.value,
+              dir: dirInput.value,
+              tag: tagInput.value || undefined,
+              lang: langInput.value || undefined,
+              icon: iconInput.value || undefined,
+              image: imageInput.value || undefined,
+              badge: badgeInput.value || undefined,
+              silent: isSilent,
+              requireInteraction: interactionInput.checked,
+              renotify: renotifyInput.checked
+            };
+            if (vibratePattern.length > 0) options.vibrate = vibratePattern;
+
+            const notification = new Notification(titleInput.value, options);
+            notification.onclick = (event) => {
+              event.preventDefault();
+              window.focus();
+              logList(true, "Notification", "Clicked");
+            };
+
+            notification.onshow = () => logList(true, "Notification", "Displayed");
+            notification.onerror = () => logList(false, "Notification", "Failed");
+            notification.onclose = () => logList(null, "Notification", "Closed");
+          }
+          catch (e) { logList(false, "Error", e); }
+        });
+
+        triggerBtnLi.appendChild(triggerButton);
+        list.appendChild(triggerBtnLi);
+      }
+    </script>
+  </body>
+</html>
