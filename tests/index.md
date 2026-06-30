@@ -104,13 +104,16 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [Happy Eyeballs Webtester](https://www.happy-eyeballs.net/)
 > - [Test Happy Eyeballs](https://he.test-ipv6.com/)
 > - [1.1.1.1](https://one.one.one.one/help/)
-> - [Notification Generator | Peter.sh](https://tests.peter.sh/notification-generator/)
+> - [Notification Generator Peter.sh](https://tests.peter.sh/notification-generator/)
+> - [Web Share Test](https://w3c.github.io/web-share/demos/share-files.html)
+> - [Check Tor](https://check.torproject.org/)
+> - [LocalCDN Test](https://www.localcdn.org/test)
 
 ### Security
-> - [SafeBrowsing Demo](https://testsafebrowsing.appspot.com/)
-> - [SafeBrowsing Malware Demo](http://malware.testing.google.test/testing/malware/)
-> - [SafeBrowsing v4 Phishing Demo](http://testsafebrowsing.appspot.com/apiv4/ANY_PLATFORM/SOCIAL_ENGINEERING/URL/)
-> - [SafeBrowsing v4 Malware Demo](http://testsafebrowsing.appspot.com/apiv4/ANY_PLATFORM/MALWARE/URL/)
+> - [Safe Browsing Demo](https://testsafebrowsing.appspot.com/)
+> - [Safe Browsing Malware Demo](http://malware.testing.google.test/testing/malware/)
+> - [Safe Browsing v4 Phishing Demo](http://testsafebrowsing.appspot.com/apiv4/ANY_PLATFORM/SOCIAL_ENGINEERING/URL/)
+> - [Safe Browsing v4 Malware Demo](http://testsafebrowsing.appspot.com/apiv4/ANY_PLATFORM/MALWARE/URL/)
 > - [SmartScreen Demo](https://demo.smartscreen.msft.net/)
 > - [Yandex Demo](http://malware-driveby.test.safebrowsing.yandex)
 > - [Yandex Phishing Demo](https://ydx-phish-shavar.cepera.ru)
@@ -207,3 +210,6 @@ A collection of browser capability tests used to evaluate feature support and we
 ### PDF
 > - [Sample PDF](https://ontheline.trincoll.edu/images/bookdown/sample-local-pdf.pdf)
 > - [PDF Tables](https://assets.accessible-digital-documents.com/uploads/2017/01/sample-tables.pdf)
+
+### SVG
+> - [SVG Files](https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/)
