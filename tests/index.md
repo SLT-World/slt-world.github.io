@@ -108,6 +108,7 @@ A collection of browser capability tests used to evaluate feature support and we
 > - [Web Share Test](https://w3c.github.io/web-share/demos/share-files.html)
 > - [Check Tor](https://check.torproject.org/)
 > - [LocalCDN Test](https://www.localcdn.org/test)
+> - [Image Decode & Visual Timings](https://colinbendell.github.io/webperf/animated-gif-decode/)
 
 ### Security
 > - [Safe Browsing Demo](https://testsafebrowsing.appspot.com/)
