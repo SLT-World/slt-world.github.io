@@ -159,6 +159,6 @@ Themed | Customizable |
 [^4]: [Migrate from Tenor - KLIPY API \| GIF API & Stickers API](https://docs.klipy.com/migrate-from-tenor)
 [^5]: [Advertisements - KLIPY API \| GIF API & Stickers API](https://docs.klipy.com/advertisements)
 [^6]: [Compatibility API - Overview - Gifbox Docs](https://gifbox.me/dev/docs/compat/overview)
-[^7]: [heypster-gif: Compliant with GDPR and DSA unlike Giphy and Tenor-gif. \| by heypster \| Medium](https://medium.com/@heypster/heypster-gif-compliant-with-gdpr-and-dsa-unlike-giphy-and-tenor-gif-3e7f544cca10)[^7]: [heypster-gif: Why you should not integrate a GIF API that tracks your users. \| by heypster \| Medium](https://medium.com/@heypster/why-you-should-not-integrate-a-gif-api-that-tracks-your-users-69012446dfae)
+[^7]: [heypster-gif: Compliant with GDPR and DSA unlike Giphy and Tenor-gif. \| by heypster \| Medium](https://medium.com/@heypster/heypster-gif-compliant-with-gdpr-and-dsa-unlike-giphy-and-tenor-gif-3e7f544cca10)
 [^8]: [heypster-gif: Why you should not integrate a GIF API that tracks your users. \| by heypster \| Medium](https://medium.com/@heypster/why-you-should-not-integrate-a-gif-api-that-tracks-your-users-69012446dfae)
 [^9]: [heypster-gif: Easy migration from Giphy or Tenor to heypster. \| by heypster \| Medium](https://medium.com/@heypster/easy-migration-from-giphy-or-tenor-to-heypster-0be2ffec6a6a)

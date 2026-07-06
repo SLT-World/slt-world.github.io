@@ -10,7 +10,7 @@ layout: base
         <a style="font-weight: bold;" href="{{ blog.url | relative_url }}">{{ blog.title | escape }}</a>
         <span class="subtext">{{ blog.date | date: date_format }}</span>
     </div>
-    <p class="subtext">{{ blog.excerpt | strip_html | strip | escape | truncate: 150 }}</p>
+    <p class="subtext">{{ blog.excerpt | strip_html | strip | escape | truncate: 100 }}</p>
 </div>
 {%- endfor -%}
 </div>

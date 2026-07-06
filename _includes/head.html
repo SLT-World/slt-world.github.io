@@ -10,8 +10,8 @@
 
     <meta name="theme-color" content="rgb(51, 145, 255)"/>
 
-    {%- if page.description -%}{% assign desc = page.description | strip_html | strip | escape | truncate: 150 %}
-    {%- elsif page.excerpt and page.collection == "blogs" -%}{% assign desc = page.excerpt | strip_html | strip | escape | truncate: 150 %}
+    {%- if page.description -%}{% assign desc = page.description | strip_html | strip | escape | truncate: 100 %}
+    {%- elsif page.excerpt and page.collection == "blogs" -%}{% assign desc = page.excerpt | strip_html | strip | escape | truncate: 100 %}
     {%- else -%}{% assign desc = "The central hub for my personal projects & experiments." %}
     {%- endif -%}
     <meta name="description" content="{{ desc }}">
