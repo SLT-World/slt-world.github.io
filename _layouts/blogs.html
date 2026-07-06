@@ -1,0 +1,67 @@
+---
+layout: base
+---
+{% assign blogs = site.blogs | reverse %}
+<div id="directory_grid">
+{%- assign date_format = "%b %-d, %Y" -%}
+{%- for blog in blogs -%}
+<div class="container" onclick="location.href='{{ blog.url | relative_url }}';">
+    <div class="header">
+        <a style="font-weight: bold;" href="{{ blog.url | relative_url }}">{{ blog.title | escape }}</a>
+        <span class="subtext">{{ blog.date | date: date_format }}</span>
+    </div>
+    <p class="subtext">{{ blog.excerpt | strip_html | strip | escape | truncate: 150 }}</p>
+</div>
+{%- endfor -%}
+</div>
+<style>
+#directory_grid {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: repeat(auto-fill, 300px);
+    width: 100%;
+}
+
+#directory_grid > div {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.25s ease;
+    cursor: pointer;
+}
+
+#directory_grid > div:hover {
+    transform: scale(1.025);
+}
+
+#directory_grid > div > .header {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-color: var(--border-color);
+    overflow: clip;
+}
+
+#directory_grid > div > p {
+    height: 100%;
+    white-space: break-spaces;
+}
+
+@media screen and (max-width: 679px) {
+    #directory_grid {
+        display: flex;
+        flex-direction: column;
+    }
+    #directory_grid > div {
+        width: 100%;
+    }
+}
+</style>

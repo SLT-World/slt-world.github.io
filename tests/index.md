@@ -1,10 +1,9 @@
 ---
 layout: page
 title: Test Pages
+description: A collection of browser capability tests used to evaluate feature support and web compatibility.
 permalink: /tests/
 ---
-
-A collection of browser capability tests used to evaluate feature support and web compatibility.
 
 ## Available Tests
 > - [Miscellaneous](../tests/misc.html)

@@ -15,6 +15,13 @@
         <div class="navigation">
             <img src="../../../favicon.png" width="35" height="35" draggable="false">
             <a href="/"><h3>SLT World</h3></a>
+            <button class="menu-toggle" popovertarget="navigation-links"><span class="material-symbols-rounded icon">more_vert</span></button>
+            <div id="navigation-links" popover class="links">
+                <a href="/" class="button"><span class="material-symbols-rounded icon">home</span>Home</a>
+                <a href="/explore/" class="button"><span class="material-symbols-rounded icon">explore</span>Explore</a>
+                <a href="/tests/" class="button"><span class="material-symbols-rounded icon">science</span>Tests</a>
+                <a href="/blog/" class="button"><span class="material-symbols-rounded icon">news</span>Blog</a>
+            </div>
         </div>
         <h1>Tixel Known Issues & Limitations</h1>
         <p>Tixel is under <strong>active development</strong> and is currently hosted on a <strong>free, limited platform</strong>.</p>
@@ -31,10 +38,10 @@
                 <p>Following a later redesign, Tixel adopted a <strong>backward-logging system</strong>, where each change records the previous color of a pixel and reconstructs history by applying changes in reverse against the current canvas state.</p>
                 <p>This architectural change significantly improved storage efficiency and reconstruction flexibility, but introduced incompatibility with the original logging format.</p>
                 <p>As a result:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Legacy logs cannot be directly interpreted by the current systems.</li>
                     <li>Migrating legacy logs would require complex transformation logic.</li>
-                </ol>
+                </ul>
                 <p>Due to these constraints, the current logging system starts from a new baseline, and earlier pixel history is not included.</p>
             </div>
         </div>
@@ -49,11 +56,11 @@
                 <p>This measure is necessary to maintain service availability while operating within platform constraints.</p>
                 <p>However, users may still experience occasional unexpected disconnects.</p>
                 <p>These may be caused by:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Platform-level limitations or throttling</li>
                     <li>Network instability</li>
                     <li>Backend restarts</li>
-                </ol>
+                </ul>
             </div>
         </div>
         <div class="container">

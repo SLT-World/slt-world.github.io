@@ -15,6 +15,13 @@
         <div class="navigation">
             <img src="../../../favicon.png" width="35" height="35" draggable="false">
             <a href="/"><h3>SLT World</h3></a>
+            <button class="menu-toggle" popovertarget="navigation-links"><span class="material-symbols-rounded icon">more_vert</span></button>
+            <div id="navigation-links" popover class="links">
+                <a href="/" class="button"><span class="material-symbols-rounded icon">home</span>Home</a>
+                <a href="/explore/" class="button"><span class="material-symbols-rounded icon">explore</span>Explore</a>
+                <a href="/tests/" class="button"><span class="material-symbols-rounded icon">science</span>Tests</a>
+                <a href="/blog/" class="button"><span class="material-symbols-rounded icon">news</span>Blog</a>
+            </div>
         </div>
         <h1>SLChat Technical Overview</h1>
         <p>A <strong>technical overview</strong> of various SLChat features.</p>
@@ -26,32 +33,32 @@
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>Originally, SLChat relied on a single WebSocket connection, which was primarily responsible for handling chat messages.</p>
                 <p>While sufficient at the time, this design had several limitations:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>The socket was focused on message delivery only.</li>
                     <li>Updates such as server membership changes were not propagated in real time.</li>
                     <li>Multiple tabs could become desynchronized, each maintaining its own outdated list of servers and DMs.</li>
-                </ol>
+                </ul>
                 <p>As a result, information and updates were not consistently synchronized across sessions.</p>
                 <p>To address these issues, on 27/11/2025, SLChat switched to a dual socket architecture.</p>
                 <p>Under this model:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>The user socket is responsible for user and account data, such as servers and direct messages.</li>
                     <li>the chat socket is responsible for chat data, such as message delivery and presence updates.</li>
-                </ol>
+                </ul>
                 <p>This transition introduced several additional improvements:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Enabled the implementation of the pseudo-SPA Architecture.</li>
                     <li>Real-time synchronization of server and DM updates across all open tabs.</li>
                     <li>Simplified user data delivery, with user data sent immediately upon connection.</li>
                     <li>Removal of Jinja-based rendering, as user data is now supplied over the user socket.</li>
                     <li>Improved API wrapper design, as client-side state is initialized from socket data rather than templated HTML.</li>
-                </ol>
+                </ul>
                 <p>By removing reliance on server rendered pages for data delivery, this change also enables greater flexibility going forward, making it easier to:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Develop native applications</li>
                     <li>Introduce shared or headless clients</li>
                     <li>Support alternative frontends using the same backend infrastructure</li>
-                </ol>
+                </ul>
                 <p>This lays the groundwork for a more native, cross-platform SLChat ecosystem.</p>
             </div>
         </div>
@@ -63,11 +70,11 @@
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>Previously, SLChat relied entirely on server-side rendering using Jinja templates.</p>
                 <p>While simple to implement at the time, it had several issues:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Each navigation action generated and returned a fully rendered HTML page.</li>
                     <li>Server-side rendering on every navigation increased server load.</li>
                     <li>Full page reloads made the interface feel less responsive, impacting user experience.</li>
-                </ol>
+                </ul>
                 <p>To address these issues, on 28/11/2025, following the introduction of the dual socket architecture, SLChat switched to a pseudo-SPA (Single Page Application) model, partially. Other pages were soon to follow in the conversion to pseudo-SPA.</p>
                 <p>Now, instead of re-rendering entire pages for each navigation, the application now sends JSON data while the client handles updates and transitions on each navigation.</p>
                 <p>This reduces redundant server-side rendering, improves responsiveness, and provides smoother navigation without the overhead of a full SPA.</p>
@@ -82,12 +89,12 @@
                 <p>Initially, SLChat did not support link preview rendering. Links appeared as plain text without any additional context.</p>
                 <p>To provide richer previews, an external third-party service was used to fetch link metadata.</p>
                 <p>However, this approach introduced several issues:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Unreliable information</li>
                     <li>Privacy concerns</li>
                     <li>Dependence on a third-party service</li>
                     <li>Risk of failure which could not be instantly repaired</li>
-                </ol>
+                </ul>
 
                 <p>On 1/12/2025, SLChat switched to its own link preview system, <a href="https://github.com/SLT-World/metafetcher" target="_blank">Metafetcher</a>.</p>
                 <p>Although Metafetcher runs as a separate service, it is fully managed by the same person, ensuring reliability, security, and reduced dependency on external services.</p>
@@ -101,11 +108,11 @@
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>Originally, SLChat allowed messages to be formatted in HTML, providing extensive customization for users.</p>
                 <p>However, this approach introduced several issues:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Security risks requiring server-side HTML sanitization</li>
                     <li>Difficulty standardizing message content such as attachments</li>
                     <li>Increased storage requirements, as HTML blocks are larger than plain text</li>
-                </ol>
+                </ul>
 
                 <p>To address these issues, SLChat deprecated HTML in favor of Markdown on 2/12/2025.</p>
                 <p>Markdown reduces storage and bandwidth usage while maintaining a level of user-customizable rich content.</p>

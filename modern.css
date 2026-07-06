@@ -41,9 +41,11 @@ body {
     overflow-y: auto;
     overflow-x: clip;
 }
+
 p, h1, h2, h3, h4, h5, h6, span, i {
     color: var(--font-color);
 }
+
 .navigation {
     display: flex;
     align-items: center;
@@ -52,7 +54,31 @@ p, h1, h2, h3, h4, h5, h6, span, i {
     border: 1px solid var(--border-color);
     border-radius: 5px;
     padding: 10px;
+    position: relative;
+
+    .links {
+        position: relative;
+        display: flex;
+        gap: 10px;
+        margin-left: auto;
+        border: 0;
+        background: transparent;
+    }
+
+    .menu-toggle {
+        display: none;
+        margin-left: auto;
+        aspect-ratio: 1 / 1;
+        background: var(--primary-color);
+    }
+
+    .links > a {
+        background: var(--primary-color);
+        color: var(--font-color);
+        padding: 0 10px;
+    }
 }
+
 .container {
     background: var(--secondary-color);
     border: 1px solid var(--border-color);
@@ -61,29 +87,31 @@ p, h1, h2, h3, h4, h5, h6, span, i {
     gap: 10px;
     display: flex;
     flex-direction: column;
-}
-.container > .header {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding-bottom: 10px;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-color: var(--border-color);
-}
-.container > .header > p {
-    font-size: 20px;
-}
-.container > .header > .icon:not(button):not(a.button) {
-    color: var(--gray-color);
-    width: 25px;
-    height: 25px;
-    text-align: center;
-    align-content: center;
+
+    .header {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding-bottom: 10px;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-color: var(--border-color);
+
+        p, a {
+            font-size: 20px;
+        }
+
+        .icon:not(button):not(a.button) {
+            color: var(--gray-color);
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            align-content: center;
+        }
+    }
 }
 ol.container {
     background: var(--primary-color);
-    list-style: circle;
     padding-left: 20px !important;
     border: none;
 }
@@ -100,7 +128,13 @@ ul.container ul {
     flex-direction: column;
 }
 li {
-    list-style-position: inside;
+    list-style-position: outside;
+}
+:not(li) > ul > li {
+    margin-left: 20px;
+}
+:not(li) > ol > li {
+    margin-left: 30px;
 }
 .material-symbols-rounded {
     user-select: none;
@@ -301,6 +335,7 @@ table {
     border-radius: 5px;
     border-spacing: 0px;
     width: 100%;
+    table-layout: fixed;
 }
 
 thead {
@@ -332,6 +367,16 @@ th, td {
     align-content: center;
 }
 
+hr {
+    margin: 10px 0;
+    background: var(--border-color);
+    height: 1px;
+    border: none;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+}
+
 @media (prefers-color-scheme: dark) {
     ::-webkit-calendar-picker-indicator {
         filter: invert(1);
@@ -347,5 +392,38 @@ th, td {
 
     body {
         background-image: url("data:image/svg+xml;utf8,\<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'>\<circle cx='20' cy='20' r='2' fill='%23313336'/>\</svg>");
+    }
+}
+
+@media (max-width: 700px) {
+    .navigation {
+        .menu-toggle {
+            display: flex;
+        }
+
+        .links:popover-open {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 0;
+            border-radius: 5px;
+            background: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            margin: 0;
+            position-area: bottom span-left;
+        }
+
+        .links:popover-open > a {
+            background: var(--secondary-color);
+            border: 0;
+            padding: 0 15px;
+            border-radius: 0;
+            justify-content: left;
+            height: 40px;
+        }
+
+        .links:not(:popover-open) {
+            display: none;
+        }
     }
 }

@@ -16,6 +16,13 @@
         <div class="navigation">
             <img src="../../../favicon.png" width="35" height="35" draggable="false">
             <a href="/"><h3>SLT World</h3></a>
+            <button class="menu-toggle" popovertarget="navigation-links"><span class="material-symbols-rounded icon">more_vert</span></button>
+            <div id="navigation-links" popover class="links">
+                <a href="/" class="button"><span class="material-symbols-rounded icon">home</span>Home</a>
+                <a href="/explore/" class="button"><span class="material-symbols-rounded icon">explore</span>Explore</a>
+                <a href="/tests/" class="button"><span class="material-symbols-rounded icon">science</span>Tests</a>
+                <a href="/blog/" class="button"><span class="material-symbols-rounded icon">news</span>Blog</a>
+            </div>
         </div>
         <h1>SLBr Known Issues & Limitations</h1>
         <p>This page documents the most commonly observed issues in SLBr and explains their underlying causes to clear up any misconceptions and misunderstandings.</p>
@@ -69,10 +76,10 @@
                 <p>SLBr's multi-engine architecture significantly complicates extension support.</p>
                 <p>Each web engine implements extension APIs differently, and none of the embedding libraries prioritize full extension APIs.</p>
                 <p>This has several disadvantages:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Extensions cannot be implemented consistently across all engines.</li>
                     <li>Extension capabilities are limited compared to single-engine browsers.</li>
-                </ol>
+                </ul>
                 <p>Due to these constraints, SLBr currently only offers minimal extension support.</p>
             </div>
         </div>

@@ -1,0 +1,40 @@
+---
+layout: base
+---
+<div id="metadata">
+  {%- assign date_format = "%b %-d, %Y" -%}
+  {%- assign pdate = page.date | date_to_xmlschema -%}
+  <p>
+    <strong>Published:</strong>
+    <time datetime="{{ pdate }}">{{ pdate | date: date_format }}</time>
+  </p>
+  {%- if page.modified_date -%}
+  <strong id="date-separator"> • </strong>
+  <p>
+    <strong>Updated:</strong>
+    {%- assign mdate = page.modified_date | date_to_xmlschema %}
+    <time datetime="{{ mdate }}">{{ mdate | date: date_format }}</time>
+  </p>
+  {%- endif -%}
+</div>
+<hr>
+
+<article class="container">{{ content }}</article>
+
+<style>
+#metadata * {
+  color: var(--gray-color);
+}
+#metadata > * {
+  display: inline;
+}
+
+@media (max-width: 700px) {
+  #date-separator {
+    display: none !important;
+  }
+  #metadata > * {
+    display: block;
+  }
+}
+</style>

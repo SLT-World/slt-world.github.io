@@ -14,7 +14,7 @@
 }
 
 * {
-    font-family: monospace, Tahoma, sans-serif, 'brands';
+    font-family: 'Space Mono', monospace, Tahoma, sans-serif, 'brands';
 }
 
 #directory_grid {
@@ -190,6 +190,13 @@ path#unity_right { fill: #000000; }
         <div class="navigation">
             <img src="../favicon.png" width="35" height="35" draggable="false">
             <a href="/"><h3>SLT World</h3></a>
+            <button class="menu-toggle" popovertarget="navigation-links"><span class="material-symbols-rounded icon">more_vert</span></button>
+            <div id="navigation-links" popover class="links">
+                <a href="/" class="button"><span class="material-symbols-rounded icon">home</span>Home</a>
+                <a href="/explore/" class="button"><span class="material-symbols-rounded icon">explore</span>Explore</a>
+                <a href="/tests/" class="button"><span class="material-symbols-rounded icon">science</span>Tests</a>
+                <a href="/blog/" class="button"><span class="material-symbols-rounded icon">news</span>Blog</a>
+            </div>
         </div>
         <h1>Explore</h1>
         <p>Browse through active, completed, and abandoned projects.</p>
@@ -767,7 +774,7 @@ function insert_entry(entry) {
                 <span style="font-weight: bold;">${entry.title}</span>
                 <span class="subtext">${entry.subtext}</span>
             </div>
-            <p style="background: var(--primary-color);border: 1px solid var(--border-color);padding: 10px 7.5px;display: flex;align-items: center;justify-content: center;border-radius: 100px;height: 20px;line-height: 20px;" class="subtext">${entry.creation}</p>
+            <p style="font-size:small;background: var(--primary-color);border: 1px solid var(--border-color);padding: 10px 7.5px;display: flex;align-items: center;justify-content: center;border-radius: 100px;height: 20px;line-height: 20px;" class="subtext">${entry.creation}</p>
         </div>
         <p class="subtext">${entry.description}</p>
         ${entry.links || entry.tech ? `<div class="separator"></div>

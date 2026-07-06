@@ -13,6 +13,13 @@
         <div class="navigation">
             <img src="../../../favicon.png" width="35" height="35" draggable="false">
             <a href="/"><h3>SLT World</h3></a>
+            <button class="menu-toggle" popovertarget="navigation-links"><span class="material-symbols-rounded icon">more_vert</span></button>
+            <div id="navigation-links" popover class="links">
+                <a href="/" class="button"><span class="material-symbols-rounded icon">home</span>Home</a>
+                <a href="/explore/" class="button"><span class="material-symbols-rounded icon">explore</span>Explore</a>
+                <a href="/tests/" class="button"><span class="material-symbols-rounded icon">science</span>Tests</a>
+                <a href="/blog/" class="button"><span class="material-symbols-rounded icon">news</span>Blog</a>
+            </div>
         </div>
         <h1>SLBr Technical Overview</h1>
         <p>A <strong>technical overview</strong> of various SLBr features.</p>
@@ -27,26 +34,26 @@
                 <p>However, rendering Unicode domains directly introduced a significant security concern, that is homograph attacks.</p>
                 <p>Homograph attacks exploit visually similar characters to create deceptive domain names, such as replacing Latin characters with Cyrillic or Greek characters.</p>
                 <p>Examples include:</p>
-                <ol class="container">
+                <ul class="container">
                     <li><a href="https://vvikipedia.com/" target="_blank" rel="noreferrer nofollow noopener">vvikipedia.com</a></li>
                     <li><a href="https://www.xn--80ak6aa92e.com/" target="_blank" rel="noreferrer nofollow noopener">аррӏе.com</a></li>
-                </ol>
+                </ul>
                 <p>To address this risk, SLBr implemented a homograph detection and highlighting system within the omnibox.</p>
                 <p>When potentially confusable or suspicious characters are detected, those characters are highlighted in orange, making them visually distinct from other characters.</p>
                 <p>This approach provides several benefits:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Internationalized domains remain readable.</li>
                     <li>Suspicious domains become visually noticeable.</li>
                     <li>Users are not forced to interpret encoded Punycode URLs.</li>
-                </ol>
+                </ul>
                 <p>The initial implementation rendered each character of the domain as an individual text run.</p>
                 <p>This was inefficient and introduced unnecessary rendering overhead, especially during frequent omnibox updates.</p>
                 <p>SLBr now uses a buffered rendering approach:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Characters are grouped into segments.</li>
                     <li>Each segment is rendered as a single text run.</li>
                     <li>Suspicious and normal characters are batched separately.</li>
-                </ol>
+                </ul>
                 <p>This significantly reduced the number of UI elements created per update, improving rendering performance.</p>
             </div>
         </div>
@@ -63,12 +70,12 @@
                 <p>Earlier versions of SLBr implemented multi-engine support through conditional logic.</p>
                 <p>Multiple web engines such as CefSharp (Chromium), WebView2 (Microsoft Edge), and WebBrowser (Internet Explorer) were used directly throughout the codebase without a shared interface.</p>
                 <p>This approach resulted in several issues:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Extensive engine-specific conditionals scattered across the codebase.</li>
                     <li>Tight coupling between browser logic and individual engines.</li>
                     <li>Poor maintainability and limited extensibility.</li>
                     <li>Increasing difficulty adding new features or engines while maintaining parity.</li>
-                </ol>
+                </ul>
                 <p>As development continued, the code quickly became a complex and unmanageable set of engine-specific cases.</p>
                 <p>Due to these issues, the multi-engine feature was effectively shelved for a period of time, as maintaining feature parity and stability across engines became impractical without a fundamental redesign.</p>
                 <p>In addition, engine features became highly inconsistent. The conditional-based implementation often resulted in features being developed primarily for a single engine, while other engines received incomplete or no support.</p>
@@ -77,13 +84,13 @@
                 <p>Each web engine is wrapped by an adapter that translates engine-specific APIs into a shared interface.</p>
                 <p>The browser core interacts with the engines through a single interface, remaining mostly unaware of which engine is currently in use.</p>
                 <p>This architecture provides several benefits:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Engine-specific behavior is fully isolated.</li>
                     <li>New engines can be added without extensively modifying existing browser logic.</li>
                     <li>Conditional engine checks are largely eliminated.</li>
                     <li>Overall codebase remains clean and maintainable.</li>
                     <li>Feature parity is significantly improved.</li>
-                </ol>
+                </ul>
                 <p>As a result, SLBr can more easily support additional engines in the future, such as GeckoFX, Ultralight, or other web engine implementations.</p>
 
                 <p>The new architecture also enabled proper handling of custom protocol schemes such as gemini://, gopher://, and slbr:// across different web engines.</p>
@@ -92,11 +99,11 @@
 
                 <p>Despite the architectural improvements, not all web engines provide the same level of functionality.</p>
                 <p>Some limitations include:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Extension support is not fully standardized.</li>
                     <li>Certain features, such as downloads and popups, behave inconsistently.</li>
                     <li>Legacy web engines like Internet Explorer lack many modern web capabilities.</li>
-                </ol>
+                </ul>
                 <p>These constraints are inherent to the underlying engines themselves rather than the architecture.</p>
             </div>
         </div>
@@ -112,31 +119,31 @@
                 <p>In early versions of SLBr, the Settings page was implemented as a special standalone tab, rather than a navigable page.</p>
                 <p>Users could not access it via a URL such as <code class="inline">slbr://setting</code>, and the tab system required custom handling to support this exception.</p>
                 <p>This approach resulted in several issues:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Internal pages were not navigable.</li>
                     <li>Further complicated tab system due to special-case handling.</li>
                     <li>Inconsistent behavior between web engines.</li>
-                </ol>
+                </ul>
                 <p>As a result, a new approach was introduced to integrate internal pages with the browser's navigation model.</p>
                 <p>SLBr now uses an overlay-based page system, where internal pages are implemented as User Controls rendered on top of the web view.</p>
                 <p>From a user's perspective, these pages behave like normal navigable URLs, while internally they are rendered natively using WPF rather than HTML.</p>
                 <p>This approach provides several advantages:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Internal pages are fully navigable.</li>
                     <li>No special tab logic required.</li>
                     <li>Internal pages can be developed using C# and XAML.</li>
                     <li>Behavior remains consistent across all web engines.</li>
                     <li>Avoids exposing privileged browser information to JavaScript.</li>
-                </ol>
+                </ul>
                 <p>Because the overlay is engine-agnostic, it integrates cleanly with the existing multi-engine abstraction layer and avoids relying on engine-specific HTML and JavaScript capabilities.</p>
                 <p>Following the success of the Settings page, other internal pages such as History were also migrated from HTML/JavaScript implementations to native WPF overlays.</p>
                 <p>This transition provides several benefits:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Simplified development and improved internal integration.</li>
                     <li>Browser information can be accessed directly without polling or scripting bridges.</li>
                     <li>UI updates react immediately to changes.</li>
                     <li>Instant loading for instant pages.</li>
-                </ol>
+                </ul>
                 <p>This approach results in a cleaner, more maintainable design, while still presenting internal pages as part of a smooth browsing experience.</p>
             </div>
         </div>
@@ -155,29 +162,29 @@
                 <p>Rather than performing continuous, real-time spellchecking, SLBr adopted an on-demand request model.</p>
                 <p>Spellcheck requests are triggered only when text is selected and the context menu is opened.</p>
                 <p>This design introduced several benefits:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Lower request frequency compared to traditional real-time spellcheckers.</li>
                     <li>Significantly reduced bandwidth usage.</li>
                     <li>Reduced risk of sensitive data leakage since text is not transmitted while typing.</li>
                     <li>Consistent behavior across all web engines.</li>
-                </ol>
+                </ul>
                 <p>Despite these advantages, the cloud-based approach had notable drawbacks:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Spellchecking required an active internet connection.</li>
                     <li>Sending requests introduced significant privacy concerns.</li>
                     <li>Network latency affected context menu responsiveness.</li>
                     <li>Total reliance on an external service.</li>
                     <li>Increased bandwidth usage.</li>
-                </ol>
+                </ul>
                 <p>To address these issues, SLBr added a local spellchecking provider based on WPF's built-in spellchecker.</p>
                 <p>This provider contains several advantages:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Operates entirely on the client side.</li>
                     <li>Near-instant spellcheck results.</li>
                     <li>Remains functional without an active internet connection.</li>
                     <li>Zero network usage.</li>
                     <li>Improved responsiveness when opening context menus.</li>
-                </ol>
+                </ul>
                 <p>While this option does not offer the same language depth as cloud-based solutions, it significantly improves performance and reliability for common use cases.</p>
                 <p>During further development, Microsoft Edge's cloud-based spellchecker was discovered and integrated as an additional provider.</p>
             </div>
@@ -191,10 +198,10 @@
                 <p>Earlier versions of SLBr used a single global timer to manage tab unloading.</p>
                 <p>Under this system, all inactive tabs were evaluated and unloaded at the same time once the timer elapsed.</p>
                 <p>While simple, this approach introduced several usability issues:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>The system did not account for tab usage.</li>
                     <li>Recently visited tabs could be unloaded shortly after switching away.</li>
-                </ol>
+                </ul>
                 <p>This resulted in unnecessary reloads and a disruptive browsing experience.</p>
                 <p>To address these issues, SLBr now uses a per-tab unload scheduling architecture.</p>
                 <p>Each tab tracks its own last active time and is assigned an independent expiry window.</p>
@@ -203,11 +210,11 @@
                 <p>Instead of using a fixed interval, the system dynamically adjusts its scheduling based on the nearest tab expiry time.</p>
                 <p>This is implemented using a timer that recalibrates itself to trigger precisely when the next tab is due for unloading.</p>
                 <p>This approach provides:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>More precise unload timing.</li>
                     <li>Reduced unnecessary timer wake-ups.</li>
                     <li>Improved overall efficiency.</li>
-                </ol>
+                </ul>
             </div>
         </div>
     </div>

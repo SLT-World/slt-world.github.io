@@ -13,6 +13,13 @@
         <div class="navigation">
             <img src="../../../favicon.png" width="35" height="35" draggable="false">
             <a href="/"><h3>SLT World</h3></a>
+            <button class="menu-toggle" popovertarget="navigation-links"><span class="material-symbols-rounded icon">more_vert</span></button>
+            <div id="navigation-links" popover class="links">
+                <a href="/" class="button"><span class="material-symbols-rounded icon">home</span>Home</a>
+                <a href="/explore/" class="button"><span class="material-symbols-rounded icon">explore</span>Explore</a>
+                <a href="/tests/" class="button"><span class="material-symbols-rounded icon">science</span>Tests</a>
+                <a href="/blog/" class="button"><span class="material-symbols-rounded icon">news</span>Blog</a>
+            </div>
         </div>
         <h1>SLSearch Technical Overview</h1>
         <p>A <strong>technical overview</strong> of various SLSearch features.</p>
@@ -25,19 +32,19 @@
                 <p>In earlier versions, SLSearch only supported a single rich result, which was a Wikipedia-based knowledge graph.</p>
                 <p>The feature was initially processed entirely on the server, where the backend fetched and rendered the data before returning the final response.</p>
                 <p>While functional, this approach introduced a few issues:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Additional server-side fetching and processing</li>
                     <li>Increased response times, even when no valid Wikipedia result was available</li>
                     <li>Unnecessary load placed on the backend</li>
-                </ol>
+                </ul>
                 <p>To address these issues, rich results were migrated from the backend to the frontend.</p>
                 <p>Since Wikipedia data can be fetched directly without CORS restrictions, the information can be processed and rendered client-side.</p>
                 <p>However, moving rich results to the frontend also introduced its own set of limitations:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>CORS-related issues are encountered frequently</li>
                     <li>Increased reliance on third-party CORS proxy services</li>
                     <li>API key–protected services cannot be used, as keys cannot be securely stored on the client side</li>
-                </ol>
+                </ul>
                 <p>While frontend processing presents various limitations, it significantly reduces search latency, keeps the backend lightweight, and preserves informative results for users without sacrificing server performance.</p>
                 <p>An additional benefit of this approach is improved user control.</p>
                 <p>Since rich features are processed client-side, users can enable or disable individual features without requiring the server to track feature preferences and alter responses.</p>
@@ -51,10 +58,10 @@
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>Previously, SLSearch relied entirely on keyword-based matching to determine when certain feature panels should be displayed.</p>
                 <p>While simple, this approach had several issues:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Queries in other languages, such as Chinese, would fail to trigger anything</li>
                     <li>Maintaining keyword lists for every language was impractical</li>
-                </ol>
+                </ul>
                 <p>To address these issues, instead of relying solely on the query text, SLSearch now also analyzes the search results.</p>
                 <p>By scanning result sources and identifying recurring well known websites, the system can reliably deduce the nature of the query.</p>
                 <p>In addition, SLSearch evaluates which words appear most frequently across the results.</p>

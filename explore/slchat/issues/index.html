@@ -15,6 +15,13 @@
         <div class="navigation">
             <img src="../../../favicon.png" width="35" height="35" draggable="false">
             <a href="/"><h3>SLT World</h3></a>
+            <button class="menu-toggle" popovertarget="navigation-links"><span class="material-symbols-rounded icon">more_vert</span></button>
+            <div id="navigation-links" popover class="links">
+                <a href="/" class="button"><span class="material-symbols-rounded icon">home</span>Home</a>
+                <a href="/explore/" class="button"><span class="material-symbols-rounded icon">explore</span>Explore</a>
+                <a href="/tests/" class="button"><span class="material-symbols-rounded icon">science</span>Tests</a>
+                <a href="/blog/" class="button"><span class="material-symbols-rounded icon">news</span>Blog</a>
+            </div>
         </div>
         <h1>SLChat Known Issues & Limitations</h1>
         <p>SLChat is under <strong>active development</strong> and is currently hosted on a <strong>free, limited platform</strong> using a single application architecture.</p>
@@ -54,10 +61,10 @@
                 <p>The error message "<strong>Connection to upstream failed: connection failure</strong>" typically indicates that SLChat is starting from an idle state.</p>
                 <p>SLChat is hosted on a free platform that automatically shuts down the application after a period of inactivity.</p>
                 <p>This behavior is partially intentional and serves two purposes:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>To avoid unnecessary resource usage and prevent abuse of free hosting resources.</li>
                     <li>To allow SLChat to recover from occasional, rare issues that causes the application to become unresponsive.</li>
-                </ol>
+                </ul>
                 <p>When a new request is made after inactivity, SLChat must perform a cold start, which prevents connections until the startup is complete.</p>
                 <p>This behavior is expected under the current hosting constraints and usually resolves itself after a short delay.</p>
                 <p>The issue <strong>does not</strong> indicate permanent data loss or server malfunction.</p>
@@ -95,11 +102,11 @@
             <div style="display: flex;gap: 10px;flex-direction: column;">
                 <p>Some features may behave inconsistently or change over time as SLChat continues to evolve.</p>
                 <p>This includes, but is not limited to:</p>
-                <ol class="container">
+                <ul class="container">
                     <li>Markdown rendering</li>
                     <li>Link previews</li>
                     <li>Experimental features</li>
-                </ol>
+                </ul>
                 <p>Features may be removed, adjusted, disabled, or reworked without notice during development.</p>
             </div>
         </div>
