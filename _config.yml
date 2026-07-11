@@ -1,5 +1,8 @@
 title: ''
 
+plugins:
+  - jekyll-sitemap
+
 collections:
   blogs:
     output: true
