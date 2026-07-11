@@ -46,6 +46,11 @@ p, h1, h2, h3, h4, h5, h6, span, i {
     color: var(--font-color);
 }
 
+@keyframes navigation-shadow {
+  from { }
+  to { box-shadow: 0 0 25px dimgray; }
+}
+
 .navigation {
     display: flex;
     align-items: center;
@@ -54,7 +59,16 @@ p, h1, h2, h3, h4, h5, h6, span, i {
     border: 1px solid var(--border-color);
     border-radius: 5px;
     padding: 10px;
-    position: relative;
+    position: fixed;
+    width: calc(100% - 50px);
+    max-width: 950px;
+    top: 25px;
+    z-index: 10;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: navigation-shadow linear both;
+    animation-timeline: scroll();
+    animation-range: 0px 1px;
 
     .links {
         position: relative;
@@ -77,6 +91,10 @@ p, h1, h2, h3, h4, h5, h6, span, i {
         color: var(--font-color);
         padding: 0 10px;
     }
+}
+
+.navigation + * {
+    margin-top: 67px;
 }
 
 .container {
@@ -393,6 +411,11 @@ hr {
     body {
         background-image: url("data:image/svg+xml;utf8,\<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'>\<circle cx='20' cy='20' r='2' fill='%23313336'/>\</svg>");
     }
+
+    @keyframes navigation-shadow {
+        from { }
+        to { box-shadow: 0 0 25px black; }
+    }
 }
 
 @media (max-width: 700px) {
@@ -410,6 +433,7 @@ hr {
             background: var(--secondary-color);
             border: 1px solid var(--border-color);
             margin: 0;
+            position: fixed;
             position-area: bottom span-left;
         }
 
