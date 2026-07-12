@@ -1,5 +1,5 @@
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>{% if page.title %}{{ page.title | escape }} - SLT World{% else %}SLT World{% endif %}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@0..1">
 
     <meta name="theme-color" content="rgb(51, 145, 255)"/>
+    <meta name="author" content="SLT World">
+    <meta name="robots" content="index, follow">
 
     {%- if page.description -%}{% assign desc = page.description | strip_html | strip | escape | truncate: 100 %}
     {%- elsif page.excerpt and page.collection == "blogs" -%}{% assign desc = page.excerpt | strip_html | strip | escape | truncate: 100 %}
