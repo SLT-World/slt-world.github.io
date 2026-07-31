@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Explore - SLT World</title>
-    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../modern.css">
+    <link rel="stylesheet" href="/modern.css">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@0..1">
 
     <meta name="description" content="Browse through active, completed, and abandoned projects.">
@@ -142,7 +142,9 @@
 
 .material-symbols-rounded {
     color: var(--gray-color);
-    font-size: 24px;
+}
+#navigation-links .material-symbols-rounded {
+    color: var(--font-color);
 }
 
 #search_options {
@@ -200,7 +202,7 @@ path#unity_right { fill: #000000; }
 <body>
     <div class="content">
         <div class="navigation">
-            <img src="../favicon.png" width="35" height="35" draggable="false">
+            <img src="/favicon.png" width="35" height="35" draggable="false">
             <a href="/"><h3>SLT World</h3></a>
             <button class="menu-toggle" popovertarget="navigation-links"><span class="material-symbols-rounded icon">more_vert</span></button>
             <div id="navigation-links" popover class="links">
@@ -313,7 +315,7 @@ const entries = [
     {
         "featured": true,
         "state": "active",
-        "icon": "../slbr/slbr.png",
+        "icon": "/slbr/slbr.png",
         "title": "SLBr",
         "subtext": "Web Browser",
         "description": "A lightweight WPF C# browser for a faster web.<br>Fast, lightweight browsing with a clean interface.",
@@ -321,7 +323,7 @@ const entries = [
         "creation": "2022",
         "tech": ["net", "wpf"],
         "links": {
-            "site": "../slbr/",
+            "site": "/slbr/",
             "github": "https://github.com/SLT-World/SLBr",
             "info": "slbr/"
         }
@@ -344,7 +346,7 @@ const entries = [
     {
         "featured": true,
         "state": "paused",
-        "icon": "../slbr/slbr.png",
+        "icon": "/slbr/slbr.png",
         "title": "SLSearch",
         "subtext": "Metasearch Engine",
         "description": "A small, experimental metasearch engine that returns results from other search engines.",

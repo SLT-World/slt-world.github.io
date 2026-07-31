@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Weather Icons - SLT World</title>
-    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../modern.css">
+    <link rel="stylesheet" href="/modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
     <style>
 .icon_grid {
     display: grid;
@@ -38,8 +39,11 @@
     aspect-ratio: 1 / 1;
 }
 table {
-    width: min-content;
-    align-self: center;
+    table-layout: auto;
+    border: none;
+}
+thead:first-child tr:first-child th:first-child, tr td:first-child {
+    border-left: none;
 }
 tbody td:first-child > div {
     padding: 10px;
@@ -72,7 +76,7 @@ tbody td > img {
 <body>
     <div class="content">
         <div class="navigation">
-            <img src="../../../favicon.png" width="35" height="35" draggable="false">
+            <img src="/favicon.png" width="35" height="35" draggable="false">
             <a href="/"><h3>SLT World</h3></a>
             <button class="menu-toggle" popovertarget="navigation-links"><span class="material-symbols-rounded icon">more_vert</span></button>
             <div id="navigation-links" popover class="links">
@@ -94,52 +98,49 @@ tbody td > img {
         </div>
         <div class="container">
             <div class="header">
-                <p class="icon">1.</p>
                 <p>OpenWeatherMap</p>
             </div>
             <div id="openweathermap" class="icon_grid"></div>
         </div>
         <div class="container">
             <div class="header">
-                <p class="icon">2.</p>
                 <p>AccuWeather</p>
             </div>
             <div id="accuweather" class="icon_grid"></div>
         </div>
         <div class="container">
             <div class="header">
-                <p class="icon">3.</p>
                 <p>Google</p>
             </div>
             <div id="google" class="icon_grid"></div>
         </div>
         <div class="container">
             <div class="header">
-                <p class="icon">3.</p>
                 <p>MSN</p>
             </div>
             <div id="msn" class="icon_grid"></div>
         </div>
         <div class="container">
             <div class="header">
-                <p class="icon">3.</p>
                 <p>Old MSN</p>
             </div>
             <div id="omsn" class="icon_grid"></div>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Weather</th>
-                    <th data-title="OpenWeatherMap">OWM</th>
-                    <th data-title="AccuWeather">ACW</th>
-                    <th data-title="Google">GGL</th>
-                    <th data-title="MSN">MSN</th>
-                    <th data-title="Old MSN">OMSN</th>
-                </tr>
-            </thead>
-            <tbody id="weather_table"></tbody>
-        </table>
+        <div class="container" style="margin: 0;padding: 0;overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Weather</th>
+                        <th data-title="OpenWeatherMap">OWM</th>
+                        <th data-title="AccuWeather">ACW</th>
+                        <th data-title="Google">GGL</th>
+                        <th data-title="MSN">MSN</th>
+                        <th data-title="Old MSN">OMSN</th>
+                    </tr>
+                </thead>
+                <tbody id="weather_table"></tbody>
+            </table>
+        </div>
     </div>
     <script>
 const wmoDescMap = {

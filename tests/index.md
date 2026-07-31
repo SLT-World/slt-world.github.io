@@ -108,6 +108,7 @@ permalink: /tests/
 > - [Check Tor](https://check.torproject.org/)
 > - [LocalCDN Test](https://www.localcdn.org/test)
 > - [Image Decode & Visual Timings](https://colinbendell.github.io/webperf/animated-gif-decode/)
+> - [Browser Score](https://browserscore.dev/?status=stable)
 
 ### Security
 > - [Safe Browsing Demo](https://testsafebrowsing.appspot.com/)

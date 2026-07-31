@@ -435,6 +435,7 @@ hr {
             margin: 0;
             position: fixed;
             position-area: bottom span-left;
+            box-shadow: 0 0 25px black;
         }
 
         .links:popover-open > a {

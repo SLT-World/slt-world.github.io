@@ -6,8 +6,8 @@ layout: base
 {%- assign date_format = "%b %-d, %Y" -%}
 {%- for blog in blogs -%}
 <div class="container" onclick="location.href='{{ blog.url | relative_url }}';">
-    <div class="header">
-        <a style="font-weight: bold;" href="{{ blog.url | relative_url }}">{{ blog.title | escape }}</a>
+    <div class="header" style="gap: 0px;">
+        <a style="font-weight: bold;font-size: medium;color: var(--font-color);" href="{{ blog.url | relative_url }}">{{ blog.title | escape }}</a>
         <span class="subtext">{{ blog.date | date: date_format }}</span>
     </div>
     <p class="subtext">{{ blog.excerpt | strip_html | strip | escape | truncate: 100 }}</p>
