@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Power Station Inc Directory - SLT World</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/modern.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+    <style>
+#directory_grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+}
+
+#directory_grid > a > .button {
+    justify-content: stretch;
+    height: unset;
+    padding: 10px;
+}
+
+#directory_grid > a > .button > div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    height: 35px;
+    width: 100%;
+}
+
+.material-symbols-rounded {
+    color: var(--gray-color);
+}
+#navigation-links .material-symbols-rounded {
+    color: var(--font-color);
+}
+
+@media screen and (max-width: 1000px) {
+    #directory_grid {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="navigation">
+            <img src="/favicon.png" width="35" height="35" draggable="false">
+            <a href="/"><h3>SLT World</h3></a>
+            <button class="menu-toggle" popovertarget="navigation-links"><span class="material-symbols-rounded icon">more_vert</span></button>
+            <div id="navigation-links" popover class="links">
+                <a href="/" class="button"><span class="material-symbols-rounded icon">home</span>Home</a>
+                <a href="/explore/" class="button"><span class="material-symbols-rounded icon">explore</span>Explore</a>
+                <a href="/tests/" class="button"><span class="material-symbols-rounded icon">science</span>Tests</a>
+                <a href="/blog/" class="button"><span class="material-symbols-rounded icon">news</span>Blog</a>
+            </div>
+        </div>
+        <h1>Power Station Inc Directory</h1>
+        <p>A collection of Power Station Inc utilities, tools & small showcases.</p>
+        <div id="directory_grid">
+            <a href="https://play.google.com/store/apps/details?id=com.SLTSoftwares.PowerStationInc" target="_blank">
+                <div class="button">
+                    <div>
+                        <span class="material-symbols-rounded icon">play_arrow</span>
+                        <span>Google Play Store</span>
+                        <span class="material-symbols-rounded icon" style="margin-left:auto;">open_in_new</span>
+                    </div>
+                </div>
+            </a>
+            <a href="privacy-policy">
+                <div class="button">
+                    <div>
+                        <span class="material-symbols-rounded icon">verified_user</span>
+                        <span>Privacy Policy</span>
+                        <span class="material-symbols-rounded icon" style="margin-left:auto;">keyboard_arrow_right</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
