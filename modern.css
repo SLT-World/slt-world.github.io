@@ -253,17 +253,18 @@ textarea {
 }
 
 .icon_links > a {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
 
 .icon_links .material-symbols-rounded, .icon_links svg {
     color: var(--gray-color);
     fill: var(--gray-color);
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
     border-radius: 2.5px;
+    font-size: 30px;
 }
 
 ::-webkit-scrollbar {
